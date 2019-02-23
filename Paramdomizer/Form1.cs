@@ -28,16 +28,24 @@ namespace Paramdomizer
             //check if running exe from data directory
             gameDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
-            if (File.Exists(gameDirectory + "\\DARKSOULS.exe"))
+            if (File.Exists(gameDirectory + (checkBoxRemaster.Checked ? "\\DarkSoulsRemastered.exe" : "\\DARKSOULS.exe")))
             {
                 //exe is in a valid game directory, just use this as the path instead of asking for input
                 txtGamePath.Text = gameDirectory;
                 txtGamePath.ReadOnly = true;
 
-                if (!File.Exists(gameDirectory + "\\param\\GameParam\\GameParam.parambnd"))
+                if (!File.Exists(gameDirectory + "\\param\\GameParam\\GameParam.parambnd" + (checkBoxRemaster.Checked ? ".dcx" : "")))
                 {
-                    //user hasn't unpacked their game
-                    lblMessage.Text = "You don't seem to have an unpacked Dark Souls installation. Please run UDSFM and come back :)";
+                    if (checkBoxRemaster.Checked)
+                    {
+                        //invalid directory
+                        lblMessage.Text = "Invalid Dark Souls: Remastered game directory; No GameParam found.";
+                    }
+                    else
+                    {
+                        //user hasn't unpacked their game
+                        lblMessage.Text = "You don't seem to have an unpacked Dark Souls: Prepare to Die Edition installation. Please run UDSFM and come back :)";
+                    }
                     lblMessage.Visible = true;
                     lblMessage.ForeColor = Color.Red;
                 }
@@ -56,16 +64,24 @@ namespace Paramdomizer
                 lblMessage.Text = "";
                 lblMessage.Visible = true;
 
-                if (!File.Exists(gameDirectory + "\\DARKSOULS.exe"))
+                if (!File.Exists(gameDirectory + (checkBoxRemaster.Checked ? "\\DarkSoulsRemastered.exe" : "\\DARKSOULS.exe")))
                 {
-                    lblMessage.Text = "Not a valid Data directory!";
+                    lblMessage.Text = $"Not a valid {(checkBoxRemaster.Checked ? "Dark Souls: Remastered" : "Dark Souls: Prepare to Die Edition")} Data directory.";
                     lblMessage.ForeColor = Color.Red;
                     return;
                 }
-                else if (!File.Exists(gameDirectory + "\\param\\GameParam\\GameParam.parambnd"))
+                else if (!File.Exists(gameDirectory + "\\param\\GameParam\\GameParam.parambnd" + (checkBoxRemaster.Checked ? ".dcx" : "")))
                 {
-                    //user hasn't unpacked their game
-                    lblMessage.Text = "You don't seem to have an unpacked Dark Souls installation. Please run UDSFM and come back :)";
+                    if (checkBoxRemaster.Checked)
+                    {
+                        //invalid directory
+                        lblMessage.Text = "Invalid Dark Souls: Remastered game directory; No GameParam found.";
+                    }
+                    else
+                    {
+                        //user hasn't unpacked their game
+                        lblMessage.Text = "You don't seem to have an unpacked Dark Souls: Prepare to Die Edition installation. Please run UDSFM and come back :)";
+                    }
                     lblMessage.ForeColor = Color.Red;
                     return;
                 }
@@ -82,16 +98,24 @@ namespace Paramdomizer
             lblMessage.ForeColor = new Color();
             lblMessage.Visible = true;
 
-            if (!File.Exists(gameDirectory + "\\DARKSOULS.exe"))
+            if (!File.Exists(gameDirectory + (checkBoxRemaster.Checked ? "\\DarkSoulsRemastered.exe" : "\\DARKSOULS.exe")))
             {
-                lblMessage.Text = "Not a valid Data directory!";
+                lblMessage.Text = $"Not a valid {(checkBoxRemaster.Checked ? "Dark Souls: Remastered" : "Dark Souls: Prepare to Die Edition")} Data directory.";
                 lblMessage.ForeColor = Color.Red;
                 return;
             }
-            else if (!File.Exists(gameDirectory + "\\param\\GameParam\\GameParam.parambnd"))
+            else if (!File.Exists(gameDirectory + "\\param\\GameParam\\GameParam.parambnd" + (checkBoxRemaster.Checked ? ".dcx" : "")))
             {
-                //user hasn't unpacked their game
-                lblMessage.Text = "You don't seem to have an unpacked Dark Souls installation. Please run UDSFM and come back :)";
+                if (checkBoxRemaster.Checked)
+                {
+                    //invalid directory
+                    lblMessage.Text = "Invalid Dark Souls: Remastered game directory; No GameParam found.";
+                }
+                else
+                {
+                    //user hasn't unpacked their game
+                    lblMessage.Text = "You don't seem to have an unpacked Dark Souls: Prepare to Die Edition installation. Please run UDSFM and come back :)";
+                }
                 lblMessage.ForeColor = Color.Red;
                 return;
             }
@@ -114,62 +138,27 @@ namespace Paramdomizer
             string seed = txtSeed.Text;
 
             //create backup of gameparam
-            if (!File.Exists(gameDirectory + "\\param\\GameParam\\GameParam.parambnd.bak"))
+            if (!File.Exists(gameDirectory + $"\\param\\GameParam\\GameParam.parambnd{(checkBoxRemaster.Checked ? ".dcx" : "")}.bak"))
             {
-                File.Copy(gameDirectory + "\\param\\GameParam\\GameParam.parambnd", gameDirectory + "\\param\\GameParam\\GameParam.parambnd.bak");
-                lblMessage.Text = "Backed up GameParam.parambnd \n\n";
+                File.Copy(gameDirectory + $"\\param\\GameParam\\GameParam.parambnd{(checkBoxRemaster.Checked ? ".dcx" : "")}", 
+                    gameDirectory + $"\\param\\GameParam\\GameParam.parambnd{(checkBoxRemaster.Checked ? ".dcx" : "")}.bak");
+                lblMessage.Text = $"Backed up GameParam.parambnd{(checkBoxRemaster.Checked ? ".dcx" : "")} \n\n";
                 lblMessage.ForeColor = Color.Black;
                 lblMessage.Visible = true;
             }
 
-            //Load parambnds/paramdefs into params
-            List<PARAM> AllParams = new List<PARAM>();
-            List<PARAMDEF> ParamDefs = new List<PARAMDEF>();
+            PARAMBND gameparamBnd = DataFile.LoadFromFile<PARAMBND>(gameDirectory + $"\\param\\GameParam\\GameParam.parambnd{(checkBoxRemaster.Checked ? ".dcx" : "")}");
 
-            List<BND> gameparamBnds = Directory.GetFiles(gameDirectory + "\\param\\GameParam\\", "*.parambnd")
-                .Select(p => DataFile.LoadFromFile<BND>(p, new Progress<(int, int)>((pr) =>
-                {
-
-                }))).ToList();
-
-            List<BND> paramdefBnds = Directory.GetFiles(gameDirectory + "\\paramdef\\", "*.paramdefbnd")
-                .Select(p => DataFile.LoadFromFile<BND>(p, new Progress<(int, int)>((pr) =>
-                {
-
-                }))).ToList();
-
-            for (int i = 0; i < paramdefBnds.Count(); i++)
-            {
-                foreach (MeowDSIO.DataTypes.BND.BNDEntry paramdef in paramdefBnds[i])
-                {
-                    PARAMDEF newParamDef = paramdef.ReadDataAs<PARAMDEF>(new Progress<(int, int)>((p) =>
-                    {
-
-                    }));
-                    ParamDefs.Add(newParamDef);
-                }
-            }
-
-            for (int i = 0; i < gameparamBnds.Count(); i++)
-            {
-                foreach (MeowDSIO.DataTypes.BND.BNDEntry param in gameparamBnds[i])
-                {
-                    PARAM newParam = param.ReadDataAs<PARAM>(new Progress<(int, int)>((p) =>
-                    {
-
-                    }));
-
-                    newParam.ApplyPARAMDEFTemplate(ParamDefs.Where(x => x.ID == newParam.ID).First());
-                    AllParams.Add(newParam);
-                }
-            }
+            gameparamBnd.ApplyDefaultParamDefs();
 
             //Hash seed so people can use meme seeds
             Random r = new Random(seed.GetHashCode());
 
-            foreach (PARAM paramFile in AllParams)
+            foreach (var paramBndEntry in gameparamBnd)
             {
-                if (paramFile.VirtualUri.EndsWith("AtkParam_Npc.param"))
+                var paramShortName = paramBndEntry.Name;
+                var paramFile = paramBndEntry.Param;
+                if (paramShortName.Contains("AtkParam_Npc"))
                 {
                     List<int> allSpEffects = new List<int>();
                     List<float> allKnockbackDists = new List<float>();
@@ -262,7 +251,7 @@ namespace Paramdomizer
                         }
                     }
                 }
-                else if (paramFile.VirtualUri.EndsWith("AtkParam_Pc.param"))
+                else if (paramShortName.Contains("AtkParam_Pc"))
                 {
                     List<float> allKnockbackDists = new List<float>();
                     List<int> allDmgLevels = new List<int>();
@@ -2927,25 +2916,7 @@ namespace Paramdomizer
             }
 
             //repack param files
-            foreach (BND paramBnd in gameparamBnds)
-            {
-                foreach (MeowDSIO.DataTypes.BND.BNDEntry param in paramBnd)
-                {
-                    string filteredParamName = param.Name.Substring(param.Name.LastIndexOf("\\") + 1).Replace(".param", "");
-
-                    PARAM matchingParam = AllParams.Where(x => x.VirtualUri == param.Name).First();
-
-                    param.ReplaceData(matchingParam,new Progress<(int, int)>((p) =>
-                    {
-
-                    }));
-                }
-
-                DataFile.Resave(paramBnd, new Progress<(int, int)>((p) =>
-                {
-
-                }));
-            }
+            DataFile.Resave(gameparamBnd);
 
             lblMessage.Text += "Randomizing Complete!";
             lblMessage.ForeColor = Color.Black;
@@ -3166,5 +3137,37 @@ namespace Paramdomizer
             
         }
 
+        private void checkBoxRemaster_CheckedChanged(object sender, EventArgs e)
+        {
+            //check that entered path is valid
+            gameDirectory = txtGamePath.Text;
+
+            //reset message label
+            lblMessage.Text = "";
+            lblMessage.ForeColor = new Color();
+            lblMessage.Visible = true;
+
+            if (!File.Exists(gameDirectory + (checkBoxRemaster.Checked ? "\\DarkSoulsRemastered.exe" : "\\DARKSOULS.exe")))
+            {
+                lblMessage.Text = $"Not a valid {(checkBoxRemaster.Checked ? "Dark Souls: Remastered" : "Dark Souls: Prepare to Die Edition")} Data directory.";
+                lblMessage.ForeColor = Color.Red;
+                return;
+            }
+            else if (!File.Exists(gameDirectory + "\\param\\GameParam\\GameParam.parambnd" + (checkBoxRemaster.Checked ? ".dcx" : "")))
+            {
+                if (checkBoxRemaster.Checked)
+                {
+                    //invalid directory
+                    lblMessage.Text = "Invalid Dark Souls: Remastered game directory; No GameParam found.";
+                }
+                else
+                {
+                    //user hasn't unpacked their game
+                    lblMessage.Text = "You don't seem to have an unpacked Dark Souls: Prepare to Die Edition installation. Please run UDSFM and come back :)";
+                }
+                lblMessage.ForeColor = Color.Red;
+                return;
+            }
+        }
     }
 }

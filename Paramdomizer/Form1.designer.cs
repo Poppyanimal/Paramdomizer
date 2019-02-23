@@ -54,6 +54,7 @@
             this.chkMagicAnimations = new System.Windows.Forms.CheckBox();
             this.btnOpenFolderDialog = new System.Windows.Forms.Button();
             this.chkRandomFaceData = new System.Windows.Forms.CheckBox();
+            this.checkBoxRemaster = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // txtSeed
@@ -93,7 +94,7 @@
             // 
             // btnSubmit
             // 
-            this.btnSubmit.Location = new System.Drawing.Point(189, 253);
+            this.btnSubmit.Location = new System.Drawing.Point(265, 251);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.Size = new System.Drawing.Size(75, 23);
             this.btnSubmit.TabIndex = 20;
@@ -130,6 +131,7 @@
             // 
             // chkWeaponModels
             // 
+            this.chkWeaponModels.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkWeaponModels.AutoSize = true;
             this.chkWeaponModels.Checked = true;
             this.chkWeaponModels.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -142,6 +144,7 @@
             // 
             // chkWeaponDamage
             // 
+            this.chkWeaponDamage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkWeaponDamage.AutoSize = true;
             this.chkWeaponDamage.Checked = true;
             this.chkWeaponDamage.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -154,6 +157,7 @@
             // 
             // chkWeaponMoveset
             // 
+            this.chkWeaponMoveset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkWeaponMoveset.AutoSize = true;
             this.chkWeaponMoveset.Checked = true;
             this.chkWeaponMoveset.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -166,6 +170,7 @@
             // 
             // chkBullets
             // 
+            this.chkBullets.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkBullets.AutoSize = true;
             this.chkBullets.Checked = true;
             this.chkBullets.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -214,6 +219,7 @@
             // 
             // chkVoices
             // 
+            this.chkVoices.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkVoices.AutoSize = true;
             this.chkVoices.Checked = true;
             this.chkVoices.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -274,6 +280,7 @@
             // 
             // chkItemAnimations
             // 
+            this.chkItemAnimations.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkItemAnimations.AutoSize = true;
             this.chkItemAnimations.Checked = true;
             this.chkItemAnimations.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -286,6 +293,7 @@
             // 
             // chkMagicAnimations
             // 
+            this.chkMagicAnimations.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkMagicAnimations.AutoSize = true;
             this.chkMagicAnimations.Checked = true;
             this.chkMagicAnimations.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -308,6 +316,7 @@
             // 
             // chkRandomFaceData
             // 
+            this.chkRandomFaceData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkRandomFaceData.AutoSize = true;
             this.chkRandomFaceData.Checked = true;
             this.chkRandomFaceData.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -318,11 +327,23 @@
             this.chkRandomFaceData.Text = "Random NPC Face Data";
             this.chkRandomFaceData.UseVisualStyleBackColor = true;
             // 
+            // checkBoxRemaster
+            // 
+            this.checkBoxRemaster.AutoSize = true;
+            this.checkBoxRemaster.Location = new System.Drawing.Point(11, 257);
+            this.checkBoxRemaster.Name = "checkBoxRemaster";
+            this.checkBoxRemaster.Size = new System.Drawing.Size(176, 17);
+            this.checkBoxRemaster.TabIndex = 23;
+            this.checkBoxRemaster.Text = "DARK SOULS: REMASTERED";
+            this.checkBoxRemaster.UseVisualStyleBackColor = true;
+            this.checkBoxRemaster.CheckedChanged += new System.EventHandler(this.checkBoxRemaster_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(452, 329);
+            this.Controls.Add(this.checkBoxRemaster);
             this.Controls.Add(this.chkRandomFaceData);
             this.Controls.Add(this.btnOpenFolderDialog);
             this.Controls.Add(this.chkMagicAnimations);
@@ -382,6 +403,7 @@
         private System.Windows.Forms.CheckBox chkMagicAnimations;
         private System.Windows.Forms.Button btnOpenFolderDialog;
         private System.Windows.Forms.CheckBox chkRandomFaceData;
+        private System.Windows.Forms.CheckBox checkBoxRemaster;
     }
 }
 
