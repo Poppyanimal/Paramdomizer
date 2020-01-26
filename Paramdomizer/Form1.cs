@@ -897,10 +897,18 @@ namespace Paramdomizer
                     List<int> allWepmotion1hCats = new List<int>();
                     List<int> allWepmotion2hCats = new List<int>();
                     List<int> allspAtkcategories = new List<int>();
-                    List<int> allAttackBasePhysic = new List<int>();
+                    List<int> allAttackBasePhysic = new List<int>(); //base damage
                     List<int> allAttackBaseMagic = new List<int>();
                     List<int> allAttackBaseFire = new List<int>();
                     List<int> allAttackBaseThunder = new List<int>();
+                    List<int> allAttackCorrectStrength = new List<int>(); //scaling
+                    List<int> allAttackCorrectAgility = new List<int>();
+                    List<int> allAttackCorrectMagic = new List<int>();
+                    List<int> allAttackCorrectFaith = new List<int>();
+                    List<int> allAttackProperStrength = new List<int>(); //minimum stats
+                    List<int> allAttackProperAgility = new List<int>();
+                    List<int> allAttackProperMagic = new List<int>();
+                    List<int> allAttackProperFaith = new List<int>();
                     List<int> allEquipModelIds = new List<int>();
 
                     foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
@@ -962,6 +970,46 @@ namespace Paramdomizer
                             {
                                 PropertyInfo prop = cell.GetType().GetProperty("Value");
                                 allAttackBaseThunder.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                            }
+                            else if (cell.Def.Name == "correctStrength")
+                            {
+                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                allAttackCorrectStrength.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                            }
+                            else if (cell.Def.Name == "correctAgility")
+                            {
+                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                allAttackCorrectAgility.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                            }
+                            else if (cell.Def.Name == "correctMagic")
+                            {
+                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                allAttackCorrectMagic.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                            }
+                            else if (cell.Def.Name == "correctFaith")
+                            {
+                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                allAttackCorrectFaith.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                            }
+                            else if (cell.Def.Name == "properStrength")
+                            {
+                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                allAttackProperStrength.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                            }
+                            else if (cell.Def.Name == "properAgility")
+                            {
+                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                allAttackProperAgility.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                            }
+                            else if (cell.Def.Name == "properMagic")
+                            {
+                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                allAttackProperMagic.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                            }
+                            else if (cell.Def.Name == "properFaith")
+                            {
+                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                allAttackProperFaith.Add(Convert.ToInt32(prop.GetValue(cell, null)));
                             }
                         }
                     }
@@ -1090,6 +1138,102 @@ namespace Paramdomizer
                                 }
 
                                 allAttackBaseThunder.RemoveAt(randomIndex);
+                            }
+                            else if (cell.Def.Name == "correctStrength")
+                            {
+                                int randomIndex = r.Next(allAttackCorrectStrength.Count);
+                                Type type = cell.GetType();
+                                PropertyInfo prop = type.GetProperty("Value");
+                                if (checkBoxWeaponScaling.Checked)
+                                {
+                                    prop.SetValue(cell, allAttackCorrectStrength[randomIndex], null);
+                                }
+
+                                allAttackCorrectStrength.RemoveAt(randomIndex);
+                            }
+                            else if (cell.Def.Name == "correctAgility")
+                            {
+                                int randomIndex = r.Next(allAttackCorrectAgility.Count);
+                                Type type = cell.GetType();
+                                PropertyInfo prop = type.GetProperty("Value");
+                                if (checkBoxWeaponScaling.Checked)
+                                {
+                                    prop.SetValue(cell, allAttackCorrectAgility[randomIndex], null);
+                                }
+
+                                allAttackCorrectAgility.RemoveAt(randomIndex);
+                            }
+                            else if (cell.Def.Name == "correctMagic")
+                            {
+                                int randomIndex = r.Next(allAttackCorrectMagic.Count);
+                                Type type = cell.GetType();
+                                PropertyInfo prop = type.GetProperty("Value");
+                                if (checkBoxWeaponScaling.Checked)
+                                {
+                                    prop.SetValue(cell, allAttackCorrectMagic[randomIndex], null);
+                                }
+
+                                allAttackCorrectMagic.RemoveAt(randomIndex);
+                            }
+                            else if (cell.Def.Name == "correctFaith")
+                            {
+                                int randomIndex = r.Next(allAttackCorrectFaith.Count);
+                                Type type = cell.GetType();
+                                PropertyInfo prop = type.GetProperty("Value");
+                                if (checkBoxWeaponScaling.Checked)
+                                {
+                                    prop.SetValue(cell, allAttackCorrectFaith[randomIndex], null);
+                                }
+
+                                allAttackCorrectFaith.RemoveAt(randomIndex);
+                            }
+                            else if (cell.Def.Name == "properStrength")
+                            {
+                                int randomIndex = r.Next(allAttackProperStrength.Count);
+                                Type type = cell.GetType();
+                                PropertyInfo prop = type.GetProperty("Value");
+                                if (checkBoxWeaponStatMin.Checked)
+                                {
+                                    prop.SetValue(cell, allAttackProperStrength[randomIndex], null);
+                                }
+
+                                allAttackProperStrength.RemoveAt(randomIndex);
+                            }
+                            else if (cell.Def.Name == "properAgility")
+                            {
+                                int randomIndex = r.Next(allAttackProperAgility.Count);
+                                Type type = cell.GetType();
+                                PropertyInfo prop = type.GetProperty("Value");
+                                if (checkBoxWeaponStatMin.Checked)
+                                {
+                                    prop.SetValue(cell, allAttackProperAgility[randomIndex], null);
+                                }
+
+                                allAttackProperAgility.RemoveAt(randomIndex);
+                            }
+                            else if (cell.Def.Name == "properMagic")
+                            {
+                                int randomIndex = r.Next(allAttackProperMagic.Count);
+                                Type type = cell.GetType();
+                                PropertyInfo prop = type.GetProperty("Value");
+                                if (checkBoxWeaponStatMin.Checked)
+                                {
+                                    prop.SetValue(cell, allAttackProperMagic[randomIndex], null);
+                                }
+
+                                allAttackProperMagic.RemoveAt(randomIndex);
+                            }
+                            else if (cell.Def.Name == "properFaith")
+                            {
+                                int randomIndex = r.Next(allAttackProperFaith.Count);
+                                Type type = cell.GetType();
+                                PropertyInfo prop = type.GetProperty("Value");
+                                if (checkBoxWeaponStatMin.Checked)
+                                {
+                                    prop.SetValue(cell, allAttackProperFaith[randomIndex], null);
+                                }
+
+                                allAttackProperFaith.RemoveAt(randomIndex);
                             }
                         }
                     }

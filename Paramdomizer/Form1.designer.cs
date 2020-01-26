@@ -55,6 +55,8 @@
             this.btnOpenFolderDialog = new System.Windows.Forms.Button();
             this.chkRandomFaceData = new System.Windows.Forms.CheckBox();
             this.checkBoxRemaster = new System.Windows.Forms.CheckBox();
+            this.checkBoxWeaponScaling = new System.Windows.Forms.CheckBox();
+            this.checkBoxWeaponStatMin = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // txtSeed
@@ -94,7 +96,7 @@
             // 
             // btnSubmit
             // 
-            this.btnSubmit.Location = new System.Drawing.Point(265, 251);
+            this.btnSubmit.Location = new System.Drawing.Point(265, 261);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.Size = new System.Drawing.Size(75, 23);
             this.btnSubmit.TabIndex = 20;
@@ -121,7 +123,7 @@
             // 
             // lblMessage
             // 
-            this.lblMessage.Location = new System.Drawing.Point(12, 281);
+            this.lblMessage.Location = new System.Drawing.Point(12, 290);
             this.lblMessage.Name = "lblMessage";
             this.lblMessage.Size = new System.Drawing.Size(428, 43);
             this.lblMessage.TabIndex = 6;
@@ -330,13 +332,38 @@
             // checkBoxRemaster
             // 
             this.checkBoxRemaster.AutoSize = true;
-            this.checkBoxRemaster.Location = new System.Drawing.Point(11, 257);
+            this.checkBoxRemaster.Location = new System.Drawing.Point(11, 267);
             this.checkBoxRemaster.Name = "checkBoxRemaster";
             this.checkBoxRemaster.Size = new System.Drawing.Size(176, 17);
             this.checkBoxRemaster.TabIndex = 23;
             this.checkBoxRemaster.Text = "DARK SOULS: REMASTERED";
             this.checkBoxRemaster.UseVisualStyleBackColor = true;
             this.checkBoxRemaster.CheckedChanged += new System.EventHandler(this.checkBoxRemaster_CheckedChanged);
+            // 
+            // checkBoxWeaponScaling
+            // 
+            this.checkBoxWeaponScaling.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxWeaponScaling.AutoSize = true;
+            this.checkBoxWeaponScaling.Checked = true;
+            this.checkBoxWeaponScaling.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxWeaponScaling.Location = new System.Drawing.Point(265, 243);
+            this.checkBoxWeaponScaling.Name = "checkBoxWeaponScaling";
+            this.checkBoxWeaponScaling.Size = new System.Drawing.Size(156, 17);
+            this.checkBoxWeaponScaling.TabIndex = 24;
+            this.checkBoxWeaponScaling.Text = "Randomize weapon scaling";
+            this.checkBoxWeaponScaling.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxWeaponStatMin
+            // 
+            this.checkBoxWeaponStatMin.AutoSize = true;
+            this.checkBoxWeaponStatMin.Checked = true;
+            this.checkBoxWeaponStatMin.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxWeaponStatMin.Location = new System.Drawing.Point(11, 243);
+            this.checkBoxWeaponStatMin.Name = "checkBoxWeaponStatMin";
+            this.checkBoxWeaponStatMin.Size = new System.Drawing.Size(188, 17);
+            this.checkBoxWeaponStatMin.TabIndex = 25;
+            this.checkBoxWeaponStatMin.Text = "Randomize weapon minimum stats";
+            this.checkBoxWeaponStatMin.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -355,6 +382,8 @@
             this.Controls.Add(this.chkAggroRadius);
             this.Controls.Add(this.chkWeaponModels);
             this.Controls.Add(this.chkWeaponDamage);
+            this.Controls.Add(this.checkBoxWeaponScaling);
+            this.Controls.Add(this.checkBoxWeaponStatMin);
             this.Controls.Add(this.chkWeaponMoveset);
             this.Controls.Add(this.chkBullets);
             this.Controls.Add(this.chkKnockback);
@@ -404,6 +433,8 @@
         private System.Windows.Forms.Button btnOpenFolderDialog;
         private System.Windows.Forms.CheckBox chkRandomFaceData;
         private System.Windows.Forms.CheckBox checkBoxRemaster;
+        private System.Windows.Forms.CheckBox checkBoxWeaponScaling;
+        private System.Windows.Forms.CheckBox checkBoxWeaponStatMin;
     }
 }
 
