@@ -1542,16 +1542,24 @@ namespace Paramdomizer
                                 {
                                     if (checkBoxDoTrueRandom.Checked)
                                     {
-                                        //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
-                                        if (r.Next(100) == 0)
+                                        if(r.Next(3) == 0)
                                         {
-                                            //100 is the cap
-                                            prop.SetValue(cell, r.Next(61) + 40, null);
+                                            //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                            if (r.Next(33) == 0)
+                                            {
+                                                //100 is the cap
+                                                prop.SetValue(cell, r.Next(61) + 40, null);
+                                            }
+                                            else
+                                            {
+                                                //40 is 2nd soft cap
+                                                prop.SetValue(cell, r.Next(16) + 25, null);
+                                            }
                                         }
                                         else
                                         {
-                                            //40 is soft cap, minimum of 1
-                                            prop.SetValue(cell, r.Next(40) + 1, null);
+                                            //first soft cap of 25
+                                            prop.SetValue(cell, r.Next(25) + 1, null);
                                         }
                                     }
                                     else
