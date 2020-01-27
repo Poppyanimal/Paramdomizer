@@ -56,6 +56,7 @@
             this.checkBoxRemaster = new System.Windows.Forms.CheckBox();
             this.checkBoxWeaponScaling = new System.Windows.Forms.CheckBox();
             this.checkBoxWeaponStatMin = new System.Windows.Forms.CheckBox();
+            this.checkBoxWeaponWeight = new System.Windows.Forms.CheckBox();
             this.checkBoxDoTrueRandom = new System.Windows.Forms.CheckBox();
             this.tooltip = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
@@ -95,7 +96,7 @@
             // 
             // btnSubmit
             // 
-            this.btnSubmit.Location = new System.Drawing.Point(265, 261);
+            this.btnSubmit.Location = new System.Drawing.Point(358, 298);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.Size = new System.Drawing.Size(75, 23);
             this.btnSubmit.TabIndex = 20;
@@ -113,14 +114,14 @@
             this.chkRingSpeffects.Size = new System.Drawing.Size(168, 17);
             this.chkRingSpeffects.TabIndex = 7;
             this.chkRingSpeffects.Text = "Randomize SPeffects on rings";
+            this.tooltip.SetToolTip(this.chkRingSpeffects, "Randomizes special effects of rings. Not effected by DoTrueRandom.");
             this.chkRingSpeffects.UseVisualStyleBackColor = true;
-            tooltip.SetToolTip(chkRingSpeffects, "Randomizes special effects of rings. Not effected by DoTrueRandom.");
             // 
             // lblMessage
             // 
-            this.lblMessage.Location = new System.Drawing.Point(12, 290);
+            this.lblMessage.Location = new System.Drawing.Point(193, 288);
             this.lblMessage.Name = "lblMessage";
-            this.lblMessage.Size = new System.Drawing.Size(428, 43);
+            this.lblMessage.Size = new System.Drawing.Size(159, 43);
             this.lblMessage.TabIndex = 6;
             this.lblMessage.Text = "label1";
             this.lblMessage.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -137,8 +138,8 @@
             this.chkWeaponModels.Size = new System.Drawing.Size(156, 17);
             this.chkWeaponModels.TabIndex = 13;
             this.chkWeaponModels.Text = "Randomize weapon models";
+            this.tooltip.SetToolTip(this.chkWeaponModels, "Randomizes weapon models. Not effected by DoTrueRandom.");
             this.chkWeaponModels.UseVisualStyleBackColor = true;
-            tooltip.SetToolTip(chkWeaponModels, "Randomizes weapon models. Not effected by DoTrueRandom.");
             // 
             // chkWeaponDamage
             // 
@@ -151,8 +152,8 @@
             this.chkWeaponDamage.Size = new System.Drawing.Size(161, 17);
             this.chkWeaponDamage.TabIndex = 12;
             this.chkWeaponDamage.Text = "Randomize weapon damage";
+            this.tooltip.SetToolTip(this.chkWeaponDamage, "Randomizes weapon damage. Effected by DoTrueRandom.");
             this.chkWeaponDamage.UseVisualStyleBackColor = true;
-            tooltip.SetToolTip(chkWeaponDamage, "Randomizes weapon damage. Effected by DoTrueRandom.");
             // 
             // chkWeaponMoveset
             // 
@@ -165,8 +166,8 @@
             this.chkWeaponMoveset.Size = new System.Drawing.Size(168, 17);
             this.chkWeaponMoveset.TabIndex = 11;
             this.chkWeaponMoveset.Text = "Randomize weapon movesets";
+            this.tooltip.SetToolTip(this.chkWeaponMoveset, "Randomizes weapon movesets. Not effected by DoTrueRandom.");
             this.chkWeaponMoveset.UseVisualStyleBackColor = true;
-            tooltip.SetToolTip(chkWeaponMoveset, "Randomizes weapon movesets. Not effected by DoTrueRandom.");
             // 
             // chkBullets
             // 
@@ -179,8 +180,8 @@
             this.chkBullets.Size = new System.Drawing.Size(112, 17);
             this.chkBullets.TabIndex = 9;
             this.chkBullets.Text = "Randomize bullets";
+            this.tooltip.SetToolTip(this.chkBullets, "Randomizes bullets. Not effected by DoTrueRandom.");
             this.chkBullets.UseVisualStyleBackColor = true;
-            tooltip.SetToolTip(chkBullets, "Randomizes bullets. Not effected by DoTrueRandom.");
             // 
             // chkKnockback
             // 
@@ -192,8 +193,8 @@
             this.chkKnockback.Size = new System.Drawing.Size(169, 17);
             this.chkKnockback.TabIndex = 16;
             this.chkKnockback.Text = "Randomize attack knockback";
+            this.tooltip.SetToolTip(this.chkKnockback, "Randomizes attack knockback. Not effected by DoTrueRandom.");
             this.chkKnockback.UseVisualStyleBackColor = true;
-            tooltip.SetToolTip(chkKnockback, "Randomizes attack knockback. Not effected by DoTrueRandom.");
             // 
             // chkSpeffects
             // 
@@ -205,8 +206,8 @@
             this.chkSpeffects.Size = new System.Drawing.Size(185, 17);
             this.chkSpeffects.TabIndex = 5;
             this.chkSpeffects.Text = "Randomize SPeffects on enemies";
+            this.tooltip.SetToolTip(this.chkSpeffects, "Randomizes special effects on enemies. Not effected by DoTrueRandom.");
             this.chkSpeffects.UseVisualStyleBackColor = true;
-            tooltip.SetToolTip(chkSpeffects, "Randomizes special effects on enemies. Not effected by DoTrueRandom.");
             // 
             // chkAttackSpeffects
             // 
@@ -218,8 +219,8 @@
             this.chkAttackSpeffects.Size = new System.Drawing.Size(181, 17);
             this.chkAttackSpeffects.TabIndex = 6;
             this.chkAttackSpeffects.Text = "Randomize SPeffects on attacks";
+            this.tooltip.SetToolTip(this.chkAttackSpeffects, "Randomizes special effects on attacks. Not effected by DoTrueRandom.");
             this.chkAttackSpeffects.UseVisualStyleBackColor = true;
-            tooltip.SetToolTip(chkAttackSpeffects, "Randomizes special effects on attacks. Not effected by DoTrueRandom.");
             // 
             // chkVoices
             // 
@@ -232,8 +233,8 @@
             this.chkVoices.Size = new System.Drawing.Size(132, 17);
             this.chkVoices.TabIndex = 10;
             this.chkVoices.Text = "Randomize voice lines";
+            this.tooltip.SetToolTip(this.chkVoices, "Randomizes voice lines. Not effected by DoTrueRandom.");
             this.chkVoices.UseVisualStyleBackColor = true;
-            tooltip.SetToolTip(chkVoices, "Randomizes voice lines. Not effected by DoTrueRandom.");
             // 
             // chkTurnSpeeds
             // 
@@ -245,8 +246,8 @@
             this.chkTurnSpeeds.Size = new System.Drawing.Size(166, 17);
             this.chkTurnSpeeds.TabIndex = 3;
             this.chkTurnSpeeds.Text = "Randomize enemy turn speed";
+            this.tooltip.SetToolTip(this.chkTurnSpeeds, "Randomizes enemy turn speed. Not effected by DoTrueRandom.");
             this.chkTurnSpeeds.UseVisualStyleBackColor = true;
-            tooltip.SetToolTip(chkTurnSpeeds, "Randomizes enemy turn speed. Not effected by DoTrueRandom.");
             // 
             // chkHitboxSizes
             // 
@@ -258,8 +259,8 @@
             this.chkHitboxSizes.Size = new System.Drawing.Size(136, 17);
             this.chkHitboxSizes.TabIndex = 18;
             this.chkHitboxSizes.Text = "Randomize hitbox sizes";
+            this.tooltip.SetToolTip(this.chkHitboxSizes, "Randomizes hitbox sizes. Not effected by DoTrueRandom.");
             this.chkHitboxSizes.UseVisualStyleBackColor = true;
-            tooltip.SetToolTip(chkHitboxSizes, "Randomizes hitbox sizes. Not effected by DoTrueRandom.");
             // 
             // chkStaggerLevels
             // 
@@ -271,8 +272,8 @@
             this.chkStaggerLevels.Size = new System.Drawing.Size(147, 17);
             this.chkStaggerLevels.TabIndex = 17;
             this.chkStaggerLevels.Text = "Randomize stagger levels";
+            this.tooltip.SetToolTip(this.chkStaggerLevels, "Randomizes stagger levels. Not effected by DoTrueRandom.");
             this.chkStaggerLevels.UseVisualStyleBackColor = true;
-            tooltip.SetToolTip(chkStaggerLevels, "Randomizes stagger levels. Not effected by DoTrueRandom.");
             // 
             // chkAggroRadius
             // 
@@ -284,8 +285,8 @@
             this.chkAggroRadius.Size = new System.Drawing.Size(140, 17);
             this.chkAggroRadius.TabIndex = 2;
             this.chkAggroRadius.Text = "Randomize aggro radius";
+            this.tooltip.SetToolTip(this.chkAggroRadius, "Randomizes the aggro range of enemies. Not effected by DoTrueRandom.");
             this.chkAggroRadius.UseVisualStyleBackColor = true;
-            tooltip.SetToolTip(chkAggroRadius, "Randomizes the aggro range of enemies. Not effected by DoTrueRandom.");
             // 
             // chkItemAnimations
             // 
@@ -298,8 +299,8 @@
             this.chkItemAnimations.Size = new System.Drawing.Size(154, 17);
             this.chkItemAnimations.TabIndex = 14;
             this.chkItemAnimations.Text = "Randomize item animations";
+            this.tooltip.SetToolTip(this.chkItemAnimations, "Randomizes the animations of items. Not effected by DoTrueRandom.");
             this.chkItemAnimations.UseVisualStyleBackColor = true;
-            tooltip.SetToolTip(chkItemAnimations, "Randomizes the animations of items. Not effected by DoTrueRandom.");
             // 
             // chkMagicAnimations
             // 
@@ -312,8 +313,8 @@
             this.chkMagicAnimations.Size = new System.Drawing.Size(163, 17);
             this.chkMagicAnimations.TabIndex = 15;
             this.chkMagicAnimations.Text = "Randomize magic animations";
+            this.tooltip.SetToolTip(this.chkMagicAnimations, "Randomizes the animations of magic. Not effected by DoTrueRandom.");
             this.chkMagicAnimations.UseVisualStyleBackColor = true;
-            tooltip.SetToolTip(chkMagicAnimations, "Randomizes the animations of magic. Not effected by DoTrueRandom.");
             // 
             // btnOpenFolderDialog
             // 
@@ -322,9 +323,9 @@
             this.btnOpenFolderDialog.Size = new System.Drawing.Size(28, 20);
             this.btnOpenFolderDialog.TabIndex = 21;
             this.btnOpenFolderDialog.Text = "...";
+            this.tooltip.SetToolTip(this.btnOpenFolderDialog, "Open Folder");
             this.btnOpenFolderDialog.UseVisualStyleBackColor = true;
             this.btnOpenFolderDialog.Click += new System.EventHandler(this.btnOpenFolderDialog_Click);
-            tooltip.SetToolTip(btnOpenFolderDialog, "Open Folder");
             // 
             // chkRandomFaceData
             // 
@@ -337,20 +338,20 @@
             this.chkRandomFaceData.Size = new System.Drawing.Size(144, 17);
             this.chkRandomFaceData.TabIndex = 22;
             this.chkRandomFaceData.Text = "Random NPC Face Data";
+            this.tooltip.SetToolTip(this.chkRandomFaceData, "Randomizes the faces of npcs. Not effected by DoTrueRandom.");
             this.chkRandomFaceData.UseVisualStyleBackColor = true;
-            tooltip.SetToolTip(chkRandomFaceData, "Randomizes the faces of npcs. Not effected by DoTrueRandom.");
             // 
             // checkBoxRemaster
             // 
             this.checkBoxRemaster.AutoSize = true;
-            this.checkBoxRemaster.Location = new System.Drawing.Point(11, 267);
+            this.checkBoxRemaster.Location = new System.Drawing.Point(11, 304);
             this.checkBoxRemaster.Name = "checkBoxRemaster";
             this.checkBoxRemaster.Size = new System.Drawing.Size(176, 17);
             this.checkBoxRemaster.TabIndex = 23;
             this.checkBoxRemaster.Text = "DARK SOULS: REMASTERED";
+            this.tooltip.SetToolTip(this.checkBoxRemaster, "Enable this if you are using the remastered version.");
             this.checkBoxRemaster.UseVisualStyleBackColor = true;
             this.checkBoxRemaster.CheckedChanged += new System.EventHandler(this.checkBoxRemaster_CheckedChanged);
-            tooltip.SetToolTip(checkBoxRemaster, "Enable this if you are using the remastered version.");
             // 
             // checkBoxWeaponScaling
             // 
@@ -358,13 +359,13 @@
             this.checkBoxWeaponScaling.AutoSize = true;
             this.checkBoxWeaponScaling.Checked = true;
             this.checkBoxWeaponScaling.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxWeaponScaling.Location = new System.Drawing.Point(265, 243);
+            this.checkBoxWeaponScaling.Location = new System.Drawing.Point(265, 245);
             this.checkBoxWeaponScaling.Name = "checkBoxWeaponScaling";
             this.checkBoxWeaponScaling.Size = new System.Drawing.Size(156, 17);
             this.checkBoxWeaponScaling.TabIndex = 24;
             this.checkBoxWeaponScaling.Text = "Randomize weapon scaling";
+            this.tooltip.SetToolTip(this.checkBoxWeaponScaling, "Randomizes the scaling of a weapon. Effected by DoTrueRandom.");
             this.checkBoxWeaponScaling.UseVisualStyleBackColor = true;
-            tooltip.SetToolTip(checkBoxWeaponScaling, "Randomizes the scaling of a weapon. Effected by DoTrueRandom.");
             // 
             // checkBoxWeaponStatMin
             // 
@@ -376,22 +377,35 @@
             this.checkBoxWeaponStatMin.Size = new System.Drawing.Size(188, 17);
             this.checkBoxWeaponStatMin.TabIndex = 25;
             this.checkBoxWeaponStatMin.Text = "Randomize weapon minimum stats";
+            this.tooltip.SetToolTip(this.checkBoxWeaponStatMin, "Randomizes the minimum stats for a weapon. Effected by DoTrueRandom.");
             this.checkBoxWeaponStatMin.UseVisualStyleBackColor = true;
-            tooltip.SetToolTip(checkBoxWeaponStatMin, "Randomizes the minimum stats for a weapon. Effected by DoTrueRandom.");
+            // 
+            // checkBoxWeaponWeight
+            // 
+            this.checkBoxWeaponWeight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxWeaponWeight.AutoSize = true;
+            this.checkBoxWeaponWeight.Checked = true;
+            this.checkBoxWeaponWeight.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxWeaponWeight.Location = new System.Drawing.Point(265, 268);
+            this.checkBoxWeaponWeight.Name = "checkBoxWeaponWeight";
+            this.checkBoxWeaponWeight.Size = new System.Drawing.Size(154, 17);
+            this.checkBoxWeaponWeight.TabIndex = 27;
+            this.checkBoxWeaponWeight.Text = "Randomize weapon weight";
+            this.tooltip.SetToolTip(this.checkBoxWeaponWeight, "Randomizes the weight of a weapon. Effected by DoTrueRandom.");
+            this.checkBoxWeaponWeight.UseVisualStyleBackColor = true;
             // 
             // checkBoxDoTrueRandom
             // 
             this.checkBoxDoTrueRandom.AutoSize = true;
-            this.checkBoxDoTrueRandom.Location = new System.Drawing.Point(11, 304);
+            this.checkBoxDoTrueRandom.Location = new System.Drawing.Point(11, 268);
             this.checkBoxDoTrueRandom.Name = "checkBoxDoTrueRandom";
             this.checkBoxDoTrueRandom.Size = new System.Drawing.Size(256, 17);
             this.checkBoxDoTrueRandom.TabIndex = 26;
             this.checkBoxDoTrueRandom.Text = "Don\'t randomize by shuffle; randomize by random";
+            this.tooltip.SetToolTip(this.checkBoxDoTrueRandom, resources.GetString("checkBoxDoTrueRandom.ToolTip"));
             this.checkBoxDoTrueRandom.UseVisualStyleBackColor = true;
-            tooltip.SetToolTip(checkBoxDoTrueRandom, "Instead of the defualt behavior which is just to randomly shuffle the randomized element, this will attempt to randomize items by not shuffling them.\n" +
-                "Seeds may not be persistant across different settings if this is enabled.");
             // 
-            // tooltip1
+            // tooltip
             // 
             this.tooltip.AutomaticDelay = 250;
             // 
@@ -414,6 +428,7 @@
             this.Controls.Add(this.chkWeaponDamage);
             this.Controls.Add(this.checkBoxWeaponScaling);
             this.Controls.Add(this.checkBoxWeaponStatMin);
+            this.Controls.Add(this.checkBoxWeaponWeight);
             this.Controls.Add(this.chkWeaponMoveset);
             this.Controls.Add(this.checkBoxDoTrueRandom);
             this.Controls.Add(this.chkBullets);
@@ -465,6 +480,7 @@
         private System.Windows.Forms.CheckBox checkBoxRemaster;
         private System.Windows.Forms.CheckBox checkBoxWeaponScaling;
         private System.Windows.Forms.CheckBox checkBoxWeaponStatMin;
+        private System.Windows.Forms.CheckBox checkBoxWeaponWeight;
         private System.Windows.Forms.CheckBox checkBoxDoTrueRandom;
         private System.Windows.Forms.ToolTip tooltip;
     }

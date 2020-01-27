@@ -909,6 +909,7 @@ namespace Paramdomizer
                     List<int> allAttackProperAgility = new List<int>();
                     List<int> allAttackProperMagic = new List<int>();
                     List<int> allAttackProperFaith = new List<int>();
+                    List<Double> allWepWeight = new List<Double>(); //weapon weight
                     List<int> allEquipModelIds = new List<int>();
 
                     foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
@@ -1010,6 +1011,11 @@ namespace Paramdomizer
                             {
                                 PropertyInfo prop = cell.GetType().GetProperty("Value");
                                 allAttackProperFaith.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                            }
+                            else if (cell.Def.Name == "weight")
+                            {
+                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                allWepWeight.Add(Convert.ToDouble(prop.GetValue(cell, null)));
                             }
                         }
                     }
@@ -1486,6 +1492,35 @@ namespace Paramdomizer
                                 }
 
                                 allAttackProperFaith.RemoveAt(randomIndex);
+                            }
+                            else if (cell.Def.Name == "weight")
+                            {
+                                int randomIndex = r.Next(allWepWeight.Count);
+                                Type type = cell.GetType();
+                                PropertyInfo prop = type.GetProperty("Value");
+                                if (checkBoxWeaponWeight.Checked)
+                                {
+                                    if (checkBoxDoTrueRandom.Checked)
+                                    {
+                                        //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                        if (r.Next(20) == 0)
+                                        {
+                                            //28 is the cap; weight is randomized in half steps
+                                            prop.SetValue(cell, (r.Next(37) + 20) / 2.0, null);
+                                        }
+                                        else
+                                        {
+                                            //10 is soft cap; weight is randomized in half steps
+                                            prop.SetValue(cell, (r.Next(21)) / 2.0, null);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        prop.SetValue(cell, allWepWeight[randomIndex], null);
+                                    }
+                                }
+
+                                allWepWeight.RemoveAt(randomIndex);
                             }
                         }
                     }
