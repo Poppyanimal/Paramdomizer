@@ -57,6 +57,7 @@
             this.checkBoxWeaponScaling = new System.Windows.Forms.CheckBox();
             this.checkBoxWeaponStatMin = new System.Windows.Forms.CheckBox();
             this.checkBoxWeaponWeight = new System.Windows.Forms.CheckBox();
+            this.checkBoxWeaponStamina = new System.Windows.Forms.CheckBox();
             this.checkBoxDoTrueRandom = new System.Windows.Forms.CheckBox();
             this.tooltip = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
@@ -109,7 +110,7 @@
             this.chkRingSpeffects.AutoSize = true;
             this.chkRingSpeffects.Checked = true;
             this.chkRingSpeffects.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkRingSpeffects.Location = new System.Drawing.Point(11, 222);
+            this.chkRingSpeffects.Location = new System.Drawing.Point(12, 208);
             this.chkRingSpeffects.Name = "chkRingSpeffects";
             this.chkRingSpeffects.Size = new System.Drawing.Size(168, 17);
             this.chkRingSpeffects.TabIndex = 7;
@@ -133,7 +134,7 @@
             this.chkWeaponModels.AutoSize = true;
             this.chkWeaponModels.Checked = true;
             this.chkWeaponModels.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkWeaponModels.Location = new System.Drawing.Point(265, 108);
+            this.chkWeaponModels.Location = new System.Drawing.Point(265, 104);
             this.chkWeaponModels.Name = "chkWeaponModels";
             this.chkWeaponModels.Size = new System.Drawing.Size(156, 17);
             this.chkWeaponModels.TabIndex = 13;
@@ -147,7 +148,7 @@
             this.chkWeaponDamage.AutoSize = true;
             this.chkWeaponDamage.Checked = true;
             this.chkWeaponDamage.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkWeaponDamage.Location = new System.Drawing.Point(265, 86);
+            this.chkWeaponDamage.Location = new System.Drawing.Point(265, 84);
             this.chkWeaponDamage.Name = "chkWeaponDamage";
             this.chkWeaponDamage.Size = new System.Drawing.Size(161, 17);
             this.chkWeaponDamage.TabIndex = 12;
@@ -175,7 +176,7 @@
             this.chkBullets.AutoSize = true;
             this.chkBullets.Checked = true;
             this.chkBullets.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkBullets.Location = new System.Drawing.Point(265, 175);
+            this.chkBullets.Location = new System.Drawing.Point(265, 165);
             this.chkBullets.Name = "chkBullets";
             this.chkBullets.Size = new System.Drawing.Size(112, 17);
             this.chkBullets.TabIndex = 9;
@@ -188,7 +189,7 @@
             this.chkKnockback.AutoSize = true;
             this.chkKnockback.Checked = true;
             this.chkKnockback.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkKnockback.Location = new System.Drawing.Point(12, 109);
+            this.chkKnockback.Location = new System.Drawing.Point(12, 105);
             this.chkKnockback.Name = "chkKnockback";
             this.chkKnockback.Size = new System.Drawing.Size(169, 17);
             this.chkKnockback.TabIndex = 16;
@@ -201,7 +202,7 @@
             this.chkSpeffects.AutoSize = true;
             this.chkSpeffects.Checked = true;
             this.chkSpeffects.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkSpeffects.Location = new System.Drawing.Point(11, 177);
+            this.chkSpeffects.Location = new System.Drawing.Point(12, 167);
             this.chkSpeffects.Name = "chkSpeffects";
             this.chkSpeffects.Size = new System.Drawing.Size(185, 17);
             this.chkSpeffects.TabIndex = 5;
@@ -214,7 +215,7 @@
             this.chkAttackSpeffects.AutoSize = true;
             this.chkAttackSpeffects.Checked = true;
             this.chkAttackSpeffects.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkAttackSpeffects.Location = new System.Drawing.Point(11, 199);
+            this.chkAttackSpeffects.Location = new System.Drawing.Point(12, 187);
             this.chkAttackSpeffects.Name = "chkAttackSpeffects";
             this.chkAttackSpeffects.Size = new System.Drawing.Size(181, 17);
             this.chkAttackSpeffects.TabIndex = 6;
@@ -228,7 +229,7 @@
             this.chkVoices.AutoSize = true;
             this.chkVoices.Checked = true;
             this.chkVoices.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkVoices.Location = new System.Drawing.Point(265, 199);
+            this.chkVoices.Location = new System.Drawing.Point(265, 187);
             this.chkVoices.Name = "chkVoices";
             this.chkVoices.Size = new System.Drawing.Size(132, 17);
             this.chkVoices.TabIndex = 10;
@@ -241,7 +242,7 @@
             this.chkTurnSpeeds.AutoSize = true;
             this.chkTurnSpeeds.Checked = true;
             this.chkTurnSpeeds.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkTurnSpeeds.Location = new System.Drawing.Point(12, 86);
+            this.chkTurnSpeeds.Location = new System.Drawing.Point(12, 84);
             this.chkTurnSpeeds.Name = "chkTurnSpeeds";
             this.chkTurnSpeeds.Size = new System.Drawing.Size(166, 17);
             this.chkTurnSpeeds.TabIndex = 3;
@@ -254,7 +255,7 @@
             this.chkHitboxSizes.AutoSize = true;
             this.chkHitboxSizes.Checked = true;
             this.chkHitboxSizes.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkHitboxSizes.Location = new System.Drawing.Point(12, 154);
+            this.chkHitboxSizes.Location = new System.Drawing.Point(12, 146);
             this.chkHitboxSizes.Name = "chkHitboxSizes";
             this.chkHitboxSizes.Size = new System.Drawing.Size(136, 17);
             this.chkHitboxSizes.TabIndex = 18;
@@ -267,7 +268,7 @@
             this.chkStaggerLevels.AutoSize = true;
             this.chkStaggerLevels.Checked = true;
             this.chkStaggerLevels.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkStaggerLevels.Location = new System.Drawing.Point(12, 131);
+            this.chkStaggerLevels.Location = new System.Drawing.Point(12, 125);
             this.chkStaggerLevels.Name = "chkStaggerLevels";
             this.chkStaggerLevels.Size = new System.Drawing.Size(147, 17);
             this.chkStaggerLevels.TabIndex = 17;
@@ -294,7 +295,7 @@
             this.chkItemAnimations.AutoSize = true;
             this.chkItemAnimations.Checked = true;
             this.chkItemAnimations.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkItemAnimations.Location = new System.Drawing.Point(265, 130);
+            this.chkItemAnimations.Location = new System.Drawing.Point(265, 124);
             this.chkItemAnimations.Name = "chkItemAnimations";
             this.chkItemAnimations.Size = new System.Drawing.Size(154, 17);
             this.chkItemAnimations.TabIndex = 14;
@@ -308,7 +309,7 @@
             this.chkMagicAnimations.AutoSize = true;
             this.chkMagicAnimations.Checked = true;
             this.chkMagicAnimations.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkMagicAnimations.Location = new System.Drawing.Point(265, 152);
+            this.chkMagicAnimations.Location = new System.Drawing.Point(265, 144);
             this.chkMagicAnimations.Name = "chkMagicAnimations";
             this.chkMagicAnimations.Size = new System.Drawing.Size(163, 17);
             this.chkMagicAnimations.TabIndex = 15;
@@ -333,7 +334,7 @@
             this.chkRandomFaceData.AutoSize = true;
             this.chkRandomFaceData.Checked = true;
             this.chkRandomFaceData.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkRandomFaceData.Location = new System.Drawing.Point(265, 222);
+            this.chkRandomFaceData.Location = new System.Drawing.Point(265, 208);
             this.chkRandomFaceData.Name = "chkRandomFaceData";
             this.chkRandomFaceData.Size = new System.Drawing.Size(144, 17);
             this.chkRandomFaceData.TabIndex = 22;
@@ -359,7 +360,7 @@
             this.checkBoxWeaponScaling.AutoSize = true;
             this.checkBoxWeaponScaling.Checked = true;
             this.checkBoxWeaponScaling.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxWeaponScaling.Location = new System.Drawing.Point(265, 245);
+            this.checkBoxWeaponScaling.Location = new System.Drawing.Point(265, 229);
             this.checkBoxWeaponScaling.Name = "checkBoxWeaponScaling";
             this.checkBoxWeaponScaling.Size = new System.Drawing.Size(156, 17);
             this.checkBoxWeaponScaling.TabIndex = 24;
@@ -372,7 +373,7 @@
             this.checkBoxWeaponStatMin.AutoSize = true;
             this.checkBoxWeaponStatMin.Checked = true;
             this.checkBoxWeaponStatMin.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxWeaponStatMin.Location = new System.Drawing.Point(11, 243);
+            this.checkBoxWeaponStatMin.Location = new System.Drawing.Point(12, 227);
             this.checkBoxWeaponStatMin.Name = "checkBoxWeaponStatMin";
             this.checkBoxWeaponStatMin.Size = new System.Drawing.Size(188, 17);
             this.checkBoxWeaponStatMin.TabIndex = 25;
@@ -386,7 +387,7 @@
             this.checkBoxWeaponWeight.AutoSize = true;
             this.checkBoxWeaponWeight.Checked = true;
             this.checkBoxWeaponWeight.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxWeaponWeight.Location = new System.Drawing.Point(265, 268);
+            this.checkBoxWeaponWeight.Location = new System.Drawing.Point(265, 250);
             this.checkBoxWeaponWeight.Name = "checkBoxWeaponWeight";
             this.checkBoxWeaponWeight.Size = new System.Drawing.Size(154, 17);
             this.checkBoxWeaponWeight.TabIndex = 27;
@@ -394,10 +395,23 @@
             this.tooltip.SetToolTip(this.checkBoxWeaponWeight, "Randomizes the weight of a weapon. Effected by DoTrueRandom.");
             this.checkBoxWeaponWeight.UseVisualStyleBackColor = true;
             // 
+            // checkBoxWeaponStamina
+            // 
+            this.checkBoxWeaponStamina.AutoSize = true;
+            this.checkBoxWeaponStamina.Checked = true;
+            this.checkBoxWeaponStamina.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxWeaponStamina.Location = new System.Drawing.Point(12, 250);
+            this.checkBoxWeaponStamina.Name = "checkBoxWeaponStamina";
+            this.checkBoxWeaponStamina.Size = new System.Drawing.Size(159, 17);
+            this.checkBoxWeaponStamina.TabIndex = 25;
+            this.checkBoxWeaponStamina.Text = "Randomize weapon stamina";
+            this.tooltip.SetToolTip(this.checkBoxWeaponStamina, "Randomizes the stamina usage of weapons. Effected by DoTrueRandom.");
+            this.checkBoxWeaponStamina.UseVisualStyleBackColor = true;
+            // 
             // checkBoxDoTrueRandom
             // 
             this.checkBoxDoTrueRandom.AutoSize = true;
-            this.checkBoxDoTrueRandom.Location = new System.Drawing.Point(11, 268);
+            this.checkBoxDoTrueRandom.Location = new System.Drawing.Point(12, 271);
             this.checkBoxDoTrueRandom.Name = "checkBoxDoTrueRandom";
             this.checkBoxDoTrueRandom.Size = new System.Drawing.Size(256, 17);
             this.checkBoxDoTrueRandom.TabIndex = 26;
@@ -429,6 +443,7 @@
             this.Controls.Add(this.checkBoxWeaponScaling);
             this.Controls.Add(this.checkBoxWeaponStatMin);
             this.Controls.Add(this.checkBoxWeaponWeight);
+            this.Controls.Add(this.checkBoxWeaponStamina);
             this.Controls.Add(this.chkWeaponMoveset);
             this.Controls.Add(this.checkBoxDoTrueRandom);
             this.Controls.Add(this.chkBullets);
@@ -481,6 +496,7 @@
         private System.Windows.Forms.CheckBox checkBoxWeaponScaling;
         private System.Windows.Forms.CheckBox checkBoxWeaponStatMin;
         private System.Windows.Forms.CheckBox checkBoxWeaponWeight;
+        private System.Windows.Forms.CheckBox checkBoxWeaponStamina;
         private System.Windows.Forms.CheckBox checkBoxDoTrueRandom;
         private System.Windows.Forms.ToolTip tooltip;
     }

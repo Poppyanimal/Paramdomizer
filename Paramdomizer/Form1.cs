@@ -909,6 +909,7 @@ namespace Paramdomizer
                     List<int> allAttackProperAgility = new List<int>();
                     List<int> allAttackProperMagic = new List<int>();
                     List<int> allAttackProperFaith = new List<int>();
+                    List<int> allAttackBaseStamina = new List<int>();
                     List<Double> allWepWeight = new List<Double>(); //weapon weight
                     List<int> allEquipModelIds = new List<int>();
 
@@ -1016,6 +1017,11 @@ namespace Paramdomizer
                             {
                                 PropertyInfo prop = cell.GetType().GetProperty("Value");
                                 allWepWeight.Add(Convert.ToDouble(prop.GetValue(cell, null)));
+                            }
+                            else if (cell.Def.Name == "attackBaseStamina")
+                            {
+                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                allAttackBaseStamina.Add(Convert.ToInt32(prop.GetValue(cell, null)));
                             }
                         }
                     }
@@ -1526,6 +1532,35 @@ namespace Paramdomizer
                                 }
 
                                 allWepWeight.RemoveAt(randomIndex);
+                            }
+                            else if (cell.Def.Name == "attackBaseStamina")
+                            {
+                                int randomIndex = r.Next(allAttackBaseStamina.Count);
+                                Type type = cell.GetType();
+                                PropertyInfo prop = type.GetProperty("Value");
+                                if (checkBoxWeaponStamina.Checked)
+                                {
+                                    if (checkBoxDoTrueRandom.Checked)
+                                    {
+                                        //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                        if (r.Next(100) == 0)
+                                        {
+                                            //100 is the cap
+                                            prop.SetValue(cell, r.Next(61) + 40, null);
+                                        }
+                                        else
+                                        {
+                                            //40 is soft cap, minimum of 1
+                                            prop.SetValue(cell, r.Next(40) + 1, null);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        prop.SetValue(cell, allAttackBaseStamina[randomIndex], null);
+                                    }
+                                }
+
+                                allAttackBaseStamina.RemoveAt(randomIndex);
                             }
                         }
                     }
