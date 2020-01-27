@@ -1215,11 +1215,11 @@ namespace Paramdomizer
                                             if(r.Next(20) == 0)
                                             {
                                                 //215 is the cap for a stat (tin crystallization catalyst)
-                                                prop.SetValue(cell, r.Next(91) + 125, null);
+                                                prop.SetValue(cell, r.Next(116) + 100, null);
                                             }
                                             else
                                             {
-                                                prop.SetValue(cell, r.Next(126), null);
+                                                prop.SetValue(cell, r.Next(101), null);
                                             }
                                         }
                                         else
@@ -1251,11 +1251,11 @@ namespace Paramdomizer
                                             if (r.Next(20) == 0)
                                             {
                                                 //215 is the cap for a stat (tin crystallization catalyst)
-                                                prop.SetValue(cell, r.Next(91) + 125, null);
+                                                prop.SetValue(cell, r.Next(116) + 100, null);
                                             }
                                             else
                                             {
-                                                prop.SetValue(cell, r.Next(126), null);
+                                                prop.SetValue(cell, r.Next(101), null);
                                             }
                                         }
                                         else
@@ -1287,11 +1287,11 @@ namespace Paramdomizer
                                             if (r.Next(20) == 0)
                                             {
                                                 //215 is the cap for a stat (tin crystallization catalyst)
-                                                prop.SetValue(cell, r.Next(91) + 125, null);
+                                                prop.SetValue(cell, r.Next(116) + 100, null);
                                             }
                                             else
                                             {
-                                                prop.SetValue(cell, r.Next(126), null);
+                                                prop.SetValue(cell, r.Next(101), null);
                                             }
                                         }
                                         else
@@ -1323,11 +1323,11 @@ namespace Paramdomizer
                                             if (r.Next(20) == 0)
                                             {
                                                 //215 is the cap for a stat (tin crystallization catalyst)
-                                                prop.SetValue(cell, r.Next(91) + 125, null);
+                                                prop.SetValue(cell, r.Next(116) + 100, null);
                                             }
                                             else
                                             {
-                                                prop.SetValue(cell, r.Next(126), null);
+                                                prop.SetValue(cell, r.Next(101), null);
                                             }
                                         }
                                         else
