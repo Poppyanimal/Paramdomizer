@@ -1089,6 +1089,7 @@ namespace Paramdomizer
                             }
                         }
 
+                        int baseDamage = 0;
                         foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
                         {
                             if (cell.Def.Name == "equipModelId")
@@ -1115,15 +1116,18 @@ namespace Paramdomizer
                                         //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the damage it does
                                         if(r.Next(3) == 0)
                                         {
-                                            prop.SetValue(cell, r.Next(391), null);
+                                            int temp = r.Next(391);
+                                            baseDamage += temp;
+                                            prop.SetValue(cell, temp, null);
                                         }
                                         else
                                         {
-                                            prop.SetValue(cell, r.Next(0), null);
+                                            prop.SetValue(cell, 0, null);
                                         }
                                     }
                                     else
                                     {
+                                        baseDamage += allAttackBasePhysic[randomIndex];
                                         prop.SetValue(cell, allAttackBasePhysic[randomIndex], null);
                                     }
                                 }
@@ -1142,15 +1146,18 @@ namespace Paramdomizer
                                         //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the damage it does
                                         if (r.Next(3) == 0)
                                         {
-                                            prop.SetValue(cell, r.Next(391), null);
+                                            int temp = r.Next(391);
+                                            baseDamage += temp;
+                                            prop.SetValue(cell, temp, null);
                                         }
                                         else
                                         {
-                                            prop.SetValue(cell, r.Next(0), null);
+                                            prop.SetValue(cell, 0, null);
                                         }
                                     }
                                     else
                                     {
+                                        baseDamage += allAttackBaseMagic[randomIndex];
                                         prop.SetValue(cell, allAttackBaseMagic[randomIndex], null);
                                     }
                                 }
@@ -1169,15 +1176,18 @@ namespace Paramdomizer
                                         //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the damage it does
                                         if (r.Next(3) == 0)
                                         {
-                                            prop.SetValue(cell, r.Next(391), null);
+                                            int temp = r.Next(391);
+                                            baseDamage += temp;
+                                            prop.SetValue(cell, temp, null);
                                         }
                                         else
                                         {
-                                            prop.SetValue(cell, r.Next(0), null);
+                                            prop.SetValue(cell, 0, null);
                                         }
                                     }
                                     else
                                     {
+                                        baseDamage += allAttackBaseFire[randomIndex];
                                         prop.SetValue(cell, allAttackBaseFire[randomIndex], null);
                                     }
                                 }
@@ -1196,15 +1206,18 @@ namespace Paramdomizer
                                         //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the damage it does
                                         if (r.Next(3) == 0)
                                         {
-                                            prop.SetValue(cell, r.Next(391), null);
+                                            int temp = r.Next(391);
+                                            baseDamage += temp;
+                                            prop.SetValue(cell, temp, null);
                                         }
                                         else
                                         {
-                                            prop.SetValue(cell, r.Next(0), null);
+                                            prop.SetValue(cell, 0, null);
                                         }
                                     }
                                     else
                                     {
+                                        baseDamage += allAttackBaseThunder[randomIndex];
                                         prop.SetValue(cell, allAttackBaseThunder[randomIndex], null);
                                     }
                                 }
@@ -1571,7 +1584,41 @@ namespace Paramdomizer
                                 allAttackBaseStamina.RemoveAt(randomIndex);
                             }
                         }
+
+                        if(baseDamage == 0 && checkBoxDoTrueRandom.Checked)
+                        {
+                            int dtype = r.Next(4);
+                            foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                            {
+                                if (cell.Def.Name == "attackBasePhysics" && dtype == 0)
+                                {
+                                    Type type = cell.GetType();
+                                    PropertyInfo prop = type.GetProperty("Value");
+                                    prop.SetValue(cell, r.Next(371) + 20, null);
+                                }
+                                else if (cell.Def.Name == "attackBaseMagic" && dtype == 1)
+                                {
+                                    Type type = cell.GetType();
+                                    PropertyInfo prop = type.GetProperty("Value");
+                                    prop.SetValue(cell, r.Next(371) + 20, null);
+                                }
+                                else if (cell.Def.Name == "attackBaseFire" && dtype == 2)
+                                {
+                                    Type type = cell.GetType();
+                                    PropertyInfo prop = type.GetProperty("Value");
+                                    prop.SetValue(cell, r.Next(371) + 20, null);
+                                }
+                                else if (cell.Def.Name == "attackBaseThunder" && dtype == 3)
+                                {
+                                    Type type = cell.GetType();
+                                    PropertyInfo prop = type.GetProperty("Value");
+                                    prop.SetValue(cell, r.Next(371) + 20, null);
+                                }
+                            }
+                        }
                     }
+
+                    
                 }
                 else if (paramFile.ID == "MAGIC_PARAM_ST")
                 {
