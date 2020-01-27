@@ -1495,10 +1495,15 @@ namespace Paramdomizer
                             }
                             else if (cell.Def.Name == "weight")
                             {
+                                MeowDSIO.DataTypes.PARAM.ParamCellValueRef fistCheckCell = paramRow.Cells.First(c => c.Def.Name == "sortId");
+                                Type fistchecktype = fistCheckCell.GetType();
+                                PropertyInfo fistcheckprop = fistchecktype.GetProperty("Value");
+
                                 int randomIndex = r.Next(allWepWeight.Count);
                                 Type type = cell.GetType();
                                 PropertyInfo prop = type.GetProperty("Value");
-                                if (checkBoxWeaponWeight.Checked)
+                                //fists dont get weight
+                                if (checkBoxWeaponWeight.Checked && Convert.ToInt32(fistcheckprop.GetValue(fistCheckCell, null)) != 1750)
                                 {
                                     if (checkBoxDoTrueRandom.Checked)
                                     {
