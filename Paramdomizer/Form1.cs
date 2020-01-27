@@ -1098,7 +1098,22 @@ namespace Paramdomizer
                                 PropertyInfo prop = type.GetProperty("Value");
                                 if (chkWeaponDamage.Checked)
                                 {
-                                    prop.SetValue(cell, allAttackBasePhysic[randomIndex], null);
+                                    if(checkBoxDoTrueRandom.Checked)
+                                    {
+                                        //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the damage it does
+                                        if(r.Next(3) == 0)
+                                        {
+                                            prop.SetValue(cell, r.Next(391), null);
+                                        }
+                                        else
+                                        {
+                                            prop.SetValue(cell, r.Next(0), null);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        prop.SetValue(cell, allAttackBasePhysic[randomIndex], null);
+                                    }
                                 }
 
                                 allAttackBasePhysic.RemoveAt(randomIndex);
@@ -1110,7 +1125,22 @@ namespace Paramdomizer
                                 PropertyInfo prop = type.GetProperty("Value");
                                 if (chkWeaponDamage.Checked)
                                 {
-                                    prop.SetValue(cell, allAttackBaseMagic[randomIndex], null);
+                                    if (checkBoxDoTrueRandom.Checked)
+                                    {
+                                        //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the damage it does
+                                        if (r.Next(3) == 0)
+                                        {
+                                            prop.SetValue(cell, r.Next(391), null);
+                                        }
+                                        else
+                                        {
+                                            prop.SetValue(cell, r.Next(0), null);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        prop.SetValue(cell, allAttackBaseMagic[randomIndex], null);
+                                    }
                                 }
 
                                 allAttackBaseMagic.RemoveAt(randomIndex);
@@ -1122,7 +1152,22 @@ namespace Paramdomizer
                                 PropertyInfo prop = type.GetProperty("Value");
                                 if (chkWeaponDamage.Checked)
                                 {
-                                    prop.SetValue(cell, allAttackBaseFire[randomIndex], null);
+                                    if (checkBoxDoTrueRandom.Checked)
+                                    {
+                                        //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the damage it does
+                                        if (r.Next(3) == 0)
+                                        {
+                                            prop.SetValue(cell, r.Next(391), null);
+                                        }
+                                        else
+                                        {
+                                            prop.SetValue(cell, r.Next(0), null);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        prop.SetValue(cell, allAttackBaseFire[randomIndex], null);
+                                    }
                                 }
 
                                 allAttackBaseFire.RemoveAt(randomIndex);
@@ -1134,7 +1179,22 @@ namespace Paramdomizer
                                 PropertyInfo prop = type.GetProperty("Value");
                                 if (chkWeaponDamage.Checked)
                                 {
-                                    prop.SetValue(cell, allAttackBaseThunder[randomIndex], null);
+                                    if (checkBoxDoTrueRandom.Checked)
+                                    {
+                                        //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the damage it does
+                                        if (r.Next(3) == 0)
+                                        {
+                                            prop.SetValue(cell, r.Next(391), null);
+                                        }
+                                        else
+                                        {
+                                            prop.SetValue(cell, r.Next(0), null);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        prop.SetValue(cell, allAttackBaseThunder[randomIndex], null);
+                                    }
                                 }
 
                                 allAttackBaseThunder.RemoveAt(randomIndex);
@@ -1146,7 +1206,31 @@ namespace Paramdomizer
                                 PropertyInfo prop = type.GetProperty("Value");
                                 if (checkBoxWeaponScaling.Checked)
                                 {
-                                    prop.SetValue(cell, allAttackCorrectStrength[randomIndex], null);
+                                    if (checkBoxDoTrueRandom.Checked)
+                                    {
+                                        //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the scaling it does
+                                        if (r.Next(3) == 0)
+                                        {
+                                            //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                            if(r.Next(20) == 0)
+                                            {
+                                                //215 is the cap for a stat (tin crystallization catalyst)
+                                                prop.SetValue(cell, r.Next(91) + 125, null);
+                                            }
+                                            else
+                                            {
+                                                prop.SetValue(cell, r.Next(126), null);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            prop.SetValue(cell, r.Next(0), null);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        prop.SetValue(cell, allAttackCorrectStrength[randomIndex], null);
+                                    }
                                 }
 
                                 allAttackCorrectStrength.RemoveAt(randomIndex);
@@ -1158,7 +1242,31 @@ namespace Paramdomizer
                                 PropertyInfo prop = type.GetProperty("Value");
                                 if (checkBoxWeaponScaling.Checked)
                                 {
-                                    prop.SetValue(cell, allAttackCorrectAgility[randomIndex], null);
+                                    if (checkBoxDoTrueRandom.Checked)
+                                    {
+                                        //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the scaling it does
+                                        if (r.Next(3) == 0)
+                                        {
+                                            //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                            if (r.Next(20) == 0)
+                                            {
+                                                //215 is the cap for a stat (tin crystallization catalyst)
+                                                prop.SetValue(cell, r.Next(91) + 125, null);
+                                            }
+                                            else
+                                            {
+                                                prop.SetValue(cell, r.Next(126), null);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            prop.SetValue(cell, r.Next(0), null);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        prop.SetValue(cell, allAttackCorrectAgility[randomIndex], null);
+                                    }
                                 }
 
                                 allAttackCorrectAgility.RemoveAt(randomIndex);
@@ -1170,7 +1278,31 @@ namespace Paramdomizer
                                 PropertyInfo prop = type.GetProperty("Value");
                                 if (checkBoxWeaponScaling.Checked)
                                 {
-                                    prop.SetValue(cell, allAttackCorrectMagic[randomIndex], null);
+                                    if (checkBoxDoTrueRandom.Checked)
+                                    {
+                                        //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the scaling it does
+                                        if (r.Next(3) == 0)
+                                        {
+                                            //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                            if (r.Next(20) == 0)
+                                            {
+                                                //215 is the cap for a stat (tin crystallization catalyst)
+                                                prop.SetValue(cell, r.Next(91) + 125, null);
+                                            }
+                                            else
+                                            {
+                                                prop.SetValue(cell, r.Next(126), null);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            prop.SetValue(cell, r.Next(0), null);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        prop.SetValue(cell, allAttackCorrectMagic[randomIndex], null);
+                                    }
                                 }
 
                                 allAttackCorrectMagic.RemoveAt(randomIndex);
@@ -1182,7 +1314,31 @@ namespace Paramdomizer
                                 PropertyInfo prop = type.GetProperty("Value");
                                 if (checkBoxWeaponScaling.Checked)
                                 {
-                                    prop.SetValue(cell, allAttackCorrectFaith[randomIndex], null);
+                                    if (checkBoxDoTrueRandom.Checked)
+                                    {
+                                        //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the scaling it does
+                                        if (r.Next(3) == 0)
+                                        {
+                                            //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                            if (r.Next(20) == 0)
+                                            {
+                                                //215 is the cap for a stat (tin crystallization catalyst)
+                                                prop.SetValue(cell, r.Next(91) + 125, null);
+                                            }
+                                            else
+                                            {
+                                                prop.SetValue(cell, r.Next(126), null);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            prop.SetValue(cell, r.Next(0), null);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        prop.SetValue(cell, allAttackCorrectFaith[randomIndex], null);
+                                    }
                                 }
 
                                 allAttackCorrectFaith.RemoveAt(randomIndex);
@@ -1194,7 +1350,31 @@ namespace Paramdomizer
                                 PropertyInfo prop = type.GetProperty("Value");
                                 if (checkBoxWeaponStatMin.Checked)
                                 {
-                                    prop.SetValue(cell, allAttackProperStrength[randomIndex], null);
+                                    if (checkBoxDoTrueRandom.Checked)
+                                    {
+                                        //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the stat requirements
+                                        if (r.Next(3) == 0)
+                                        {
+                                            //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                            if (r.Next(20) == 0)
+                                            {
+                                                //58 is the cap
+                                                prop.SetValue(cell, r.Next(34) + 25, null);
+                                            }
+                                            else
+                                            {
+                                                prop.SetValue(cell, r.Next(26), null);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            prop.SetValue(cell, r.Next(0), null);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        prop.SetValue(cell, allAttackProperStrength[randomIndex], null);
+                                    }
                                 }
 
                                 allAttackProperStrength.RemoveAt(randomIndex);
@@ -1206,7 +1386,31 @@ namespace Paramdomizer
                                 PropertyInfo prop = type.GetProperty("Value");
                                 if (checkBoxWeaponStatMin.Checked)
                                 {
-                                    prop.SetValue(cell, allAttackProperAgility[randomIndex], null);
+                                    if (checkBoxDoTrueRandom.Checked)
+                                    {
+                                        //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the stat requirements
+                                        if (r.Next(3) == 0)
+                                        {
+                                            //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                            if (r.Next(20) == 0)
+                                            {
+                                                //58 is the cap
+                                                prop.SetValue(cell, r.Next(34) + 25, null);
+                                            }
+                                            else
+                                            {
+                                                prop.SetValue(cell, r.Next(26), null);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            prop.SetValue(cell, r.Next(0), null);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        prop.SetValue(cell, allAttackProperAgility[randomIndex], null);
+                                    }
                                 }
 
                                 allAttackProperAgility.RemoveAt(randomIndex);
@@ -1218,7 +1422,31 @@ namespace Paramdomizer
                                 PropertyInfo prop = type.GetProperty("Value");
                                 if (checkBoxWeaponStatMin.Checked)
                                 {
-                                    prop.SetValue(cell, allAttackProperMagic[randomIndex], null);
+                                    if (checkBoxDoTrueRandom.Checked)
+                                    {
+                                        //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the stat requirements
+                                        if (r.Next(3) == 0)
+                                        {
+                                            //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                            if (r.Next(20) == 0)
+                                            {
+                                                //58 is the cap
+                                                prop.SetValue(cell, r.Next(34) + 25, null);
+                                            }
+                                            else
+                                            {
+                                                prop.SetValue(cell, r.Next(26), null);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            prop.SetValue(cell, r.Next(0), null);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        prop.SetValue(cell, allAttackProperMagic[randomIndex], null);
+                                    }
                                 }
 
                                 allAttackProperMagic.RemoveAt(randomIndex);
@@ -1230,7 +1458,31 @@ namespace Paramdomizer
                                 PropertyInfo prop = type.GetProperty("Value");
                                 if (checkBoxWeaponStatMin.Checked)
                                 {
-                                    prop.SetValue(cell, allAttackProperFaith[randomIndex], null);
+                                    if (checkBoxDoTrueRandom.Checked)
+                                    {
+                                        //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the stat requirements
+                                        if (r.Next(3) == 0)
+                                        {
+                                            //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                            if (r.Next(20) == 0)
+                                            {
+                                                //58 is the cap
+                                                prop.SetValue(cell, r.Next(34) + 25, null);
+                                            }
+                                            else
+                                            {
+                                                prop.SetValue(cell, r.Next(26), null);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            prop.SetValue(cell, r.Next(0), null);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        prop.SetValue(cell, allAttackProperFaith[randomIndex], null);
+                                    }
                                 }
 
                                 allAttackProperFaith.RemoveAt(randomIndex);
@@ -3312,6 +3564,16 @@ namespace Paramdomizer
                 lblMessage.ForeColor = Color.Red;
                 return;
             }
+        }
+
+        private void tooltip1_Popup(object sender, PopupEventArgs e)
+        {
+
+        }
+
+        private void toolTip2_Popup(object sender, PopupEventArgs e)
+        {
+
         }
     }
 }
