@@ -1116,7 +1116,7 @@ namespace Paramdomizer
                                         //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the damage it does
                                         if(r.Next(3) == 0)
                                         {
-                                            int temp = r.Next(391);
+                                            int temp = r.Next(371) + 20;
                                             baseDamage += temp;
                                             prop.SetValue(cell, temp, null);
                                         }
@@ -1146,7 +1146,7 @@ namespace Paramdomizer
                                         //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the damage it does
                                         if (r.Next(3) == 0)
                                         {
-                                            int temp = r.Next(391);
+                                            int temp = r.Next(371) + 20;
                                             baseDamage += temp;
                                             prop.SetValue(cell, temp, null);
                                         }
@@ -1176,7 +1176,7 @@ namespace Paramdomizer
                                         //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the damage it does
                                         if (r.Next(3) == 0)
                                         {
-                                            int temp = r.Next(391);
+                                            int temp = r.Next(371) + 20;
                                             baseDamage += temp;
                                             prop.SetValue(cell, temp, null);
                                         }
@@ -1206,7 +1206,7 @@ namespace Paramdomizer
                                         //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the damage it does
                                         if (r.Next(3) == 0)
                                         {
-                                            int temp = r.Next(391);
+                                            int temp = r.Next(371) + 20;
                                             baseDamage += temp;
                                             prop.SetValue(cell, temp, null);
                                         }
