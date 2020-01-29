@@ -1090,6 +1090,18 @@ namespace Paramdomizer
                         }
 
                         int baseDamage = 0;
+                        bool castsMagic = false;
+                        //check if casts magic first
+                        foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                        {
+                            if (cell.Def.Name == "enableMagic" || cell.Def.Name == "enableVowMagic" || cell.Def.Name == "enableSorcery")
+                            {
+                                if (Convert.ToBoolean(cell.GetType().GetProperty("Value").GetValue(cell, null)) == true)
+                                {
+                                    castsMagic = true;
+                                }
+                            }
+                        }
                         foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
                         {
                             if (cell.Def.Name == "equipModelId")
@@ -1583,6 +1595,15 @@ namespace Paramdomizer
 
                                 allAttackBaseStamina.RemoveAt(randomIndex);
                             }
+                            else if(cell.Def.Name == "enableMagic" || cell.Def.Name == "enableVowMagic" || cell.Def.Name == "enableSorcery")
+                            {
+                                Type type = cell.GetType();
+                                PropertyInfo prop = type.GetProperty("Value");
+                                if(castsMagic && checkBoxUniversalizeCasters.Checked)
+                                {
+                                    prop.SetValue(cell, true, null);
+                                }
+                            }
                         }
 
                         if(baseDamage == 0 && checkBoxDoTrueRandom.Checked)
@@ -1624,6 +1645,11 @@ namespace Paramdomizer
                 {
                     //loop through all entries once to get list of all values
                     List<int> allSfxVariationIds = new List<int>();
+                    List<int> allSlotLengths = new List<int>();
+                    List<int> allRequirementIntellect = new List<int>();
+                    List<int> allRequirementFaith = new List<int>();
+                    List<int> allMaxQuantity = new List<int>();
+
                     foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
                     {
                         foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
@@ -1632,6 +1658,26 @@ namespace Paramdomizer
                             {
                                 PropertyInfo prop = cell.GetType().GetProperty("Value");
                                 allSfxVariationIds.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                            }
+                            else if (cell.Def.Name == "slotLength")
+                            {
+                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                allSlotLengths.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                            }
+                            else if (cell.Def.Name == "requirementIntellect")
+                            {
+                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                allRequirementIntellect.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                            }
+                            else if (cell.Def.Name == "requirementFaith")
+                            {
+                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                allRequirementFaith.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                            }
+                            else if (cell.Def.Name == "maxQuantity")
+                            {
+                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                allMaxQuantity.Add(Convert.ToInt32(prop.GetValue(cell, null)));
                             }
                         }
                     }
@@ -1653,6 +1699,54 @@ namespace Paramdomizer
                                 }
 
                                 allSfxVariationIds.RemoveAt(randomIndex);
+                            }
+                            else if (cell.Def.Name == "slotLength")
+                            {
+                                int randomIndex = r.Next(allSlotLengths.Count);
+                                Type type = cell.GetType();
+                                PropertyInfo prop = type.GetProperty("Value");
+                                if (checkBoxRandomizeSpellSlotSize.Checked)
+                                {
+                                    prop.SetValue(cell, allSlotLengths[randomIndex], null);
+                                }
+
+                                allSlotLengths.RemoveAt(randomIndex);
+                            }
+                            else if (cell.Def.Name == "requirementIntellect")
+                            {
+                                int randomIndex = r.Next(allRequirementIntellect.Count);
+                                Type type = cell.GetType();
+                                PropertyInfo prop = type.GetProperty("Value");
+                                if (checkBoxRandomizeSpellRequirements.Checked)
+                                {
+                                    prop.SetValue(cell, allRequirementIntellect[randomIndex], null);
+                                }
+
+                                allRequirementIntellect.RemoveAt(randomIndex);
+                            }
+                            else if (cell.Def.Name == "requirementFaith")
+                            {
+                                int randomIndex = r.Next(allRequirementFaith.Count);
+                                Type type = cell.GetType();
+                                PropertyInfo prop = type.GetProperty("Value");
+                                if (checkBoxRandomizeSpellRequirements.Checked)
+                                {
+                                    prop.SetValue(cell, allRequirementFaith[randomIndex], null);
+                                }
+
+                                allRequirementFaith.RemoveAt(randomIndex);
+                            }
+                            else if (cell.Def.Name == "maxQuantity")
+                            {
+                                int randomIndex = r.Next(allMaxQuantity.Count);
+                                Type type = cell.GetType();
+                                PropertyInfo prop = type.GetProperty("Value");
+                                if (checkBoxRandomizeSpellQuantity.Checked)
+                                {
+                                    prop.SetValue(cell, allMaxQuantity[randomIndex], null);
+                                }
+
+                                allMaxQuantity.RemoveAt(randomIndex);
                             }
                         }
                     }
