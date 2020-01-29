@@ -1652,6 +1652,21 @@ namespace Paramdomizer
 
                     foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
                     {
+                        bool dontUseSpell = false;
+                        //check if unattainable spell
+                        foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                        {
+                            if (cell.Def.Name == "maxQuantity")
+                            {
+                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                int quantity = Convert.ToInt32(prop.GetValue(cell, null));
+                                if (quantity <= 0)
+                                {
+                                    dontUseSpell = true;
+                                }
+                            }
+                        }
+                        //now do info grab
                         foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
                         {
                             if (cell.Def.Name == "refType")
@@ -1666,20 +1681,25 @@ namespace Paramdomizer
                             }
                             else if (cell.Def.Name == "requirementIntellect")
                             {
-                                PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                allRequirementIntellect.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                if(!dontUseSpell)
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    allRequirementIntellect.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                }
                             }
                             else if (cell.Def.Name == "requirementFaith")
                             {
-                                PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                allRequirementFaith.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                if(!dontUseSpell)
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    allRequirementFaith.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                }
                             }
                             else if (cell.Def.Name == "maxQuantity")
                             {
-                                PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                int quantity = Convert.ToInt32(prop.GetValue(cell, null));
-                                if(quantity > 0)
+                                if(!dontUseSpell)
                                 {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
                                     allMaxQuantity.Add(Convert.ToInt32(prop.GetValue(cell, null)));
                                 }
                             }
@@ -1689,6 +1709,21 @@ namespace Paramdomizer
                     //loop again to set a random value per entry
                     foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
                     {
+                        bool dontUseSpell = false;
+                        //check if unattainable spell
+                        foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                        {
+                            if (cell.Def.Name == "maxQuantity")
+                            {
+                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                int quantity = Convert.ToInt32(prop.GetValue(cell, null));
+                                if (quantity <= 0)
+                                {
+                                    dontUseSpell = true;
+                                }
+                            }
+                        }
+                        //now do info insert
                         foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
                         {
                             if (cell.Def.Name == "refType")
@@ -1718,36 +1753,41 @@ namespace Paramdomizer
                             }
                             else if (cell.Def.Name == "requirementIntellect")
                             {
-                                int randomIndex = r.Next(allRequirementIntellect.Count);
-                                Type type = cell.GetType();
-                                PropertyInfo prop = type.GetProperty("Value");
-                                if (checkBoxRandomizeSpellRequirements.Checked)
+                                if(!dontUseSpell)
                                 {
-                                    prop.SetValue(cell, allRequirementIntellect[randomIndex], null);
-                                }
+                                    int randomIndex = r.Next(allRequirementIntellect.Count);
+                                    Type type = cell.GetType();
+                                    PropertyInfo prop = type.GetProperty("Value");
+                                    if (checkBoxRandomizeSpellRequirements.Checked)
+                                    {
+                                        prop.SetValue(cell, allRequirementIntellect[randomIndex], null);
+                                    }
 
-                                allRequirementIntellect.RemoveAt(randomIndex);
+                                    allRequirementIntellect.RemoveAt(randomIndex);
+                                }
                             }
                             else if (cell.Def.Name == "requirementFaith")
                             {
-                                int randomIndex = r.Next(allRequirementFaith.Count);
-                                Type type = cell.GetType();
-                                PropertyInfo prop = type.GetProperty("Value");
-                                if (checkBoxRandomizeSpellRequirements.Checked)
+                                if(!dontUseSpell)
                                 {
-                                    prop.SetValue(cell, allRequirementFaith[randomIndex], null);
-                                }
+                                    int randomIndex = r.Next(allRequirementFaith.Count);
+                                    Type type = cell.GetType();
+                                    PropertyInfo prop = type.GetProperty("Value");
+                                    if (checkBoxRandomizeSpellRequirements.Checked)
+                                    {
+                                        prop.SetValue(cell, allRequirementFaith[randomIndex], null);
+                                    }
 
-                                allRequirementFaith.RemoveAt(randomIndex);
+                                    allRequirementFaith.RemoveAt(randomIndex);
+                                }
                             }
                             else if (cell.Def.Name == "maxQuantity")
                             {
-                                int randomIndex = r.Next(allMaxQuantity.Count);
-                                Type type = cell.GetType();
-                                PropertyInfo prop = type.GetProperty("Value");
-                                int quantity = Convert.ToInt32(prop.GetValue(cell, null));
-                                if(quantity > 0)
+                                if(!dontUseSpell)
                                 {
+                                    int randomIndex = r.Next(allMaxQuantity.Count);
+                                    Type type = cell.GetType();
+                                    PropertyInfo prop = type.GetProperty("Value");
                                     if (checkBoxRandomizeSpellQuantity.Checked)
                                     {
                                         prop.SetValue(cell, allMaxQuantity[randomIndex], null);
