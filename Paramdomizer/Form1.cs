@@ -1677,7 +1677,11 @@ namespace Paramdomizer
                             else if (cell.Def.Name == "maxQuantity")
                             {
                                 PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                allMaxQuantity.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                int quantity = Convert.ToInt32(prop.GetValue(cell, null));
+                                if(quantity > 0)
+                                {
+                                    allMaxQuantity.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                }
                             }
                         }
                     }
@@ -1741,12 +1745,16 @@ namespace Paramdomizer
                                 int randomIndex = r.Next(allMaxQuantity.Count);
                                 Type type = cell.GetType();
                                 PropertyInfo prop = type.GetProperty("Value");
-                                if (checkBoxRandomizeSpellQuantity.Checked)
+                                int quantity = Convert.ToInt32(prop.GetValue(cell, null));
+                                if(quantity > 0)
                                 {
-                                    prop.SetValue(cell, allMaxQuantity[randomIndex], null);
-                                }
+                                    if (checkBoxRandomizeSpellQuantity.Checked)
+                                    {
+                                        prop.SetValue(cell, allMaxQuantity[randomIndex], null);
+                                    }
 
-                                allMaxQuantity.RemoveAt(randomIndex);
+                                    allMaxQuantity.RemoveAt(randomIndex);
+                                }
                             }
                         }
                     }
