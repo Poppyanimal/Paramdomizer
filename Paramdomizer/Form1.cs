@@ -890,6 +890,295 @@ namespace Paramdomizer
                         }
                     }
                 }
+                else if (paramFile.ID == "EQUIP_PARAM_PROTECTOR_ST")
+                {
+                    //empty first id, head, body, arms, legs, head(no traveling gear), body(no traveling gear), arms(no traveling gear), legs(no traveling gear),
+                    //dragon head, dragon body, dragon arms, dragon legs, egg head, hatched egg
+                    List<int> allArmorlessIds = new List<int>() {1, 900000, 901000, 902000, 903000, 950000, 951000, 952000, 953000,
+                                                                1000000, 1001000, 1002000, 1003000, 1010000, 1020000};
+                    //add hairs to armorless ids
+                    for (int i = 10; i < 51; i++)
+                    {
+                        allArmorlessIds.Add(i * 100);
+                    }
+
+                    List<int> allArmorWeights = new List<int>();
+                    List<int> allArmorPoise = new List<int>();
+                    List<int> allArmorSpEffect = new List<int>(); //using resident effect 3; effect 2 indicates it's armor and effect 1 I am unsure of it's purpose
+
+                    List<int> allArmorDefensePhys = new List<int>();
+                    List<int> allArmorDefenseMagic = new List<int>();
+                    List<int> allArmorDefenseFire = new List<int>();
+                    List<int> allArmorDefenseThunder = new List<int>();
+                    List<int> allArmorDefenseSlash = new List<int>();
+                    List<int> allArmorDefenseBlow = new List<int>();
+                    List<int> allArmorDefenseThrust = new List<int>();
+                    List<int> allArmorResistPoison = new List<int>();
+                    List<int> allArmorResistDisease = new List<int>();
+                    List<int> allArmorResistBlood = new List<int>();
+                    List<int> allArmorResistCurse = new List<int>();
+
+                    foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
+                    {
+                        foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                        {
+                            //if not an armorless armor (if not naked)
+                            if (!allArmorlessIds.Contains(paramRow.ID))
+                            {
+                                if (cell.Def.Name == "weight")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    allArmorWeights.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                }
+                                else if (cell.Def.Name == "saDurability") //poise
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    allArmorPoise.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                }
+                                else if (cell.Def.Name == "residentSpEffectId3")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    allArmorSpEffect.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                }
+                                else if (cell.Def.Name == "defensePhysics")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    allArmorDefensePhys.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                }
+                                else if (cell.Def.Name == "defenseMagic")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    allArmorDefenseMagic.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                }
+                                else if (cell.Def.Name == "defenseFire")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    allArmorDefenseFire.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                }
+                                else if (cell.Def.Name == "defenseThunder")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    allArmorDefenseThunder.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                }
+                                else if (cell.Def.Name == "defenseSlash")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    allArmorDefenseSlash.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                }
+                                else if (cell.Def.Name == "defenseBlow")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    allArmorDefenseBlow.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                }
+                                else if (cell.Def.Name == "defenseThrust")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    allArmorDefenseThrust.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                }
+                                else if (cell.Def.Name == "resistPoison")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    allArmorResistPoison.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                }
+                                else if (cell.Def.Name == "resistDisease")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    allArmorResistDisease.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                }
+                                else if (cell.Def.Name == "resistBlood")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    allArmorResistBlood.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                }
+                                else if (cell.Def.Name == "resistCurse")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    allArmorResistCurse.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                }
+                            }
+                        }
+                    }
+
+                    //loop again to set a random value per entry
+                    foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
+                    {
+                        foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                        {
+                            //if not an armorless armor (if not naked)
+                            if (!allArmorlessIds.Contains(paramRow.ID))
+                            {
+                                if (cell.Def.Name == "weight")
+                                {
+                                    int randomIndex = r.Next(allArmorWeights.Count);
+                                    Type type = cell.GetType();
+                                    PropertyInfo prop = type.GetProperty("Value");
+                                    if (checkBoxArmorWeight.Checked)
+                                    {
+                                        prop.SetValue(cell, allArmorWeights[randomIndex], null);
+                                    }
+
+                                    allArmorWeights.RemoveAt(randomIndex);
+                                }
+                                else if (cell.Def.Name == "saDurability") //poise
+                                {
+                                    int randomIndex = r.Next(allArmorPoise.Count);
+                                    Type type = cell.GetType();
+                                    PropertyInfo prop = type.GetProperty("Value");
+                                    if (checkBoxArmorPoise.Checked)
+                                    {
+                                        prop.SetValue(cell, allArmorPoise[randomIndex], null);
+                                    }
+
+                                    allArmorPoise.RemoveAt(randomIndex);
+                                }
+                                else if (cell.Def.Name == "residentSpEffectId3")
+                                {
+                                    int randomIndex = r.Next(allArmorSpEffect.Count);
+                                    Type type = cell.GetType();
+                                    PropertyInfo prop = type.GetProperty("Value");
+                                    if (checkBoxArmorspEffect.Checked)
+                                    {
+                                        prop.SetValue(cell, allArmorSpEffect[randomIndex], null);
+                                    }
+
+                                    allArmorSpEffect.RemoveAt(randomIndex);
+                                }
+                                else if (cell.Def.Name == "defensePhysics")
+                                {
+                                    int randomIndex = r.Next(allArmorDefensePhys.Count);
+                                    Type type = cell.GetType();
+                                    PropertyInfo prop = type.GetProperty("Value");
+                                    if (checkBoxArmorResistance.Checked)
+                                    {
+                                        prop.SetValue(cell, allArmorDefensePhys[randomIndex], null);
+                                    }
+
+                                    allArmorDefensePhys.RemoveAt(randomIndex);
+                                }
+                                else if (cell.Def.Name == "defenseMagic")
+                                {
+                                    int randomIndex = r.Next(allArmorDefenseMagic.Count);
+                                    Type type = cell.GetType();
+                                    PropertyInfo prop = type.GetProperty("Value");
+                                    if (checkBoxArmorResistance.Checked)
+                                    {
+                                        prop.SetValue(cell, allArmorDefenseMagic[randomIndex], null);
+                                    }
+
+                                    allArmorDefenseMagic.RemoveAt(randomIndex);
+                                }
+                                else if (cell.Def.Name == "defenseFire")
+                                {
+                                    int randomIndex = r.Next(allArmorDefenseFire.Count);
+                                    Type type = cell.GetType();
+                                    PropertyInfo prop = type.GetProperty("Value");
+                                    if (checkBoxArmorResistance.Checked)
+                                    {
+                                        prop.SetValue(cell, allArmorDefenseFire[randomIndex], null);
+                                    }
+
+                                    allArmorDefenseFire.RemoveAt(randomIndex);
+                                }
+                                else if (cell.Def.Name == "defenseThunder")
+                                {
+                                    int randomIndex = r.Next(allArmorDefenseThunder.Count);
+                                    Type type = cell.GetType();
+                                    PropertyInfo prop = type.GetProperty("Value");
+                                    if (checkBoxArmorResistance.Checked)
+                                    {
+                                        prop.SetValue(cell, allArmorDefenseThunder[randomIndex], null);
+                                    }
+
+                                    allArmorDefenseThunder.RemoveAt(randomIndex);
+                                }
+                                else if (cell.Def.Name == "defenseSlash")
+                                {
+                                    int randomIndex = r.Next(allArmorDefenseSlash.Count);
+                                    Type type = cell.GetType();
+                                    PropertyInfo prop = type.GetProperty("Value");
+                                    if (checkBoxArmorResistance.Checked)
+                                    {
+                                        prop.SetValue(cell, allArmorDefenseSlash[randomIndex], null);
+                                    }
+
+                                    allArmorDefenseSlash.RemoveAt(randomIndex);
+                                }
+                                else if (cell.Def.Name == "defenseBlow")
+                                {
+                                    int randomIndex = r.Next(allArmorDefenseBlow.Count);
+                                    Type type = cell.GetType();
+                                    PropertyInfo prop = type.GetProperty("Value");
+                                    if (checkBoxArmorResistance.Checked)
+                                    {
+                                        prop.SetValue(cell, allArmorDefenseBlow[randomIndex], null);
+                                    }
+
+                                    allArmorDefenseBlow.RemoveAt(randomIndex);
+                                }
+                                else if (cell.Def.Name == "defenseThrust")
+                                {
+                                    int randomIndex = r.Next(allArmorDefenseThrust.Count);
+                                    Type type = cell.GetType();
+                                    PropertyInfo prop = type.GetProperty("Value");
+                                    if (checkBoxArmorResistance.Checked)
+                                    {
+                                        prop.SetValue(cell, allArmorDefenseThrust[randomIndex], null);
+                                    }
+
+                                    allArmorDefenseThrust.RemoveAt(randomIndex);
+                                }
+                                else if (cell.Def.Name == "resistPoison")
+                                {
+                                    int randomIndex = r.Next(allArmorResistPoison.Count);
+                                    Type type = cell.GetType();
+                                    PropertyInfo prop = type.GetProperty("Value");
+                                    if (checkBoxArmorResistance.Checked)
+                                    {
+                                        prop.SetValue(cell, allArmorResistPoison[randomIndex], null);
+                                    }
+
+                                    allArmorResistPoison.RemoveAt(randomIndex);
+                                }
+                                else if (cell.Def.Name == "resistDisease")
+                                {
+                                    int randomIndex = r.Next(allArmorResistDisease.Count);
+                                    Type type = cell.GetType();
+                                    PropertyInfo prop = type.GetProperty("Value");
+                                    if (checkBoxArmorResistance.Checked)
+                                    {
+                                        prop.SetValue(cell, allArmorResistDisease[randomIndex], null);
+                                    }
+
+                                    allArmorResistDisease.RemoveAt(randomIndex);
+                                }
+                                else if (cell.Def.Name == "resistBlood")
+                                {
+                                    int randomIndex = r.Next(allArmorResistBlood.Count);
+                                    Type type = cell.GetType();
+                                    PropertyInfo prop = type.GetProperty("Value");
+                                    if (checkBoxArmorResistance.Checked)
+                                    {
+                                        prop.SetValue(cell, allArmorResistBlood[randomIndex], null);
+                                    }
+
+                                    allArmorResistBlood.RemoveAt(randomIndex);
+                                }
+                                else if (cell.Def.Name == "resistCurse")
+                                {
+                                    int randomIndex = r.Next(allArmorResistCurse.Count);
+                                    Type type = cell.GetType();
+                                    PropertyInfo prop = type.GetProperty("Value");
+                                    if (checkBoxArmorResistance.Checked)
+                                    {
+                                        prop.SetValue(cell, allArmorResistCurse[randomIndex], null);
+                                    }
+
+                                    allArmorResistCurse.RemoveAt(randomIndex);
+                                }
+                            }
+                        }
+                    }
+                }
                 else if (paramFile.ID == "EQUIP_PARAM_WEAPON_ST")
                 {
                     //loop through all entries once to get list of values
