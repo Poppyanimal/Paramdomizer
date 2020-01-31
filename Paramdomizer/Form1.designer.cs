@@ -118,7 +118,7 @@
             this.chkRingSpeffects.AutoSize = true;
             this.chkRingSpeffects.Checked = true;
             this.chkRingSpeffects.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkRingSpeffects.Location = new System.Drawing.Point(30, 417);
+            this.chkRingSpeffects.Location = new System.Drawing.Point(265, 371);
             this.chkRingSpeffects.Name = "chkRingSpeffects";
             this.chkRingSpeffects.Size = new System.Drawing.Size(168, 17);
             this.chkRingSpeffects.TabIndex = 7;
@@ -184,7 +184,7 @@
             this.chkBullets.AutoSize = true;
             this.chkBullets.Checked = true;
             this.chkBullets.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkBullets.Location = new System.Drawing.Point(265, 417);
+            this.chkBullets.Location = new System.Drawing.Point(30, 417);
             this.chkBullets.Name = "chkBullets";
             this.chkBullets.Size = new System.Drawing.Size(112, 17);
             this.chkBullets.TabIndex = 9;
@@ -225,11 +225,11 @@
             this.chkAttackSpeffects.AutoSize = true;
             this.chkAttackSpeffects.Checked = true;
             this.chkAttackSpeffects.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkAttackSpeffects.Location = new System.Drawing.Point(30, 440);
+            this.chkAttackSpeffects.Location = new System.Drawing.Point(265, 162);
             this.chkAttackSpeffects.Name = "chkAttackSpeffects";
-            this.chkAttackSpeffects.Size = new System.Drawing.Size(185, 17);
+            this.chkAttackSpeffects.Size = new System.Drawing.Size(173, 17);
             this.chkAttackSpeffects.TabIndex = 6;
-            this.chkAttackSpeffects.Text = "Randomize SPeffects on attacks*";
+            this.chkAttackSpeffects.Text = "Randomize weapon SPeffects*";
             this.tooltip.SetToolTip(this.chkAttackSpeffects, "Randomizes special effects on attacks.\nDoesn\'t do anything right now???");
             this.chkAttackSpeffects.UseVisualStyleBackColor = true;
             // 
@@ -265,7 +265,7 @@
             this.chkHitboxSizes.AutoSize = true;
             this.chkHitboxSizes.Checked = true;
             this.chkHitboxSizes.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkHitboxSizes.Location = new System.Drawing.Point(265, 371);
+            this.chkHitboxSizes.Location = new System.Drawing.Point(30, 440);
             this.chkHitboxSizes.Name = "chkHitboxSizes";
             this.chkHitboxSizes.Size = new System.Drawing.Size(136, 17);
             this.chkHitboxSizes.TabIndex = 18;
@@ -308,12 +308,12 @@
             this.chkItemAnimations.AutoSize = true;
             this.chkItemAnimations.Checked = true;
             this.chkItemAnimations.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkItemAnimations.Location = new System.Drawing.Point(265, 394);
+            this.chkItemAnimations.Location = new System.Drawing.Point(30, 394);
             this.chkItemAnimations.Name = "chkItemAnimations";
             this.chkItemAnimations.Size = new System.Drawing.Size(154, 17);
             this.chkItemAnimations.TabIndex = 14;
             this.chkItemAnimations.Text = "Randomize item animations";
-            this.tooltip.SetToolTip(this.chkItemAnimations, "Randomizes the animations of items.");
+            this.tooltip.SetToolTip(this.chkItemAnimations, "Randomizes the animations of items.\nCan be extra difficult if your estus is replaced with a slow animation.");
             this.chkItemAnimations.UseVisualStyleBackColor = true;
             // 
             // chkMagicAnimations
@@ -347,7 +347,7 @@
             this.chkRandomFaceData.AutoSize = true;
             this.chkRandomFaceData.Checked = true;
             this.chkRandomFaceData.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkRandomFaceData.Location = new System.Drawing.Point(30, 394);
+            this.chkRandomFaceData.Location = new System.Drawing.Point(265, 417);
             this.chkRandomFaceData.Name = "chkRandomFaceData";
             this.chkRandomFaceData.Size = new System.Drawing.Size(144, 17);
             this.chkRandomFaceData.TabIndex = 22;
@@ -359,7 +359,7 @@
             // checkBoxRemaster
             // 
             this.checkBoxRemaster.AutoSize = true;
-            this.checkBoxRemaster.Location = new System.Drawing.Point(30, 499);
+            this.checkBoxRemaster.Location = new System.Drawing.Point(30, 515);
             this.checkBoxRemaster.Name = "checkBoxRemaster";
             this.checkBoxRemaster.Size = new System.Drawing.Size(176, 17);
             this.checkBoxRemaster.TabIndex = 23;
@@ -426,7 +426,7 @@
             // checkBoxDoTrueRandom
             // 
             this.checkBoxDoTrueRandom.AutoSize = true;
-            this.checkBoxDoTrueRandom.Location = new System.Drawing.Point(30, 463);
+            this.checkBoxDoTrueRandom.Location = new System.Drawing.Point(30, 472);
             this.checkBoxDoTrueRandom.Name = "checkBoxDoTrueRandom";
             this.checkBoxDoTrueRandom.Size = new System.Drawing.Size(256, 17);
             this.checkBoxDoTrueRandom.TabIndex = 26;
