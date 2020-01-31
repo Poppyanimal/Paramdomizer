@@ -43,7 +43,7 @@
             this.chkBullets = new System.Windows.Forms.CheckBox();
             this.chkKnockback = new System.Windows.Forms.CheckBox();
             this.chkSpeffects = new System.Windows.Forms.CheckBox();
-            this.chkAttackSpeffects = new System.Windows.Forms.CheckBox();
+            this.chkWeaponSpeffects = new System.Windows.Forms.CheckBox();
             this.chkVoices = new System.Windows.Forms.CheckBox();
             this.chkTurnSpeeds = new System.Windows.Forms.CheckBox();
             this.chkHitboxSizes = new System.Windows.Forms.CheckBox();
@@ -68,6 +68,7 @@
             this.lblSpellCategory = new System.Windows.Forms.Label();
             this.lblEnemiesCategory = new System.Windows.Forms.Label();
             this.lblOtherCategory = new System.Windows.Forms.Label();
+            this.lblSharedCategory = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtSeed
@@ -105,7 +106,7 @@
             // 
             // btnSubmit
             // 
-            this.btnSubmit.Location = new System.Drawing.Point(411, 515);
+            this.btnSubmit.Location = new System.Drawing.Point(411, 549);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.Size = new System.Drawing.Size(75, 23);
             this.btnSubmit.TabIndex = 20;
@@ -118,7 +119,7 @@
             this.chkRingSpeffects.AutoSize = true;
             this.chkRingSpeffects.Checked = true;
             this.chkRingSpeffects.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkRingSpeffects.Location = new System.Drawing.Point(265, 371);
+            this.chkRingSpeffects.Location = new System.Drawing.Point(30, 469);
             this.chkRingSpeffects.Name = "chkRingSpeffects";
             this.chkRingSpeffects.Size = new System.Drawing.Size(168, 17);
             this.chkRingSpeffects.TabIndex = 7;
@@ -128,7 +129,7 @@
             // 
             // lblMessage
             // 
-            this.lblMessage.Location = new System.Drawing.Point(230, 473);
+            this.lblMessage.Location = new System.Drawing.Point(230, 507);
             this.lblMessage.Name = "lblMessage";
             this.lblMessage.Size = new System.Drawing.Size(243, 43);
             this.lblMessage.TabIndex = 6;
@@ -184,7 +185,7 @@
             this.chkBullets.AutoSize = true;
             this.chkBullets.Checked = true;
             this.chkBullets.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkBullets.Location = new System.Drawing.Point(30, 417);
+            this.chkBullets.Location = new System.Drawing.Point(30, 391);
             this.chkBullets.Name = "chkBullets";
             this.chkBullets.Size = new System.Drawing.Size(112, 17);
             this.chkBullets.TabIndex = 9;
@@ -198,7 +199,7 @@
             this.chkKnockback.AutoSize = true;
             this.chkKnockback.Checked = true;
             this.chkKnockback.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkKnockback.Location = new System.Drawing.Point(30, 371);
+            this.chkKnockback.Location = new System.Drawing.Point(265, 368);
             this.chkKnockback.Name = "chkKnockback";
             this.chkKnockback.Size = new System.Drawing.Size(169, 17);
             this.chkKnockback.TabIndex = 16;
@@ -206,13 +207,14 @@
             this.tooltip.SetToolTip(this.chkKnockback, "Randomizes attack knockback.\nAffects all weapons and common moves like ladder kic" +
         "ks.\nAffects Enemy attacks too.");
             this.chkKnockback.UseVisualStyleBackColor = true;
+            this.chkKnockback.CheckedChanged += new System.EventHandler(this.chkKnockback_CheckedChanged);
             // 
             // chkSpeffects
             // 
             this.chkSpeffects.AutoSize = true;
             this.chkSpeffects.Checked = true;
             this.chkSpeffects.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkSpeffects.Location = new System.Drawing.Point(265, 324);
+            this.chkSpeffects.Location = new System.Drawing.Point(30, 320);
             this.chkSpeffects.Name = "chkSpeffects";
             this.chkSpeffects.Size = new System.Drawing.Size(185, 17);
             this.chkSpeffects.TabIndex = 5;
@@ -220,18 +222,18 @@
             this.tooltip.SetToolTip(this.chkSpeffects, "Randomizes special effects on enemies as well as their attacks.");
             this.chkSpeffects.UseVisualStyleBackColor = true;
             // 
-            // chkAttackSpeffects
+            // chkWeaponSpeffects
             // 
-            this.chkAttackSpeffects.AutoSize = true;
-            this.chkAttackSpeffects.Checked = true;
-            this.chkAttackSpeffects.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkAttackSpeffects.Location = new System.Drawing.Point(265, 162);
-            this.chkAttackSpeffects.Name = "chkAttackSpeffects";
-            this.chkAttackSpeffects.Size = new System.Drawing.Size(173, 17);
-            this.chkAttackSpeffects.TabIndex = 6;
-            this.chkAttackSpeffects.Text = "Randomize weapon SPeffects*";
-            this.tooltip.SetToolTip(this.chkAttackSpeffects, "Randomizes special effects on attacks.\nDoesn\'t do anything right now???");
-            this.chkAttackSpeffects.UseVisualStyleBackColor = true;
+            this.chkWeaponSpeffects.AutoSize = true;
+            this.chkWeaponSpeffects.Checked = true;
+            this.chkWeaponSpeffects.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkWeaponSpeffects.Location = new System.Drawing.Point(265, 162);
+            this.chkWeaponSpeffects.Name = "chkWeaponSpeffects";
+            this.chkWeaponSpeffects.Size = new System.Drawing.Size(173, 17);
+            this.chkWeaponSpeffects.TabIndex = 6;
+            this.chkWeaponSpeffects.Text = "Randomize weapon SPeffects";
+            this.tooltip.SetToolTip(this.chkWeaponSpeffects, "Randomizes the special effects of weapons, like poison buildup, the chaos blade's life loss and the grass crest shield's regen.");
+            this.chkWeaponSpeffects.UseVisualStyleBackColor = true;
             // 
             // chkVoices
             // 
@@ -239,7 +241,7 @@
             this.chkVoices.AutoSize = true;
             this.chkVoices.Checked = true;
             this.chkVoices.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkVoices.Location = new System.Drawing.Point(265, 440);
+            this.chkVoices.Location = new System.Drawing.Point(265, 469);
             this.chkVoices.Name = "chkVoices";
             this.chkVoices.Size = new System.Drawing.Size(132, 17);
             this.chkVoices.TabIndex = 10;
@@ -252,7 +254,7 @@
             this.chkTurnSpeeds.AutoSize = true;
             this.chkTurnSpeeds.Checked = true;
             this.chkTurnSpeeds.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkTurnSpeeds.Location = new System.Drawing.Point(265, 301);
+            this.chkTurnSpeeds.Location = new System.Drawing.Point(265, 297);
             this.chkTurnSpeeds.Name = "chkTurnSpeeds";
             this.chkTurnSpeeds.Size = new System.Drawing.Size(166, 17);
             this.chkTurnSpeeds.TabIndex = 3;
@@ -265,7 +267,7 @@
             this.chkHitboxSizes.AutoSize = true;
             this.chkHitboxSizes.Checked = true;
             this.chkHitboxSizes.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkHitboxSizes.Location = new System.Drawing.Point(30, 440);
+            this.chkHitboxSizes.Location = new System.Drawing.Point(265, 391);
             this.chkHitboxSizes.Name = "chkHitboxSizes";
             this.chkHitboxSizes.Size = new System.Drawing.Size(136, 17);
             this.chkHitboxSizes.TabIndex = 18;
@@ -280,7 +282,7 @@
             this.chkStaggerLevels.AutoSize = true;
             this.chkStaggerLevels.Checked = true;
             this.chkStaggerLevels.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkStaggerLevels.Location = new System.Drawing.Point(30, 324);
+            this.chkStaggerLevels.Location = new System.Drawing.Point(30, 368);
             this.chkStaggerLevels.Name = "chkStaggerLevels";
             this.chkStaggerLevels.Size = new System.Drawing.Size(147, 17);
             this.chkStaggerLevels.TabIndex = 17;
@@ -294,7 +296,7 @@
             this.chkAggroRadius.AutoSize = true;
             this.chkAggroRadius.Checked = true;
             this.chkAggroRadius.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkAggroRadius.Location = new System.Drawing.Point(30, 301);
+            this.chkAggroRadius.Location = new System.Drawing.Point(30, 297);
             this.chkAggroRadius.Name = "chkAggroRadius";
             this.chkAggroRadius.Size = new System.Drawing.Size(140, 17);
             this.chkAggroRadius.TabIndex = 2;
@@ -308,12 +310,13 @@
             this.chkItemAnimations.AutoSize = true;
             this.chkItemAnimations.Checked = true;
             this.chkItemAnimations.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkItemAnimations.Location = new System.Drawing.Point(30, 394);
+            this.chkItemAnimations.Location = new System.Drawing.Point(30, 446);
             this.chkItemAnimations.Name = "chkItemAnimations";
             this.chkItemAnimations.Size = new System.Drawing.Size(154, 17);
             this.chkItemAnimations.TabIndex = 14;
             this.chkItemAnimations.Text = "Randomize item animations";
-            this.tooltip.SetToolTip(this.chkItemAnimations, "Randomizes the animations of items.\nCan be extra difficult if your estus is replaced with a slow animation.");
+            this.tooltip.SetToolTip(this.chkItemAnimations, "Randomizes the animations of items.\nCan be extra difficult if your estus is repla" +
+        "ced with a slow animation.");
             this.chkItemAnimations.UseVisualStyleBackColor = true;
             // 
             // chkMagicAnimations
@@ -347,7 +350,7 @@
             this.chkRandomFaceData.AutoSize = true;
             this.chkRandomFaceData.Checked = true;
             this.chkRandomFaceData.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkRandomFaceData.Location = new System.Drawing.Point(265, 417);
+            this.chkRandomFaceData.Location = new System.Drawing.Point(265, 446);
             this.chkRandomFaceData.Name = "chkRandomFaceData";
             this.chkRandomFaceData.Size = new System.Drawing.Size(144, 17);
             this.chkRandomFaceData.TabIndex = 22;
@@ -359,7 +362,7 @@
             // checkBoxRemaster
             // 
             this.checkBoxRemaster.AutoSize = true;
-            this.checkBoxRemaster.Location = new System.Drawing.Point(30, 515);
+            this.checkBoxRemaster.Location = new System.Drawing.Point(30, 549);
             this.checkBoxRemaster.Name = "checkBoxRemaster";
             this.checkBoxRemaster.Size = new System.Drawing.Size(176, 17);
             this.checkBoxRemaster.TabIndex = 23;
@@ -426,7 +429,7 @@
             // checkBoxDoTrueRandom
             // 
             this.checkBoxDoTrueRandom.AutoSize = true;
-            this.checkBoxDoTrueRandom.Location = new System.Drawing.Point(30, 472);
+            this.checkBoxDoTrueRandom.Location = new System.Drawing.Point(30, 506);
             this.checkBoxDoTrueRandom.Name = "checkBoxDoTrueRandom";
             this.checkBoxDoTrueRandom.Size = new System.Drawing.Size(256, 17);
             this.checkBoxDoTrueRandom.TabIndex = 26;
@@ -519,17 +522,26 @@
             // lblOtherCategory
             // 
             this.lblOtherCategory.AutoSize = true;
-            this.lblOtherCategory.Location = new System.Drawing.Point(8, 344);
+            this.lblOtherCategory.Location = new System.Drawing.Point(8, 416);
             this.lblOtherCategory.Name = "lblOtherCategory";
             this.lblOtherCategory.Size = new System.Drawing.Size(77, 13);
             this.lblOtherCategory.TabIndex = 35;
             this.lblOtherCategory.Text = "Other Settings:";
             // 
+            // lblSharedCategory
+            // 
+            this.lblSharedCategory.AutoSize = true;
+            this.lblSharedCategory.Location = new System.Drawing.Point(8, 344);
+            this.lblSharedCategory.Name = "lblSharedCategory";
+            this.lblSharedCategory.Size = new System.Drawing.Size(123, 13);
+            this.lblSharedCategory.TabIndex = 36;
+            this.lblSharedCategory.Text = "Enemy (and Player) Settings:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(500, 550);
+            this.ClientSize = new System.Drawing.Size(500, 580);
             this.Controls.Add(this.checkBoxRemaster);
             this.Controls.Add(this.chkRandomFaceData);
             this.Controls.Add(this.btnOpenFolderDialog);
@@ -555,7 +567,7 @@
             this.Controls.Add(this.chkBullets);
             this.Controls.Add(this.chkKnockback);
             this.Controls.Add(this.chkSpeffects);
-            this.Controls.Add(this.chkAttackSpeffects);
+            this.Controls.Add(this.chkWeaponSpeffects);
             this.Controls.Add(this.chkVoices);
             this.Controls.Add(this.lblMessage);
             this.Controls.Add(this.btnSubmit);
@@ -567,6 +579,7 @@
             this.Controls.Add(this.lblSpellCategory);
             this.Controls.Add(this.lblEnemiesCategory);
             this.Controls.Add(this.lblOtherCategory);
+            this.Controls.Add(this.lblSharedCategory);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.ShowIcon = false;
@@ -591,7 +604,7 @@
         private System.Windows.Forms.CheckBox chkBullets;
         private System.Windows.Forms.CheckBox chkKnockback;
         private System.Windows.Forms.CheckBox chkSpeffects;
-        private System.Windows.Forms.CheckBox chkAttackSpeffects;
+        private System.Windows.Forms.CheckBox chkWeaponSpeffects;
         private System.Windows.Forms.CheckBox chkVoices;
         private System.Windows.Forms.CheckBox chkTurnSpeeds;
         private System.Windows.Forms.CheckBox chkHitboxSizes;
@@ -617,6 +630,7 @@
         private System.Windows.Forms.Label lblSpellCategory;
         private System.Windows.Forms.Label lblEnemiesCategory;
         private System.Windows.Forms.Label lblOtherCategory;
+        private System.Windows.Forms.Label lblSharedCategory;
     }
 }
 

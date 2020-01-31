@@ -912,6 +912,9 @@ namespace Paramdomizer
                     List<int> allAttackBaseStamina = new List<int>();
                     List<Double> allWepWeight = new List<Double>(); //weapon weight
                     List<int> allEquipModelIds = new List<int>();
+                    List<int> allspEffectBehavior = new List<int>(); //special effects like bleed that effect the target
+                    List<int> allspEffectBehavior2 = new List<int>(); //secondary special effects like the lifehunt scythe's hp
+                    List<int> allresidentspEffect = new List<int>(); //special effects like grass crest shield that effect the user
 
                     foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
                     {
@@ -1022,6 +1025,33 @@ namespace Paramdomizer
                             {
                                 PropertyInfo prop = cell.GetType().GetProperty("Value");
                                 allAttackBaseStamina.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                            }
+                            else if (cell.Def.Name == "spEffectBehaviorId0")
+                            {
+                                //if not fists
+                                if(paramRow.ID != 900000)
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    allspEffectBehavior.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                }
+                            }
+                            else if (cell.Def.Name == "spEffectBehaviorId1")
+                            {
+                                //if not fists
+                                if (paramRow.ID != 900000)
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    allspEffectBehavior2.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                }
+                            }
+                            else if (cell.Def.Name == "residentSpEffectId")
+                            {
+                                //if not fists
+                                if (paramRow.ID != 900000)
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    allresidentspEffect.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                }
                             }
                         }
                     }
@@ -1602,6 +1632,54 @@ namespace Paramdomizer
                                 if(castsMagic && checkBoxUniversalizeCasters.Checked)
                                 {
                                     prop.SetValue(cell, true, null);
+                                }
+                            }
+                            else if(cell.Def.Name == "spEffectBehaviorId0")
+                            {
+                                //if not fists
+                                if (paramRow.ID != 900000)
+                                {
+                                    int randomIndex = r.Next(allspEffectBehavior.Count);
+                                    Type type = cell.GetType();
+                                    PropertyInfo prop = type.GetProperty("Value");
+                                    if (chkWeaponSpeffects.Checked)
+                                    {
+                                        prop.SetValue(cell, allspEffectBehavior[randomIndex], null);
+                                    }
+
+                                    allspEffectBehavior.RemoveAt(randomIndex);
+                                }
+                            }
+                            else if (cell.Def.Name == "spEffectBehaviorId1")
+                            {
+                                //if not fists
+                                if (paramRow.ID != 900000)
+                                {
+                                    int randomIndex = r.Next(allspEffectBehavior2.Count);
+                                    Type type = cell.GetType();
+                                    PropertyInfo prop = type.GetProperty("Value");
+                                    if (chkWeaponSpeffects.Checked)
+                                    {
+                                        prop.SetValue(cell, allspEffectBehavior2[randomIndex], null);
+                                    }
+
+                                    allspEffectBehavior2.RemoveAt(randomIndex);
+                                }
+                            }
+                            else if (cell.Def.Name == "residentSpEffectId")
+                            {
+                                //if not fists
+                                if (paramRow.ID != 900000)
+                                {
+                                    int randomIndex = r.Next(allresidentspEffect.Count);
+                                    Type type = cell.GetType();
+                                    PropertyInfo prop = type.GetProperty("Value");
+                                    if (chkWeaponSpeffects.Checked)
+                                    {
+                                        prop.SetValue(cell, allresidentspEffect[randomIndex], null);
+                                    }
+
+                                    allresidentspEffect.RemoveAt(randomIndex);
                                 }
                             }
                         }
@@ -3844,6 +3922,11 @@ namespace Paramdomizer
         }
 
         private void toolTip2_Popup(object sender, PopupEventArgs e)
+        {
+
+        }
+
+        private void chkKnockback_CheckedChanged(object sender, EventArgs e)
         {
 
         }
