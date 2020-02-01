@@ -70,6 +70,8 @@
             this.checkBoxArmorPoise = new System.Windows.Forms.CheckBox();
             this.checkBoxArmorResistance = new System.Windows.Forms.CheckBox();
             this.checkBoxArmorspEffect = new System.Windows.Forms.CheckBox();
+            this.checkBoxStartingGifts = new System.Windows.Forms.CheckBox();
+            this.checkBoxPreventSpellGifts = new System.Windows.Forms.CheckBox();
             this.tooltip = new System.Windows.Forms.ToolTip(this.components);
             this.lblWeaponCategory = new System.Windows.Forms.Label();
             this.lblSpellCategory = new System.Windows.Forms.Label();
@@ -457,7 +459,7 @@
             this.checkBoxWeaponShieldSplit.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxWeaponShieldSplit.Location = new System.Drawing.Point(265, 185);
             this.checkBoxWeaponShieldSplit.Name = "checkBoxWeaponShieldSplit";
-            this.checkBoxWeaponShieldSplit.Size = new System.Drawing.Size(141, 17);
+            this.checkBoxWeaponShieldSplit.Size = new System.Drawing.Size(137, 17);
             this.checkBoxWeaponShieldSplit.TabIndex = 42;
             this.checkBoxWeaponShieldSplit.Text = "Treat shields seperately";
             this.tooltip.SetToolTip(this.checkBoxWeaponShieldSplit, "Shields will have a different randomization pool from regular weapons\nShields wil" +
@@ -472,7 +474,7 @@
             this.checkBoxWeaponFistNo.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxWeaponFistNo.Location = new System.Drawing.Point(30, 208);
             this.checkBoxWeaponFistNo.Name = "checkBoxWeaponFistNo";
-            this.checkBoxWeaponFistNo.Size = new System.Drawing.Size(109, 17);
+            this.checkBoxWeaponFistNo.Size = new System.Drawing.Size(105, 17);
             this.checkBoxWeaponFistNo.TabIndex = 43;
             this.checkBoxWeaponFistNo.Text = "Don\'t modify fists";
             this.tooltip.SetToolTip(this.checkBoxWeaponFistNo, "Fists will not be modified by damage randomization of any other type of weapon ra" +
@@ -482,11 +484,11 @@
             // checkBoxDoTrueRandom
             // 
             this.checkBoxDoTrueRandom.AutoSize = true;
-            this.checkBoxDoTrueRandom.Location = new System.Drawing.Point(30, 609);
+            this.checkBoxDoTrueRandom.Location = new System.Drawing.Point(30, 618);
             this.checkBoxDoTrueRandom.Name = "checkBoxDoTrueRandom";
-            this.checkBoxDoTrueRandom.Size = new System.Drawing.Size(256, 17);
+            this.checkBoxDoTrueRandom.Size = new System.Drawing.Size(153, 30);
             this.checkBoxDoTrueRandom.TabIndex = 26;
-            this.checkBoxDoTrueRandom.Text = "Don\'t randomize by shuffle; randomize by random";
+            this.checkBoxDoTrueRandom.Text = "Don\'t randomize by shuffle;\nrandomize by random";
             this.tooltip.SetToolTip(this.checkBoxDoTrueRandom, resources.GetString("checkBoxDoTrueRandom.ToolTip"));
             this.checkBoxDoTrueRandom.UseVisualStyleBackColor = true;
             // 
@@ -599,6 +601,36 @@
             this.tooltip.SetToolTip(this.checkBoxArmorspEffect, "Randomizes the special effects of armor like that of the mask of the father.");
             this.checkBoxArmorspEffect.UseVisualStyleBackColor = true;
             // 
+            // checkBoxStartingGifts
+            // 
+            this.checkBoxStartingGifts.AutoSize = true;
+            this.checkBoxStartingGifts.Checked = true;
+            this.checkBoxStartingGifts.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxStartingGifts.Location = new System.Drawing.Point(30, 595);
+            this.checkBoxStartingGifts.Name = "checkBoxStartingGifts";
+            this.checkBoxStartingGifts.Size = new System.Drawing.Size(142, 17);
+            this.checkBoxStartingGifts.TabIndex = 44;
+            this.checkBoxStartingGifts.Text = "Randomize starting gifts*";
+            this.tooltip.SetToolTip(this.checkBoxStartingGifts, "Randomizes the starting gifts and changes the english menus to correspend with th" +
+        "e changes.\nNoteworthy: the 2 starting rings get randomized into other rings and " +
+        "the master key does not get randomized");
+            this.checkBoxStartingGifts.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxPreventSpellGifts
+            // 
+            this.checkBoxPreventSpellGifts.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxPreventSpellGifts.AutoSize = true;
+            this.checkBoxPreventSpellGifts.Checked = true;
+            this.checkBoxPreventSpellGifts.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxPreventSpellGifts.Location = new System.Drawing.Point(265, 595);
+            this.checkBoxPreventSpellGifts.Name = "checkBoxPreventSpellGifts";
+            this.checkBoxPreventSpellGifts.Size = new System.Drawing.Size(109, 17);
+            this.checkBoxPreventSpellGifts.TabIndex = 44;
+            this.checkBoxPreventSpellGifts.Text = "Prevent spell gifts";
+            this.tooltip.SetToolTip(this.checkBoxPreventSpellGifts, "Prevents Sorceries, Miracles, or Pyromancies from being valid starting gifts.\nonl" +
+        "y applies if starting gifts are randomized");
+            this.checkBoxPreventSpellGifts.UseVisualStyleBackColor = true;
+            // 
             // lblWeaponCategory
             // 
             this.lblWeaponCategory.AutoSize = true;
@@ -687,6 +719,8 @@
             this.Controls.Add(this.checkBoxArmorPoise);
             this.Controls.Add(this.checkBoxArmorResistance);
             this.Controls.Add(this.checkBoxArmorspEffect);
+            this.Controls.Add(this.checkBoxStartingGifts);
+            this.Controls.Add(this.checkBoxPreventSpellGifts);
             this.Controls.Add(this.chkBullets);
             this.Controls.Add(this.chkKnockback);
             this.Controls.Add(this.chkSpeffects);
@@ -756,6 +790,8 @@
         private System.Windows.Forms.CheckBox checkBoxArmorPoise;
         private System.Windows.Forms.CheckBox checkBoxArmorResistance;
         private System.Windows.Forms.CheckBox checkBoxArmorspEffect;
+        private System.Windows.Forms.CheckBox checkBoxStartingGifts;
+        private System.Windows.Forms.CheckBox checkBoxPreventSpellGifts;
         private System.Windows.Forms.ToolTip tooltip;
         private System.Windows.Forms.Label lblWeaponCategory;
         private System.Windows.Forms.Label lblSpellCategory;

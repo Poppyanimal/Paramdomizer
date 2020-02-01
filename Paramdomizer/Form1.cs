@@ -49,6 +49,21 @@ namespace Paramdomizer
                     lblMessage.Visible = true;
                     lblMessage.ForeColor = Color.Red;
                 }
+                else if (!File.Exists(gameDirectory + "\\msg\\ENGLISH\\item.msgbnd" + (checkBoxRemaster.Checked ? ".dcx" : "")) || !File.Exists(gameDirectory + "\\msg\\ENGLISH\\menu.msgbnd" + (checkBoxRemaster.Checked ? ".dcx" : "")))
+                {
+                    if (checkBoxRemaster.Checked)
+                    {
+                        //invalid directory
+                        lblMessage.Text = "Invalid Dark Souls: Remastered game directory; Missing ENGLISH msgbnd files.";
+                    }
+                    else
+                    {
+                        //user hasn't unpacked their game
+                        lblMessage.Text = "You don't seem to have an unpacked Dark Souls: Prepare to Die Edition installation. Please run UDSFM and come back :)";
+                    }
+                    lblMessage.Visible = true;
+                    lblMessage.ForeColor = Color.Red;
+                }
             }
         }
 
@@ -76,6 +91,21 @@ namespace Paramdomizer
                     {
                         //invalid directory
                         lblMessage.Text = "Invalid Dark Souls: Remastered game directory; No GameParam found.";
+                    }
+                    else
+                    {
+                        //user hasn't unpacked their game
+                        lblMessage.Text = "You don't seem to have an unpacked Dark Souls: Prepare to Die Edition installation. Please run UDSFM and come back :)";
+                    }
+                    lblMessage.ForeColor = Color.Red;
+                    return;
+                }
+                else if (!File.Exists(gameDirectory + "\\msg\\ENGLISH\\item.msgbnd" + (checkBoxRemaster.Checked ? ".dcx" : "")) || !File.Exists(gameDirectory + "\\msg\\ENGLISH\\menu.msgbnd" + (checkBoxRemaster.Checked ? ".dcx" : "")))
+                {
+                    if (checkBoxRemaster.Checked)
+                    {
+                        //invalid directory
+                        lblMessage.Text = "Invalid Dark Souls: Remastered game directory; Missing ENGLISH msgbnd files.";
                     }
                     else
                     {
@@ -119,6 +149,21 @@ namespace Paramdomizer
                 lblMessage.ForeColor = Color.Red;
                 return;
             }
+            else if (!File.Exists(gameDirectory + "\\msg\\ENGLISH\\item.msgbnd" + (checkBoxRemaster.Checked ? ".dcx" : "")) || !File.Exists(gameDirectory + "\\msg\\ENGLISH\\menu.msgbnd" + (checkBoxRemaster.Checked ? ".dcx" : "")))
+            {
+                if (checkBoxRemaster.Checked)
+                {
+                    //invalid directory
+                    lblMessage.Text = "Invalid Dark Souls: Remastered game directory; Missing ENGLISH msgbnd files.";
+                }
+                else
+                {
+                    //user hasn't unpacked their game
+                    lblMessage.Text = "You don't seem to have an unpacked Dark Souls: Prepare to Die Edition installation. Please run UDSFM and come back :)";
+                }
+                lblMessage.ForeColor = Color.Red;
+                return;
+            }
 
             //update label on a new thread
             Progress<string> progress = new Progress<string>(s => lblMessage.Text = s);
@@ -146,13 +191,37 @@ namespace Paramdomizer
                 lblMessage.ForeColor = Color.Black;
                 lblMessage.Visible = true;
             }
+            //create backups of msgbnds
+            if (!File.Exists(gameDirectory + $"\\msg\\ENGLISH\\item.msgbnd{(checkBoxRemaster.Checked ? ".dcx" : "")}.bak"))
+            {
+                File.Copy(gameDirectory + $"\\msg\\ENGLISH\\item.msgbnd{(checkBoxRemaster.Checked ? ".dcx" : "")}",
+                    gameDirectory + $"\\msg\\ENGLISH\\item.msgbnd{(checkBoxRemaster.Checked ? ".dcx" : "")}.bak");
+                lblMessage.Text = $"Backed up item.msgbnd{(checkBoxRemaster.Checked ? ".dcx" : "")} \n\n";
+                lblMessage.ForeColor = Color.Black;
+                lblMessage.Visible = true;
+            }
+            if(!File.Exists(gameDirectory + $"\\msg\\ENGLISH\\menu.msgbnd{(checkBoxRemaster.Checked ? ".dcx" : "")}.bak"))
+            {
+                File.Copy(gameDirectory + $"\\msg\\ENGLISH\\menu.msgbnd{(checkBoxRemaster.Checked ? ".dcx" : "")}",
+                    gameDirectory + $"\\msg\\ENGLISH\\menu.msgbnd{(checkBoxRemaster.Checked ? ".dcx" : "")}.bak");
+                lblMessage.Text = $"Backed up menu.msgbnd{(checkBoxRemaster.Checked ? ".dcx" : "")} \n\n";
+                lblMessage.ForeColor = Color.Black;
+                lblMessage.Visible = true;
+            }
 
             PARAMBND gameparamBnd = DataFile.LoadFromFile<PARAMBND>(gameDirectory + $"\\param\\GameParam\\GameParam.parambnd{(checkBoxRemaster.Checked ? ".dcx" : "")}");
+
+            MSGBND menuMSGBND = DataFile.LoadFromFile<MSGBND>(gameDirectory + $"\\msg\\ENGLISH\\menu.msgbnd{(checkBoxRemaster.Checked ? ".dcx" : "")}");
+            MSGBND itemMSGBND = DataFile.LoadFromFile<MSGBND>(gameDirectory + $"\\msg\\ENGLISH\\item.msgbnd{(checkBoxRemaster.Checked ? ".dcx" : "")}");
 
             gameparamBnd.ApplyDefaultParamDefs();
 
             //Hash seed so people can use meme seeds
             Random r = new Random(seed.GetHashCode());
+
+            //used for name assignment when randomizing starting gifts
+            List<int> itemStartingGifts = new List<int>();
+            List<int> ringStartingGifts = new List<int>();
 
             foreach (var paramBndEntry in gameparamBnd)
             {
@@ -1472,6 +1541,15 @@ namespace Paramdomizer
                                             allspEffectBehavior2.Add(Convert.ToInt32(prop.GetValue(cell, null)));
                                         }
                                     }
+                                    else if (cell.Def.Name == "residentSpEffectId")
+                                    {
+                                        //if not fists
+                                        if (paramRow.ID != 900000)
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allresidentspEffect.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                    }
                                     else if (cell.Def.Name == "physGuardCutRate")
                                     {
                                         //if not fists
@@ -2619,6 +2697,15 @@ namespace Paramdomizer
                                             {
                                                 PropertyInfo prop = cell.GetType().GetProperty("Value");
                                                 allspEffectBehavior2.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "residentSpEffectId")
+                                        {
+                                            //if not fists
+                                            if (paramRow.ID != 900000)
+                                            {
+                                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                                allresidentspEffect.Add(Convert.ToInt32(prop.GetValue(cell, null)));
                                             }
                                         }
                                         else if (cell.Def.Name == "physGuardCutRate")
@@ -5531,11 +5618,208 @@ namespace Paramdomizer
                 }
                 else if (paramFile.ID == "CHARACTER_INIT_PARAM")
                 {
+                    List<int> validItems = new List<int>();
+                    List<int> validRings = new List<int>();
+                    if(checkBoxStartingGifts.Checked)
+                    {
+                        //add validItems
+                        validItems.Add(100); //white soapstone
+                        validItems.Add(101); //red soapstone
+                        validItems.Add(106); //orange soapstone
+                        validItems.Add(220); //silver pendant
+                        validItems.Add(240); //divine blessing
+                        validItems.Add(260); //green blossom
+                        for (int i = 0; i < 6; i++)
+                        {
+                            if(i != 3)
+                            {
+                                validItems.Add(270 + i);
+                            }
+                        }
+                        validItems.Add(280); //repair powder
+                        for (int i = 0; i < 8; i++)
+                        {
+                            if (i != 5)
+                            {
+                                validItems.Add(290 + i);
+                            }
+                        }
+                        for (int i = 0; i < 4; i++)
+                        {
+                            validItems.Add(310 + i);
+                        }
+                        validItems.Add(330); //Homeward Bone
+                        for (int i = 0; i < 7; i++)
+                        {
+                            if (i != 2)
+                            {
+                                validItems.Add(370 + i);
+                            }
+                        }
+                        for (int i = 0; i < 6; i++)
+                        {
+                            if (i != 4)
+                            {
+                                validItems.Add(380 + i);
+                            }
+                        }
+                        for (int i = 0; i < 7; i++)
+                        {
+                            validItems.Add(390 + i);
+                        }
+                        for (int i = 0; i < 10; i++)
+                        {
+                            validItems.Add(400 + i);
+                        }
+                        validItems.Add(500); //Humanity
+                        validItems.Add(501); //Twin Humanities
+                        for (int i = 0; i < 5; i++) //carvings
+                        {
+                            validItems.Add(510 + i);
+                        }
+                        for (int i = 0; i < 12; i++) //boss souls
+                        {
+                            validItems.Add(700 + i);
+                        }
+                        for (int i = 0; i < 14; i++) //upgrade materia
+                        {
+                            validItems.Add(1000 + (i*10));
+                        }
+                        for (int i = 0; i < 3; i++) //smith and repair boxes
+                        {
+                            validItems.Add(2600 + i);
+                        }
+                        validItems.Add(2608); //Bottomless Box
+                        if(!checkBoxPreventSpellGifts.Checked) //spells, miracles, pyromancies start here
+                        {
+                            for (int i = 0; i < 13; i++) //sorceries
+                            {
+                                if (i != 8 && i != 9)
+                                {
+                                    validItems.Add(3000 + (i * 10));
+                                }
+                            }
+                            validItems.Add(3300);
+                            validItems.Add(3310);
+                            validItems.Add(3400);
+                            validItems.Add(3410);
+                            for (int i = 0; i < 6; i++)
+                            {
+                                validItems.Add(3500 + (i * 10));
+                            }
+                            validItems.Add(3600);
+                            validItems.Add(3610);
+                            for (int i = 0; i < 5; i++)
+                            {
+                                validItems.Add(3700 + (i * 10));
+                            }
+                            for (int i = 0; i < 7; i++) //pyromancies
+                            {
+                                validItems.Add(4000 + (i * 10));
+                            }
+                            validItems.Add(4100);
+                            validItems.Add(4110);
+                            validItems.Add(4200);
+                            validItems.Add(4210);
+                            validItems.Add(4220);
+                            validItems.Add(4300);
+                            validItems.Add(4310);
+                            validItems.Add(4360);
+                            validItems.Add(4400);
+                            validItems.Add(4500);
+                            validItems.Add(4510);
+                            validItems.Add(4520);
+                            validItems.Add(4530);
+                            for (int i = 0; i < 6; i++) //miracles
+                            {
+                                validItems.Add(5000 + (i * 10));
+                            }
+                            validItems.Add(5100);
+                            validItems.Add(5110);
+                            validItems.Add(5200);
+                            validItems.Add(5210);
+                            validItems.Add(5300);
+                            validItems.Add(5310);
+                            validItems.Add(5320);
+                            validItems.Add(5400);
+                            validItems.Add(5500);
+                            validItems.Add(5510);
+                            validItems.Add(5520);
+                            validItems.Add(5600);
+                            validItems.Add(5610);
+                            validItems.Add(5700);
+                            validItems.Add(5800);
+                            validItems.Add(5810);
+                            validItems.Add(5900);
+                            validItems.Add(5910);
+                        }
+
+                        //add valid rings
+                        for (int i = 0; i < 31; i++)
+                        {
+                            if (i != 12 && i != 18 && i != 29)
+                            {
+                                validRings.Add(100 + i);
+                            }
+                        }
+                        validRings.Add(137);
+                        validRings.Add(138);
+                        validRings.Add(139);
+                        for (int i = 1; i < 11; i++)
+                        {
+                            validRings.Add(140 + i);
+                        }
+                    }
+
                     foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
                     {
                         MeowDSIO.DataTypes.PARAM.ParamCellValueRef bowCheckCell = paramRow.Cells.First(c => c.Def.Name == "npcPlayerFaceGenId");
                         Type bowchecktype = bowCheckCell.GetType();
                         PropertyInfo bowcheckprop = bowchecktype.GetProperty("Value");
+
+                        //IDs 2400 to 2408 are gifts: None, Goddess's Blessing, Black Firebomb, Twin Humanities, Binoculars, Pendant, Master Key, Tiny Being's Ring, Old Witch's Ring
+
+                        //Goddess's Blessing to Pendant
+                        if(paramRow.ID >= 2401 && paramRow.ID <= 2405)
+                        {
+                            foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                            {
+                                if (cell.Def.Name == "item_01")
+                                {
+                                    Type type = cell.GetType();
+                                    PropertyInfo prop = type.GetProperty("Value");
+                                    int randomIndex = r.Next(validItems.Count);
+                                    if(checkBoxStartingGifts.Checked)
+                                    {
+                                        int itemId = validItems[randomIndex];
+                                        itemStartingGifts.Add(itemId);
+                                        prop.SetValue(cell, itemId, null);
+                                    }
+                                    validItems.RemoveAt(randomIndex);
+                                }
+                            }
+                        }
+
+                        //Tiny Being's Ring and Old Witch's Ring
+                        if(paramRow.ID == 2407 || paramRow.ID == 2408)
+                        {
+                            foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                            {
+                                if (cell.Def.Name == "equip_Accessory01")
+                                {
+                                    Type type = cell.GetType();
+                                    PropertyInfo prop = type.GetProperty("Value");
+                                    int randomIndex = r.Next(validRings.Count);
+                                    if (checkBoxStartingGifts.Checked)
+                                    {
+                                        int ringId = validRings[randomIndex];
+                                        ringStartingGifts.Add(ringId);
+                                        prop.SetValue(cell, ringId, null);
+                                    }
+                                    validRings.RemoveAt(randomIndex);
+                                }
+                            }
+                        }
 
                         if (Convert.ToInt32(bowcheckprop.GetValue(bowCheckCell, null)) > -1)
                         {
@@ -5573,6 +5857,237 @@ namespace Paramdomizer
                         }
                     }
                 }
+            }
+
+            //set the text for the appropriate starting gifts
+            if(checkBoxStartingGifts.Checked)
+            {
+                //bool lists needed to prevent infinite looping because value pairs have to be removed and then added because they cant be modified directly
+                List<String> itemStartingNames = new List<String>() {"", "", "", "", ""};
+                List<String> itemStartingDescr = new List<String>() {"", "", "", "", ""};
+                List<bool> itemDoneStartingNames = new List<bool>() { false, false, false, false, false };
+                List<bool> itemDoneStartingDescr = new List<bool>() { false, false, false, false, false };
+                List<String> ringStartingNames = new List<String>() {"", ""};
+                List<String> ringStartingDescr = new List<String>() {"", ""};
+                List<bool> ringDoneStartingNames = new List<bool>() { false, false };
+                List<bool> ringDoneStartingDescr = new List<bool>() { false, false };
+
+                //get the list strings
+                foreach (var itemMsgBndEntry in itemMSGBND)
+                {
+                    var itemMsgKey = itemMsgBndEntry.Key;
+                    var itemMsgFMG = itemMsgBndEntry.Value;
+
+                    if(itemMsgKey == MeowDSIO.DataTypes.FMGBND.FmgType.ItemNames)
+                    {
+                        foreach (var FMG in itemMsgFMG)
+                        {
+                            if(itemStartingGifts.Contains(FMG.Key))
+                            {
+                                int index = itemStartingGifts.IndexOf(FMG.Key);
+                                itemStartingNames[index] = FMG.Value;
+                            }
+                        }
+                    }
+                    else if (itemMsgKey == MeowDSIO.DataTypes.FMGBND.FmgType.ItemNames_Patch)
+                    {
+                        foreach (var FMG in itemMsgFMG)
+                        {
+                            if (itemStartingGifts.Contains(FMG.Key))
+                            {
+                                int index = itemStartingGifts.IndexOf(FMG.Key);
+                                itemStartingNames[index] = FMG.Value;
+                            }
+                        }
+                    }
+                    else if (itemMsgKey == MeowDSIO.DataTypes.FMGBND.FmgType.ItemLongDescriptions)
+                    {
+                        foreach (var FMG in itemMsgFMG)
+                        {
+                            if (itemStartingGifts.Contains(FMG.Key))
+                            {
+                                int index = itemStartingGifts.IndexOf(FMG.Key);
+                                itemStartingDescr[index] = FMG.Value;
+                            }
+                        }
+                    }
+                    else if (itemMsgKey == MeowDSIO.DataTypes.FMGBND.FmgType.ItemLongDescriptions_Patch)
+                    {
+                        foreach (var FMG in itemMsgFMG)
+                        {
+                            if (itemStartingGifts.Contains(FMG.Key))
+                            {
+                                int index = itemStartingGifts.IndexOf(FMG.Key);
+                                itemStartingDescr[index] = FMG.Value;
+                            }
+                        }
+                    }
+                    else if (itemMsgKey == MeowDSIO.DataTypes.FMGBND.FmgType.RingNames)
+                    {
+                        foreach (var FMG in itemMsgFMG)
+                        {
+                            if (ringStartingGifts.Contains(FMG.Key))
+                            {
+                                int index = ringStartingGifts.IndexOf(FMG.Key);
+                                ringStartingNames[index] = FMG.Value;
+                            }
+                        }
+                    }
+                    else if (itemMsgKey == MeowDSIO.DataTypes.FMGBND.FmgType.RingNames_Patch)
+                    {
+                        foreach (var FMG in itemMsgFMG)
+                        {
+                            if (ringStartingGifts.Contains(FMG.Key))
+                            {
+                                int index = ringStartingGifts.IndexOf(FMG.Key);
+                                ringStartingNames[index] = FMG.Value;
+                            }
+                        }
+                    }
+                    else if (itemMsgKey == MeowDSIO.DataTypes.FMGBND.FmgType.RingLongDescriptions)
+                    {
+                        foreach (var FMG in itemMsgFMG)
+                        {
+                            if (ringStartingGifts.Contains(FMG.Key))
+                            {
+                                int index = ringStartingGifts.IndexOf(FMG.Key);
+                                ringStartingDescr[index] = FMG.Value;
+                            }
+                        }
+                    }
+                    else if (itemMsgKey == MeowDSIO.DataTypes.FMGBND.FmgType.RingLongDescriptions_Patch)
+                    {
+                        foreach (var FMG in itemMsgFMG)
+                        {
+                            if (ringStartingGifts.Contains(FMG.Key))
+                            {
+                                int index = ringStartingGifts.IndexOf(FMG.Key);
+                                ringStartingDescr[index] = FMG.Value;
+                            }
+                        }
+                    }
+                }
+
+                //set the starting gift text
+                foreach (var menuMsgBndEntry in menuMSGBND)
+                {
+                    var menuMsgKey = menuMsgBndEntry.Key;
+                    var menuMsgFMG = menuMsgBndEntry.Value;
+
+                    if (menuMsgKey == MeowDSIO.DataTypes.FMGBND.FmgType.MenuOther)
+                    {
+                        for(int i = 0; i < menuMsgFMG.Count; i++)
+                        {
+                            var FMG = menuMsgFMG.ElementAt(i);
+
+                            if (FMG.Key == 132051 && !itemDoneStartingNames[0]) //blessing name
+                            {
+                                menuMsgFMG.Remove(FMG.Key);
+                                menuMsgFMG.Add(FMG.Key, itemStartingNames[0]);
+                                itemDoneStartingNames[0] = true;
+                                i--;
+                            }
+                            else if (FMG.Key == 132052 && !itemDoneStartingNames[1]) //firebomb name
+                            {
+                                menuMsgFMG.Remove(FMG.Key);
+                                menuMsgFMG.Add(FMG.Key, itemStartingNames[1]);
+                                itemDoneStartingNames[1] = true;
+                                i--;
+                            }
+                            else if (FMG.Key == 132053 && !itemDoneStartingNames[2]) //twin humanity name
+                            {
+                                menuMsgFMG.Remove(FMG.Key);
+                                menuMsgFMG.Add(FMG.Key, itemStartingNames[2]);
+                                itemDoneStartingNames[2] = true;
+                                i--;
+                            }
+                            else if (FMG.Key == 132054 && !itemDoneStartingNames[3]) //binoculars name
+                            {
+                                menuMsgFMG.Remove(FMG.Key);
+                                menuMsgFMG.Add(FMG.Key, itemStartingNames[3]);
+                                itemDoneStartingNames[3] = true;
+                                i--;
+                            }
+                            else if (FMG.Key == 132055 && !itemDoneStartingNames[4]) //pendant name
+                            {
+                                menuMsgFMG.Remove(FMG.Key);
+                                menuMsgFMG.Add(FMG.Key, itemStartingNames[4]);
+                                itemDoneStartingNames[4] = true;
+                                i--;
+                            }
+                            else if (FMG.Key == 132351 && !itemDoneStartingDescr[0]) //blessing descr
+                            {
+                                menuMsgFMG.Remove(FMG.Key);
+                                menuMsgFMG.Add(FMG.Key, itemStartingDescr[0]);
+                                itemDoneStartingDescr[0] = true;
+                                i--;
+                            }
+                            else if (FMG.Key == 132352 && !itemDoneStartingDescr[1]) //firebomb descr
+                            {
+                                menuMsgFMG.Remove(FMG.Key);
+                                menuMsgFMG.Add(FMG.Key, itemStartingDescr[1]);
+                                itemDoneStartingDescr[1] = true;
+                                i--;
+                            }
+                            else if (FMG.Key == 132353 && !itemDoneStartingDescr[2]) //twin humanity descr
+                            {
+                                menuMsgFMG.Remove(FMG.Key);
+                                menuMsgFMG.Add(FMG.Key, itemStartingDescr[2]);
+                                itemDoneStartingDescr[2] = true;
+                                i--;
+                            }
+                            else if (FMG.Key == 132354 && !itemDoneStartingDescr[3]) //binoculars descr
+                            {
+                                menuMsgFMG.Remove(FMG.Key);
+                                menuMsgFMG.Add(FMG.Key, itemStartingDescr[3]);
+                                itemDoneStartingDescr[3] = true;
+                                i--;
+                            }
+                            else if (FMG.Key == 132355 && !itemDoneStartingDescr[4]) //pendant descr
+                            {
+                                menuMsgFMG.Remove(FMG.Key);
+                                menuMsgFMG.Add(FMG.Key, itemStartingDescr[4]);
+                                itemDoneStartingDescr[4] = true;
+                                i--;
+                            }
+                            else if (FMG.Key == 132057 && !ringDoneStartingNames[0]) //tiny being ring name
+                            {
+                                menuMsgFMG.Remove(FMG.Key);
+                                menuMsgFMG.Add(FMG.Key, ringStartingNames[0]);
+                                ringDoneStartingNames[0] = true;
+                                i--;
+                            }
+                            else if (FMG.Key == 132058 && !ringDoneStartingNames[1]) //old witch ring name
+                            {
+                                menuMsgFMG.Remove(FMG.Key);
+                                menuMsgFMG.Add(FMG.Key, ringStartingNames[1]);
+                                ringDoneStartingNames[1] = true;
+                                i--;
+                            }
+                            else if (FMG.Key == 132357 && !ringDoneStartingDescr[0]) //tiny being ring descr
+                            {
+                                menuMsgFMG.Remove(FMG.Key);
+                                menuMsgFMG.Add(FMG.Key, ringStartingDescr[0]);
+                                ringDoneStartingDescr[0] = true;
+                                i--;
+                            }
+                            else if (FMG.Key == 132358 && !ringDoneStartingDescr[1]) //old witch ring descr
+                            {
+                                menuMsgFMG.Remove(FMG.Key);
+                                menuMsgFMG.Add(FMG.Key, ringStartingDescr[1]);
+                                ringDoneStartingDescr[1] = true;
+                                i--;
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            //repack changed menu files if they were changed (for starting gift text to display properly)
+            if (checkBoxStartingGifts.Checked)
+            {
+                DataFile.Resave(menuMSGBND);
             }
 
             //repack param files
