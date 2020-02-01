@@ -459,7 +459,7 @@
             this.checkBoxWeaponShieldSplit.Name = "checkBoxWeaponShieldSplit";
             this.checkBoxWeaponShieldSplit.Size = new System.Drawing.Size(141, 17);
             this.checkBoxWeaponShieldSplit.TabIndex = 42;
-            this.checkBoxWeaponShieldSplit.Text = "Treat shields seperately*";
+            this.checkBoxWeaponShieldSplit.Text = "Treat shields seperately";
             this.tooltip.SetToolTip(this.checkBoxWeaponShieldSplit, "Shields will have a different randomization pool from regular weapons\nShields wil" +
         "l not be affected by the damage or defense values of normal weapons and vice ver" +
         "sa.");

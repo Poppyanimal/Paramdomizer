@@ -1331,235 +1331,245 @@ namespace Paramdomizer
                         allShieldIDs.Add(9014000); //Cleansing Greatshield
                     }
 
+                    //heads up to those who maintain this in the future:
+                    //when treat shields seperately is enabled it runs a different set of
+                    //loops for getting and setting values.
+                    //Any changes you make to the original loops, make sure to make equivalent
+                    //changes to the shield only versions of those loops
+
                     foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
                     {
-                        //check not to randomize moveset of bows which defeats the purpose of bullet rando. Try disabling this check and see what happens maybe
-                        MeowDSIO.DataTypes.PARAM.ParamCellValueRef bowCheckCell = paramRow.Cells.First(c => c.Def.Name == "bowDistRate");
-                        Type bowchecktype = bowCheckCell.GetType();
-                        PropertyInfo bowcheckprop = bowchecktype.GetProperty("Value");
-
-                        //if dont modify fists is off or if not fist
-                        if(!checkBoxWeaponFistNo.Checked || paramRow.ID != 900000)
+                        //if shield split is off or if not a shield
+                        if(!checkBoxWeaponShieldSplit.Checked || !allShieldIDs.Contains(paramRow.ID))
                         {
-                            if (Convert.ToInt32(bowcheckprop.GetValue(bowCheckCell, null)) < 0)
+                            //check not to randomize moveset of bows which defeats the purpose of bullet rando. Try disabling this check and see what happens maybe
+                            MeowDSIO.DataTypes.PARAM.ParamCellValueRef bowCheckCell = paramRow.Cells.First(c => c.Def.Name == "bowDistRate");
+                            Type bowchecktype = bowCheckCell.GetType();
+                            PropertyInfo bowcheckprop = bowchecktype.GetProperty("Value");
+
+                            //if dont modify fists is off or if not fist
+                            if (!checkBoxWeaponFistNo.Checked || paramRow.ID != 900000)
                             {
+                                if (Convert.ToInt32(bowcheckprop.GetValue(bowCheckCell, null)) < 0)
+                                {
+                                    foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                    {
+                                        if (cell.Def.Name == "wepmotionCategory")
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allWepmotionCats.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                        else if (cell.Def.Name == "wepmotionOneHandId")
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allWepmotion1hCats.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                        else if (cell.Def.Name == "wepmotionBothHandId")
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allWepmotion2hCats.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                        else if (cell.Def.Name == "spAtkcategory")
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allspAtkcategories.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                    }
+                                }
+
                                 foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
                                 {
-                                    if (cell.Def.Name == "wepmotionCategory")
+                                    if (cell.Def.Name == "equipModelId")
                                     {
                                         PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                        allWepmotionCats.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        allEquipModelIds.Add(Convert.ToInt32(prop.GetValue(cell, null)));
                                     }
-                                    else if (cell.Def.Name == "wepmotionOneHandId")
+                                    else if (cell.Def.Name == "attackBasePhysics")
                                     {
                                         PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                        allWepmotion1hCats.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        allAttackBasePhysic.Add(Convert.ToInt32(prop.GetValue(cell, null)));
                                     }
-                                    else if (cell.Def.Name == "wepmotionBothHandId")
+                                    else if (cell.Def.Name == "attackBaseMagic")
                                     {
                                         PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                        allWepmotion2hCats.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        allAttackBaseMagic.Add(Convert.ToInt32(prop.GetValue(cell, null)));
                                     }
-                                    else if (cell.Def.Name == "spAtkcategory")
+                                    else if (cell.Def.Name == "attackBaseFire")
                                     {
                                         PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                        allspAtkcategories.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        allAttackBaseFire.Add(Convert.ToInt32(prop.GetValue(cell, null)));
                                     }
-                                }
-                            }
-
-                            foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
-                            {
-                                if (cell.Def.Name == "equipModelId")
-                                {
-                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                    allEquipModelIds.Add(Convert.ToInt32(prop.GetValue(cell, null)));
-                                }
-                                else if (cell.Def.Name == "attackBasePhysics")
-                                {
-                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                    allAttackBasePhysic.Add(Convert.ToInt32(prop.GetValue(cell, null)));
-                                }
-                                else if (cell.Def.Name == "attackBaseMagic")
-                                {
-                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                    allAttackBaseMagic.Add(Convert.ToInt32(prop.GetValue(cell, null)));
-                                }
-                                else if (cell.Def.Name == "attackBaseFire")
-                                {
-                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                    allAttackBaseFire.Add(Convert.ToInt32(prop.GetValue(cell, null)));
-                                }
-                                else if (cell.Def.Name == "attackBaseThunder")
-                                {
-                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                    allAttackBaseThunder.Add(Convert.ToInt32(prop.GetValue(cell, null)));
-                                }
-                                else if (cell.Def.Name == "correctStrength")
-                                {
-                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                    allAttackCorrectStrength.Add(Convert.ToInt32(prop.GetValue(cell, null)));
-                                }
-                                else if (cell.Def.Name == "correctAgility")
-                                {
-                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                    allAttackCorrectAgility.Add(Convert.ToInt32(prop.GetValue(cell, null)));
-                                }
-                                else if (cell.Def.Name == "correctMagic")
-                                {
-                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                    allAttackCorrectMagic.Add(Convert.ToInt32(prop.GetValue(cell, null)));
-                                }
-                                else if (cell.Def.Name == "correctFaith")
-                                {
-                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                    allAttackCorrectFaith.Add(Convert.ToInt32(prop.GetValue(cell, null)));
-                                }
-                                else if (cell.Def.Name == "properStrength")
-                                {
-                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                    allAttackProperStrength.Add(Convert.ToInt32(prop.GetValue(cell, null)));
-                                }
-                                else if (cell.Def.Name == "properAgility")
-                                {
-                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                    allAttackProperAgility.Add(Convert.ToInt32(prop.GetValue(cell, null)));
-                                }
-                                else if (cell.Def.Name == "properMagic")
-                                {
-                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                    allAttackProperMagic.Add(Convert.ToInt32(prop.GetValue(cell, null)));
-                                }
-                                else if (cell.Def.Name == "properFaith")
-                                {
-                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                    allAttackProperFaith.Add(Convert.ToInt32(prop.GetValue(cell, null)));
-                                }
-                                else if (cell.Def.Name == "weight")
-                                {
-                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                    allWepWeight.Add(Convert.ToDouble(prop.GetValue(cell, null)));
-                                }
-                                else if (cell.Def.Name == "attackBaseStamina")
-                                {
-                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                    allAttackBaseStamina.Add(Convert.ToInt32(prop.GetValue(cell, null)));
-                                }
-                                else if (cell.Def.Name == "spEffectBehaviorId0")
-                                {
-                                    //if not fists
-                                    if (paramRow.ID != 900000)
+                                    else if (cell.Def.Name == "attackBaseThunder")
                                     {
                                         PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                        allspEffectBehavior.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        allAttackBaseThunder.Add(Convert.ToInt32(prop.GetValue(cell, null)));
                                     }
-                                }
-                                else if (cell.Def.Name == "spEffectBehaviorId1")
-                                {
-                                    //if not fists
-                                    if (paramRow.ID != 900000)
+                                    else if (cell.Def.Name == "correctStrength")
                                     {
                                         PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                        allspEffectBehavior2.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        allAttackCorrectStrength.Add(Convert.ToInt32(prop.GetValue(cell, null)));
                                     }
-                                }
-                                else if (cell.Def.Name == "physGuardCutRate")
-                                {
-                                    //if not fists
-                                    if (paramRow.ID != 900000)
+                                    else if (cell.Def.Name == "correctAgility")
                                     {
                                         PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                        allPhysicalGuard.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        allAttackCorrectAgility.Add(Convert.ToInt32(prop.GetValue(cell, null)));
                                     }
-                                }
-                                else if (cell.Def.Name == "magGuardCutRate")
-                                {
-                                    //if not fists
-                                    if (paramRow.ID != 900000)
+                                    else if (cell.Def.Name == "correctMagic")
                                     {
                                         PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                        allMagicGuard.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        allAttackCorrectMagic.Add(Convert.ToInt32(prop.GetValue(cell, null)));
                                     }
-                                }
-                                else if (cell.Def.Name == "fireGuardCutRate")
-                                {
-                                    //if not fists
-                                    if (paramRow.ID != 900000)
+                                    else if (cell.Def.Name == "correctFaith")
                                     {
                                         PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                        allFireGuard.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        allAttackCorrectFaith.Add(Convert.ToInt32(prop.GetValue(cell, null)));
                                     }
-                                }
-                                else if (cell.Def.Name == "thunGuardCutRate")
-                                {
-                                    //if not fists
-                                    if (paramRow.ID != 900000)
+                                    else if (cell.Def.Name == "properStrength")
                                     {
                                         PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                        allThunderGuard.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        allAttackProperStrength.Add(Convert.ToInt32(prop.GetValue(cell, null)));
                                     }
-                                }
-                                else if (cell.Def.Name == "staminaGuardDef")
-                                {
-                                    //if not fists
-                                    if (paramRow.ID != 900000)
+                                    else if (cell.Def.Name == "properAgility")
                                     {
                                         PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                        allGuardStability.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        allAttackProperAgility.Add(Convert.ToInt32(prop.GetValue(cell, null)));
                                     }
-                                }
-                                else if (cell.Def.Name == "poisonGuardResist")
-                                {
-                                    //if not fists
-                                    if (paramRow.ID != 900000)
+                                    else if (cell.Def.Name == "properMagic")
                                     {
                                         PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                        allPoisonResist.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        allAttackProperMagic.Add(Convert.ToInt32(prop.GetValue(cell, null)));
                                     }
-                                }
-                                else if (cell.Def.Name == "diseaseGuardResist")
-                                {
-                                    //if not fists
-                                    if (paramRow.ID != 900000)
+                                    else if (cell.Def.Name == "properFaith")
                                     {
                                         PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                        allDiseaseResist.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        allAttackProperFaith.Add(Convert.ToInt32(prop.GetValue(cell, null)));
                                     }
-                                }
-                                else if (cell.Def.Name == "bloodGuardResist")
-                                {
-                                    //if not fists
-                                    if (paramRow.ID != 900000)
+                                    else if (cell.Def.Name == "weight")
                                     {
                                         PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                        allBloodResist.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        allWepWeight.Add(Convert.ToDouble(prop.GetValue(cell, null)));
                                     }
-                                }
-                                else if (cell.Def.Name == "curseGuardResist")
-                                {
-                                    //if not fists
-                                    if (paramRow.ID != 900000)
+                                    else if (cell.Def.Name == "attackBaseStamina")
                                     {
                                         PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                        allCurseResist.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        allAttackBaseStamina.Add(Convert.ToInt32(prop.GetValue(cell, null)));
                                     }
-                                }
-                                else if (cell.Def.Name == "guardBaseRepel")
-                                {
-                                    //if not fists
-                                    if (paramRow.ID != 900000)
+                                    else if (cell.Def.Name == "spEffectBehaviorId0")
                                     {
-                                        PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                        allGuardBaseRepel.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        //if not fists
+                                        if (paramRow.ID != 900000)
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allspEffectBehavior.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
                                     }
-                                }
-                                else if (cell.Def.Name == "attackBaseRepel")
-                                {
-                                    //if not fists
-                                    if (paramRow.ID != 900000)
+                                    else if (cell.Def.Name == "spEffectBehaviorId1")
                                     {
-                                        PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                        allAttackBaseRepel.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        //if not fists
+                                        if (paramRow.ID != 900000)
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allspEffectBehavior2.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                    }
+                                    else if (cell.Def.Name == "physGuardCutRate")
+                                    {
+                                        //if not fists
+                                        if (paramRow.ID != 900000)
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allPhysicalGuard.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                    }
+                                    else if (cell.Def.Name == "magGuardCutRate")
+                                    {
+                                        //if not fists
+                                        if (paramRow.ID != 900000)
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allMagicGuard.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                    }
+                                    else if (cell.Def.Name == "fireGuardCutRate")
+                                    {
+                                        //if not fists
+                                        if (paramRow.ID != 900000)
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allFireGuard.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                    }
+                                    else if (cell.Def.Name == "thunGuardCutRate")
+                                    {
+                                        //if not fists
+                                        if (paramRow.ID != 900000)
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allThunderGuard.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                    }
+                                    else if (cell.Def.Name == "staminaGuardDef")
+                                    {
+                                        //if not fists
+                                        if (paramRow.ID != 900000)
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allGuardStability.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                    }
+                                    else if (cell.Def.Name == "poisonGuardResist")
+                                    {
+                                        //if not fists
+                                        if (paramRow.ID != 900000)
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allPoisonResist.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                    }
+                                    else if (cell.Def.Name == "diseaseGuardResist")
+                                    {
+                                        //if not fists
+                                        if (paramRow.ID != 900000)
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allDiseaseResist.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                    }
+                                    else if (cell.Def.Name == "bloodGuardResist")
+                                    {
+                                        //if not fists
+                                        if (paramRow.ID != 900000)
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allBloodResist.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                    }
+                                    else if (cell.Def.Name == "curseGuardResist")
+                                    {
+                                        //if not fists
+                                        if (paramRow.ID != 900000)
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allCurseResist.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                    }
+                                    else if (cell.Def.Name == "guardBaseRepel")
+                                    {
+                                        //if not fists
+                                        if (paramRow.ID != 900000)
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allGuardBaseRepel.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                    }
+                                    else if (cell.Def.Name == "attackBaseRepel")
+                                    {
+                                        //if not fists
+                                        if (paramRow.ID != 900000)
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allAttackBaseRepel.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
                                     }
                                 }
                             }
@@ -1569,901 +1579,2054 @@ namespace Paramdomizer
                     //loop again to set a random value per entry
                     foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
                     {
-                        MeowDSIO.DataTypes.PARAM.ParamCellValueRef bowCheckCell = paramRow.Cells.First(c => c.Def.Name == "bowDistRate");
-                        Type bowchecktype = bowCheckCell.GetType();
-                        PropertyInfo bowcheckprop = bowchecktype.GetProperty("Value");
-                        
-                        //if dont modify fists is off or if not fist
-                        if (!checkBoxWeaponFistNo.Checked || paramRow.ID != 900000)
+                        //if shield split is off or if not a shield
+                        if (!checkBoxWeaponShieldSplit.Checked || !allShieldIDs.Contains(paramRow.ID))
                         {
+                            MeowDSIO.DataTypes.PARAM.ParamCellValueRef bowCheckCell = paramRow.Cells.First(c => c.Def.Name == "bowDistRate");
+                            Type bowchecktype = bowCheckCell.GetType();
+                            PropertyInfo bowcheckprop = bowchecktype.GetProperty("Value");
 
-                            if (Convert.ToInt32(bowcheckprop.GetValue(bowCheckCell, null)) < 0)
+                            //if dont modify fists is off or if not fist
+                            if (!checkBoxWeaponFistNo.Checked || paramRow.ID != 900000)
                             {
+                                if (Convert.ToInt32(bowcheckprop.GetValue(bowCheckCell, null)) < 0)
+                                {
+                                    foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                    {
+                                        if (cell.Def.Name == "wepmotionCategory")
+                                        {
+                                            int randomIndex = r.Next(allWepmotionCats.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (chkWeaponMoveset.Checked)
+                                            {
+                                                prop.SetValue(cell, allWepmotionCats[randomIndex], null);
+                                            }
+
+                                            allWepmotionCats.RemoveAt(randomIndex);
+                                        }
+                                        else if (cell.Def.Name == "wepmotionOneHandId")
+                                        {
+                                            int randomIndex = r.Next(allWepmotion1hCats.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (chkWeaponMoveset.Checked)
+                                            {
+                                                prop.SetValue(cell, allWepmotion1hCats[randomIndex], null);
+                                            }
+
+                                            allWepmotion1hCats.RemoveAt(randomIndex);
+                                        }
+                                        else if (cell.Def.Name == "wepmotionBothHandId")
+                                        {
+                                            int randomIndex = r.Next(allWepmotion2hCats.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (chkWeaponMoveset.Checked)
+                                            {
+                                                prop.SetValue(cell, allWepmotion2hCats[randomIndex], null);
+                                            }
+
+                                            allWepmotion2hCats.RemoveAt(randomIndex);
+                                        }
+                                        else if (cell.Def.Name == "spAtkcategory")
+                                        {
+                                            int randomIndex = r.Next(allspAtkcategories.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+
+                                            if (chkWeaponMoveset.Checked)
+                                            {
+                                                prop.SetValue(cell, allspAtkcategories[randomIndex], null);
+                                            }
+
+                                            allspAtkcategories.RemoveAt(randomIndex);
+                                        }
+                                    }
+                                }
+
+                                int baseDamage = 0;
+                                bool castsMagic = false;
+                                List<int> damageTypes = new List<int>(); //values 0-3; phys, magic, fire, thunder
+                                                                         //check if casts magic first
                                 foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
                                 {
-                                    if (cell.Def.Name == "wepmotionCategory")
+                                    if (cell.Def.Name == "enableMagic" || cell.Def.Name == "enableVowMagic" || cell.Def.Name == "enableSorcery")
                                     {
-                                        int randomIndex = r.Next(allWepmotionCats.Count);
-                                        Type type = cell.GetType();
-                                        PropertyInfo prop = type.GetProperty("Value");
-                                        if (chkWeaponMoveset.Checked)
+                                        if (Convert.ToBoolean(cell.GetType().GetProperty("Value").GetValue(cell, null)) == true)
                                         {
-                                            prop.SetValue(cell, allWepmotionCats[randomIndex], null);
-                                        }
-
-                                        allWepmotionCats.RemoveAt(randomIndex);
-                                    }
-                                    else if (cell.Def.Name == "wepmotionOneHandId")
-                                    {
-                                        int randomIndex = r.Next(allWepmotion1hCats.Count);
-                                        Type type = cell.GetType();
-                                        PropertyInfo prop = type.GetProperty("Value");
-                                        if (chkWeaponMoveset.Checked)
-                                        {
-                                            prop.SetValue(cell, allWepmotion1hCats[randomIndex], null);
-                                        }
-
-                                        allWepmotion1hCats.RemoveAt(randomIndex);
-                                    }
-                                    else if (cell.Def.Name == "wepmotionBothHandId")
-                                    {
-                                        int randomIndex = r.Next(allWepmotion2hCats.Count);
-                                        Type type = cell.GetType();
-                                        PropertyInfo prop = type.GetProperty("Value");
-                                        if (chkWeaponMoveset.Checked)
-                                        {
-                                            prop.SetValue(cell, allWepmotion2hCats[randomIndex], null);
-                                        }
-
-                                        allWepmotion2hCats.RemoveAt(randomIndex);
-                                    }
-                                    else if (cell.Def.Name == "spAtkcategory")
-                                    {
-                                        int randomIndex = r.Next(allspAtkcategories.Count);
-                                        Type type = cell.GetType();
-                                        PropertyInfo prop = type.GetProperty("Value");
-
-                                        if (chkWeaponMoveset.Checked)
-                                        {
-                                            prop.SetValue(cell, allspAtkcategories[randomIndex], null);
-                                        }
-
-                                        allspAtkcategories.RemoveAt(randomIndex);
-                                    }
-                                }
-                            }
-
-                            int baseDamage = 0;
-                            bool castsMagic = false;
-                            List<int> damageTypes = new List<int>(); //values 0-3; phys, magic, fire, thunder
-                            //check if casts magic first
-                            foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
-                            {
-                                if (cell.Def.Name == "enableMagic" || cell.Def.Name == "enableVowMagic" || cell.Def.Name == "enableSorcery")
-                                {
-                                    if (Convert.ToBoolean(cell.GetType().GetProperty("Value").GetValue(cell, null)) == true)
-                                    {
-                                        castsMagic = true;
-                                    }
-                                }
-                            }
-                            foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
-                            {
-                                if (cell.Def.Name == "equipModelId")
-                                {
-                                    int randomIndex = r.Next(allEquipModelIds.Count);
-                                    Type type = cell.GetType();
-                                    PropertyInfo prop = type.GetProperty("Value");
-                                    if (chkWeaponModels.Checked)
-                                    {
-                                        prop.SetValue(cell, allEquipModelIds[randomIndex], null);
-                                    }
-
-                                    allEquipModelIds.RemoveAt(randomIndex);
-                                }
-                                else if (cell.Def.Name == "attackBasePhysics")
-                                {
-                                    int randomIndex = r.Next(allAttackBasePhysic.Count);
-                                    Type type = cell.GetType();
-                                    PropertyInfo prop = type.GetProperty("Value");
-                                    if (chkWeaponDamage.Checked)
-                                    {
-                                        if (checkBoxDoTrueRandom.Checked)
-                                        {
-                                            //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the damage it does
-                                            if (r.Next(3) == 0)
-                                            {
-                                                damageTypes.Add(0);
-                                                int temp = r.Next(371) + 20;
-                                                baseDamage += temp;
-                                                prop.SetValue(cell, temp, null);
-                                            }
-                                            else
-                                            {
-                                                prop.SetValue(cell, 0, null);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            baseDamage += allAttackBasePhysic[randomIndex];
-                                            prop.SetValue(cell, allAttackBasePhysic[randomIndex], null);
-                                        }
-                                    }
-
-                                    allAttackBasePhysic.RemoveAt(randomIndex);
-                                }
-                                else if (cell.Def.Name == "attackBaseMagic")
-                                {
-                                    int randomIndex = r.Next(allAttackBaseMagic.Count);
-                                    Type type = cell.GetType();
-                                    PropertyInfo prop = type.GetProperty("Value");
-                                    if (chkWeaponDamage.Checked)
-                                    {
-                                        if (checkBoxDoTrueRandom.Checked)
-                                        {
-                                            //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the damage it does
-                                            if (r.Next(3) == 0)
-                                            {
-                                                damageTypes.Add(1);
-                                                int temp = r.Next(371) + 20;
-                                                baseDamage += temp;
-                                                prop.SetValue(cell, temp, null);
-                                            }
-                                            else
-                                            {
-                                                prop.SetValue(cell, 0, null);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            baseDamage += allAttackBaseMagic[randomIndex];
-                                            prop.SetValue(cell, allAttackBaseMagic[randomIndex], null);
-                                        }
-                                    }
-
-                                    allAttackBaseMagic.RemoveAt(randomIndex);
-                                }
-                                else if (cell.Def.Name == "attackBaseFire")
-                                {
-                                    int randomIndex = r.Next(allAttackBaseFire.Count);
-                                    Type type = cell.GetType();
-                                    PropertyInfo prop = type.GetProperty("Value");
-                                    if (chkWeaponDamage.Checked)
-                                    {
-                                        if (checkBoxDoTrueRandom.Checked)
-                                        {
-                                            //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the damage it does
-                                            if (r.Next(3) == 0)
-                                            {
-                                                damageTypes.Add(2);
-                                                int temp = r.Next(371) + 20;
-                                                baseDamage += temp;
-                                                prop.SetValue(cell, temp, null);
-                                            }
-                                            else
-                                            {
-                                                prop.SetValue(cell, 0, null);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            baseDamage += allAttackBaseFire[randomIndex];
-                                            prop.SetValue(cell, allAttackBaseFire[randomIndex], null);
-                                        }
-                                    }
-
-                                    allAttackBaseFire.RemoveAt(randomIndex);
-                                }
-                                else if (cell.Def.Name == "attackBaseThunder")
-                                {
-                                    int randomIndex = r.Next(allAttackBaseThunder.Count);
-                                    Type type = cell.GetType();
-                                    PropertyInfo prop = type.GetProperty("Value");
-                                    if (chkWeaponDamage.Checked)
-                                    {
-                                        if (checkBoxDoTrueRandom.Checked)
-                                        {
-                                            //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the damage it does
-                                            if (r.Next(3) == 0)
-                                            {
-                                                damageTypes.Add(3);
-                                                int temp = r.Next(371) + 20;
-                                                baseDamage += temp;
-                                                prop.SetValue(cell, temp, null);
-                                            }
-                                            else
-                                            {
-                                                prop.SetValue(cell, 0, null);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            baseDamage += allAttackBaseThunder[randomIndex];
-                                            prop.SetValue(cell, allAttackBaseThunder[randomIndex], null);
-                                        }
-                                    }
-
-                                    allAttackBaseThunder.RemoveAt(randomIndex);
-                                }
-                                else if (cell.Def.Name == "correctStrength")
-                                {
-                                    int randomIndex = r.Next(allAttackCorrectStrength.Count);
-                                    Type type = cell.GetType();
-                                    PropertyInfo prop = type.GetProperty("Value");
-                                    if (checkBoxWeaponScaling.Checked)
-                                    {
-                                        if (checkBoxDoTrueRandom.Checked)
-                                        {
-                                            //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the scaling it does
-                                            if (r.Next(3) == 0)
-                                            {
-                                                //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
-                                                if (r.Next(20) == 0)
-                                                {
-                                                    //215 is the cap for a stat (tin crystallization catalyst)
-                                                    prop.SetValue(cell, r.Next(116) + 100, null);
-                                                }
-                                                else
-                                                {
-                                                    prop.SetValue(cell, r.Next(101), null);
-                                                }
-                                            }
-                                            else
-                                            {
-                                                prop.SetValue(cell, r.Next(0), null);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            prop.SetValue(cell, allAttackCorrectStrength[randomIndex], null);
-                                        }
-                                    }
-
-                                    allAttackCorrectStrength.RemoveAt(randomIndex);
-                                }
-                                else if (cell.Def.Name == "correctAgility")
-                                {
-                                    int randomIndex = r.Next(allAttackCorrectAgility.Count);
-                                    Type type = cell.GetType();
-                                    PropertyInfo prop = type.GetProperty("Value");
-                                    if (checkBoxWeaponScaling.Checked)
-                                    {
-                                        if (checkBoxDoTrueRandom.Checked)
-                                        {
-                                            //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the scaling it does
-                                            if (r.Next(3) == 0)
-                                            {
-                                                //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
-                                                if (r.Next(20) == 0)
-                                                {
-                                                    //215 is the cap for a stat (tin crystallization catalyst)
-                                                    prop.SetValue(cell, r.Next(116) + 100, null);
-                                                }
-                                                else
-                                                {
-                                                    prop.SetValue(cell, r.Next(101), null);
-                                                }
-                                            }
-                                            else
-                                            {
-                                                prop.SetValue(cell, r.Next(0), null);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            prop.SetValue(cell, allAttackCorrectAgility[randomIndex], null);
-                                        }
-                                    }
-
-                                    allAttackCorrectAgility.RemoveAt(randomIndex);
-                                }
-                                else if (cell.Def.Name == "correctMagic")
-                                {
-                                    int randomIndex = r.Next(allAttackCorrectMagic.Count);
-                                    Type type = cell.GetType();
-                                    PropertyInfo prop = type.GetProperty("Value");
-                                    if (checkBoxWeaponScaling.Checked)
-                                    {
-                                        if (checkBoxDoTrueRandom.Checked)
-                                        {
-                                            //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the scaling it does
-                                            if (r.Next(3) == 0)
-                                            {
-                                                //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
-                                                if (r.Next(20) == 0)
-                                                {
-                                                    //215 is the cap for a stat (tin crystallization catalyst)
-                                                    prop.SetValue(cell, r.Next(116) + 100, null);
-                                                }
-                                                else
-                                                {
-                                                    prop.SetValue(cell, r.Next(101), null);
-                                                }
-                                            }
-                                            else
-                                            {
-                                                prop.SetValue(cell, r.Next(0), null);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            prop.SetValue(cell, allAttackCorrectMagic[randomIndex], null);
-                                        }
-                                    }
-
-                                    allAttackCorrectMagic.RemoveAt(randomIndex);
-                                }
-                                else if (cell.Def.Name == "correctFaith")
-                                {
-                                    int randomIndex = r.Next(allAttackCorrectFaith.Count);
-                                    Type type = cell.GetType();
-                                    PropertyInfo prop = type.GetProperty("Value");
-                                    if (checkBoxWeaponScaling.Checked)
-                                    {
-                                        if (checkBoxDoTrueRandom.Checked)
-                                        {
-                                            //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the scaling it does
-                                            if (r.Next(3) == 0)
-                                            {
-                                                //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
-                                                if (r.Next(20) == 0)
-                                                {
-                                                    //215 is the cap for a stat (tin crystallization catalyst)
-                                                    prop.SetValue(cell, r.Next(116) + 100, null);
-                                                }
-                                                else
-                                                {
-                                                    prop.SetValue(cell, r.Next(101), null);
-                                                }
-                                            }
-                                            else
-                                            {
-                                                prop.SetValue(cell, r.Next(0), null);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            prop.SetValue(cell, allAttackCorrectFaith[randomIndex], null);
-                                        }
-                                    }
-
-                                    allAttackCorrectFaith.RemoveAt(randomIndex);
-                                }
-                                else if (cell.Def.Name == "properStrength")
-                                {
-                                    int randomIndex = r.Next(allAttackProperStrength.Count);
-                                    Type type = cell.GetType();
-                                    PropertyInfo prop = type.GetProperty("Value");
-                                    if (checkBoxWeaponStatMin.Checked)
-                                    {
-                                        if (checkBoxDoTrueRandom.Checked)
-                                        {
-                                            //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the stat requirements
-                                            if (r.Next(3) == 0)
-                                            {
-                                                //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
-                                                if (r.Next(20) == 0)
-                                                {
-                                                    //58 is the cap
-                                                    prop.SetValue(cell, r.Next(34) + 25, null);
-                                                }
-                                                else
-                                                {
-                                                    prop.SetValue(cell, r.Next(26), null);
-                                                }
-                                            }
-                                            else
-                                            {
-                                                prop.SetValue(cell, r.Next(0), null);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            prop.SetValue(cell, allAttackProperStrength[randomIndex], null);
-                                        }
-                                    }
-
-                                    allAttackProperStrength.RemoveAt(randomIndex);
-                                }
-                                else if (cell.Def.Name == "properAgility")
-                                {
-                                    int randomIndex = r.Next(allAttackProperAgility.Count);
-                                    Type type = cell.GetType();
-                                    PropertyInfo prop = type.GetProperty("Value");
-                                    if (checkBoxWeaponStatMin.Checked)
-                                    {
-                                        if (checkBoxDoTrueRandom.Checked)
-                                        {
-                                            //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the stat requirements
-                                            if (r.Next(3) == 0)
-                                            {
-                                                //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
-                                                if (r.Next(20) == 0)
-                                                {
-                                                    //58 is the cap
-                                                    prop.SetValue(cell, r.Next(34) + 25, null);
-                                                }
-                                                else
-                                                {
-                                                    prop.SetValue(cell, r.Next(26), null);
-                                                }
-                                            }
-                                            else
-                                            {
-                                                prop.SetValue(cell, r.Next(0), null);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            prop.SetValue(cell, allAttackProperAgility[randomIndex], null);
-                                        }
-                                    }
-
-                                    allAttackProperAgility.RemoveAt(randomIndex);
-                                }
-                                else if (cell.Def.Name == "properMagic")
-                                {
-                                    int randomIndex = r.Next(allAttackProperMagic.Count);
-                                    Type type = cell.GetType();
-                                    PropertyInfo prop = type.GetProperty("Value");
-                                    if (checkBoxWeaponStatMin.Checked)
-                                    {
-                                        if (checkBoxDoTrueRandom.Checked)
-                                        {
-                                            //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the stat requirements
-                                            if (r.Next(3) == 0)
-                                            {
-                                                //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
-                                                if (r.Next(20) == 0)
-                                                {
-                                                    //58 is the cap
-                                                    prop.SetValue(cell, r.Next(34) + 25, null);
-                                                }
-                                                else
-                                                {
-                                                    prop.SetValue(cell, r.Next(26), null);
-                                                }
-                                            }
-                                            else
-                                            {
-                                                prop.SetValue(cell, r.Next(0), null);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            prop.SetValue(cell, allAttackProperMagic[randomIndex], null);
-                                        }
-                                    }
-
-                                    allAttackProperMagic.RemoveAt(randomIndex);
-                                }
-                                else if (cell.Def.Name == "properFaith")
-                                {
-                                    int randomIndex = r.Next(allAttackProperFaith.Count);
-                                    Type type = cell.GetType();
-                                    PropertyInfo prop = type.GetProperty("Value");
-                                    if (checkBoxWeaponStatMin.Checked)
-                                    {
-                                        if (checkBoxDoTrueRandom.Checked)
-                                        {
-                                            //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the stat requirements
-                                            if (r.Next(3) == 0)
-                                            {
-                                                //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
-                                                if (r.Next(20) == 0)
-                                                {
-                                                    //58 is the cap
-                                                    prop.SetValue(cell, r.Next(34) + 25, null);
-                                                }
-                                                else
-                                                {
-                                                    prop.SetValue(cell, r.Next(26), null);
-                                                }
-                                            }
-                                            else
-                                            {
-                                                prop.SetValue(cell, r.Next(0), null);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            prop.SetValue(cell, allAttackProperFaith[randomIndex], null);
-                                        }
-                                    }
-
-                                    allAttackProperFaith.RemoveAt(randomIndex);
-                                }
-                                else if (cell.Def.Name == "weight")
-                                {
-                                    MeowDSIO.DataTypes.PARAM.ParamCellValueRef fistCheckCell = paramRow.Cells.First(c => c.Def.Name == "sortId");
-                                    Type fistchecktype = fistCheckCell.GetType();
-                                    PropertyInfo fistcheckprop = fistchecktype.GetProperty("Value");
-
-                                    int randomIndex = r.Next(allWepWeight.Count);
-                                    Type type = cell.GetType();
-                                    PropertyInfo prop = type.GetProperty("Value");
-                                    //fists dont get weight
-                                    if (checkBoxWeaponWeight.Checked && Convert.ToInt32(fistcheckprop.GetValue(fistCheckCell, null)) != 1750)
-                                    {
-                                        if (checkBoxDoTrueRandom.Checked)
-                                        {
-                                            //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
-                                            if (r.Next(20) == 0)
-                                            {
-                                                //28 is the cap; weight is randomized in half steps
-                                                prop.SetValue(cell, (r.Next(37) + 20) / 2.0, null);
-                                            }
-                                            else
-                                            {
-                                                //10 is soft cap; weight is randomized in half steps
-                                                prop.SetValue(cell, (r.Next(21)) / 2.0, null);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            prop.SetValue(cell, allWepWeight[randomIndex], null);
-                                        }
-                                    }
-
-                                    allWepWeight.RemoveAt(randomIndex);
-                                }
-                                else if (cell.Def.Name == "attackBaseStamina")
-                                {
-                                    int randomIndex = r.Next(allAttackBaseStamina.Count);
-                                    Type type = cell.GetType();
-                                    PropertyInfo prop = type.GetProperty("Value");
-                                    if (checkBoxWeaponStamina.Checked)
-                                    {
-                                        if (checkBoxDoTrueRandom.Checked)
-                                        {
-                                            if (r.Next(3) == 0)
-                                            {
-                                                //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
-                                                if (r.Next(33) == 0)
-                                                {
-                                                    //100 is the cap
-                                                    prop.SetValue(cell, r.Next(61) + 40, null);
-                                                }
-                                                else
-                                                {
-                                                    //40 is 2nd soft cap
-                                                    prop.SetValue(cell, r.Next(16) + 25, null);
-                                                }
-                                            }
-                                            else
-                                            {
-                                                //first soft cap of 25
-                                                prop.SetValue(cell, r.Next(25) + 1, null);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            prop.SetValue(cell, allAttackBaseStamina[randomIndex], null);
-                                        }
-                                    }
-
-                                    allAttackBaseStamina.RemoveAt(randomIndex);
-                                }
-                                else if (cell.Def.Name == "enableMagic" || cell.Def.Name == "enableVowMagic" || cell.Def.Name == "enableSorcery")
-                                {
-                                    Type type = cell.GetType();
-                                    PropertyInfo prop = type.GetProperty("Value");
-                                    if (castsMagic && checkBoxUniversalizeCasters.Checked)
-                                    {
-                                        prop.SetValue(cell, true, null);
-                                    }
-                                }
-                                else if (cell.Def.Name == "spEffectBehaviorId0")
-                                {
-                                    //if not fists
-                                    if (paramRow.ID != 900000)
-                                    {
-                                        int randomIndex = r.Next(allspEffectBehavior.Count);
-                                        Type type = cell.GetType();
-                                        PropertyInfo prop = type.GetProperty("Value");
-                                        if (chkWeaponSpeffects.Checked)
-                                        {
-                                            prop.SetValue(cell, allspEffectBehavior[randomIndex], null);
-                                        }
-
-                                        allspEffectBehavior.RemoveAt(randomIndex);
-                                    }
-                                }
-                                else if (cell.Def.Name == "spEffectBehaviorId1")
-                                {
-                                    //if not fists
-                                    if (paramRow.ID != 900000)
-                                    {
-                                        int randomIndex = r.Next(allspEffectBehavior2.Count);
-                                        Type type = cell.GetType();
-                                        PropertyInfo prop = type.GetProperty("Value");
-                                        if (chkWeaponSpeffects.Checked)
-                                        {
-                                            prop.SetValue(cell, allspEffectBehavior2[randomIndex], null);
-                                        }
-
-                                        allspEffectBehavior2.RemoveAt(randomIndex);
-                                    }
-                                }
-                                else if (cell.Def.Name == "residentSpEffectId")
-                                {
-                                    //if not fists
-                                    if (paramRow.ID != 900000)
-                                    {
-                                        int randomIndex = r.Next(allresidentspEffect.Count);
-                                        Type type = cell.GetType();
-                                        PropertyInfo prop = type.GetProperty("Value");
-                                        if (chkWeaponSpeffects.Checked)
-                                        {
-                                            prop.SetValue(cell, allresidentspEffect[randomIndex], null);
-                                        }
-
-                                        allresidentspEffect.RemoveAt(randomIndex);
-                                    }
-                                }
-                                else if (cell.Def.Name == "physGuardCutRate")
-                                {
-                                    //if not fists
-                                    if (paramRow.ID != 900000)
-                                    {
-                                        int randomIndex = r.Next(allPhysicalGuard.Count);
-                                        Type type = cell.GetType();
-                                        PropertyInfo prop = type.GetProperty("Value");
-                                        if (checkBoxWeaponDefense.Checked)
-                                        {
-                                            prop.SetValue(cell, allPhysicalGuard[randomIndex], null);
-                                        }
-
-                                        allPhysicalGuard.RemoveAt(randomIndex);
-                                    }
-                                }
-                                else if (cell.Def.Name == "magGuardCutRate")
-                                {
-                                    //if not fists
-                                    if (paramRow.ID != 900000)
-                                    {
-                                        int randomIndex = r.Next(allMagicGuard.Count);
-                                        Type type = cell.GetType();
-                                        PropertyInfo prop = type.GetProperty("Value");
-                                        if (checkBoxWeaponDefense.Checked)
-                                        {
-                                            prop.SetValue(cell, allMagicGuard[randomIndex], null);
-                                        }
-
-                                        allMagicGuard.RemoveAt(randomIndex);
-                                    }
-                                }
-                                else if (cell.Def.Name == "fireGuardCutRate")
-                                {
-                                    //if not fists
-                                    if (paramRow.ID != 900000)
-                                    {
-                                        int randomIndex = r.Next(allFireGuard.Count);
-                                        Type type = cell.GetType();
-                                        PropertyInfo prop = type.GetProperty("Value");
-                                        if (checkBoxWeaponDefense.Checked)
-                                        {
-                                            prop.SetValue(cell, allFireGuard[randomIndex], null);
-                                        }
-
-                                        allFireGuard.RemoveAt(randomIndex);
-                                    }
-                                }
-                                else if (cell.Def.Name == "thunGuardCutRate")
-                                {
-                                    //if not fists
-                                    if (paramRow.ID != 900000)
-                                    {
-                                        int randomIndex = r.Next(allThunderGuard.Count);
-                                        Type type = cell.GetType();
-                                        PropertyInfo prop = type.GetProperty("Value");
-                                        if (checkBoxWeaponDefense.Checked)
-                                        {
-                                            prop.SetValue(cell, allThunderGuard[randomIndex], null);
-                                        }
-
-                                        allThunderGuard.RemoveAt(randomIndex);
-                                    }
-                                }
-                                else if (cell.Def.Name == "staminaGuardDef")
-                                {
-                                    //if not fists
-                                    if (paramRow.ID != 900000)
-                                    {
-                                        int randomIndex = r.Next(allGuardStability.Count);
-                                        Type type = cell.GetType();
-                                        PropertyInfo prop = type.GetProperty("Value");
-                                        if (checkBoxWeaponDefense.Checked)
-                                        {
-                                            prop.SetValue(cell, allGuardStability[randomIndex], null);
-                                        }
-
-                                        allGuardStability.RemoveAt(randomIndex);
-                                    }
-                                }
-                                else if (cell.Def.Name == "poisonGuardResist")
-                                {
-                                    //if not fists
-                                    if (paramRow.ID != 900000)
-                                    {
-                                        int randomIndex = r.Next(allPoisonResist.Count);
-                                        Type type = cell.GetType();
-                                        PropertyInfo prop = type.GetProperty("Value");
-                                        if (checkBoxWeaponDefense.Checked)
-                                        {
-                                            prop.SetValue(cell, allPoisonResist[randomIndex], null);
-                                        }
-
-                                        allPoisonResist.RemoveAt(randomIndex);
-                                    }
-                                }
-                                else if (cell.Def.Name == "diseaseGuardResist")
-                                {
-                                    //if not fists
-                                    if (paramRow.ID != 900000)
-                                    {
-                                        int randomIndex = r.Next(allDiseaseResist.Count);
-                                        Type type = cell.GetType();
-                                        PropertyInfo prop = type.GetProperty("Value");
-                                        if (checkBoxWeaponDefense.Checked)
-                                        {
-                                            prop.SetValue(cell, allDiseaseResist[randomIndex], null);
-                                        }
-
-                                        allDiseaseResist.RemoveAt(randomIndex);
-                                    }
-                                }
-                                else if (cell.Def.Name == "bloodGuardResist")
-                                {
-                                    //if not fists
-                                    if (paramRow.ID != 900000)
-                                    {
-                                        int randomIndex = r.Next(allBloodResist.Count);
-                                        Type type = cell.GetType();
-                                        PropertyInfo prop = type.GetProperty("Value");
-                                        if (checkBoxWeaponDefense.Checked)
-                                        {
-                                            prop.SetValue(cell, allBloodResist[randomIndex], null);
-                                        }
-
-                                        allBloodResist.RemoveAt(randomIndex);
-                                    }
-                                }
-                                else if (cell.Def.Name == "curseGuardResist")
-                                {
-                                    //if not fists
-                                    if (paramRow.ID != 900000)
-                                    {
-                                        int randomIndex = r.Next(allCurseResist.Count);
-                                        Type type = cell.GetType();
-                                        PropertyInfo prop = type.GetProperty("Value");
-                                        if (checkBoxWeaponDefense.Checked)
-                                        {
-                                            prop.SetValue(cell, allCurseResist[randomIndex], null);
-                                        }
-
-                                        allCurseResist.RemoveAt(randomIndex);
-                                    }
-                                }
-                                else if (cell.Def.Name == "guardBaseRepel")
-                                {
-                                    //if not fists
-                                    if (paramRow.ID != 900000)
-                                    {
-                                        int randomIndex = r.Next(allGuardBaseRepel.Count);
-                                        Type type = cell.GetType();
-                                        PropertyInfo prop = type.GetProperty("Value");
-                                        if (checkBoxWeaponDefense.Checked)
-                                        {
-                                            prop.SetValue(cell, allGuardBaseRepel[randomIndex], null);
-                                        }
-
-                                        allGuardBaseRepel.RemoveAt(randomIndex);
-                                    }
-                                }
-                                else if (cell.Def.Name == "attackBaseRepel")
-                                {
-                                    //if not fists
-                                    if (paramRow.ID != 900000)
-                                    {
-                                        int randomIndex = r.Next(allAttackBaseRepel.Count);
-                                        Type type = cell.GetType();
-                                        PropertyInfo prop = type.GetProperty("Value");
-                                        if (checkBoxWeaponDefense.Checked)
-                                        {
-                                            prop.SetValue(cell, allAttackBaseRepel[randomIndex], null);
-                                        }
-
-                                        allAttackBaseRepel.RemoveAt(randomIndex);
-                                    }
-                                }
-                            }
-
-                            //damage dropoff when rolling more than one damage type (Dont randomize by shuffle mode only, shuffle mode will have an empty damagetypes list)
-                            while(damageTypes.Count > 0)
-                            {
-                                int index = r.Next(damageTypes.Count);
-                                int type = damageTypes[index];
-
-                                //new damage of this damage type = (rolled damage / total damage types);
-                                //new damage will be the same as rolled damage if only one damage type was rolled
-                                //or if this is the last of the damage types that dropoff is applied to
-                                if (type == 0) //if physical
-                                {
-                                    foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
-                                    {
-                                        if (cell.Def.Name == "attackBasePhysics")
-                                        {
-                                            int newDamage = Convert.ToInt32(cell.GetType().GetProperty("Value").GetValue(cell, null)) / damageTypes.Count;
-                                            cell.GetType().GetProperty("Value").SetValue(cell, newDamage, null);
+                                            castsMagic = true;
                                         }
                                     }
                                 }
-                                else if (type == 1) //if magic
-                                {
-                                    foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
-                                    {
-                                        if (cell.Def.Name == "attackBaseMagic")
-                                        {
-                                            int newDamage = Convert.ToInt32(cell.GetType().GetProperty("Value").GetValue(cell, null)) / damageTypes.Count;
-                                            cell.GetType().GetProperty("Value").SetValue(cell, newDamage, null);
-                                        }
-                                    }
-                                }
-                                else if (type == 2) // if fire
-                                {
-                                    foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
-                                    {
-                                        if (cell.Def.Name == "attackBaseFire")
-                                        {
-                                            int newDamage = Convert.ToInt32(cell.GetType().GetProperty("Value").GetValue(cell, null)) / damageTypes.Count;
-                                            cell.GetType().GetProperty("Value").SetValue(cell, newDamage, null);
-                                        }
-                                    }
-                                }
-                                else if (type == 3) //if thunder
-                                {
-                                    foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
-                                    {
-                                        if (cell.Def.Name == "attackBaseThunder")
-                                        {
-                                            int newDamage = Convert.ToInt32(cell.GetType().GetProperty("Value").GetValue(cell, null)) / damageTypes.Count;
-                                            cell.GetType().GetProperty("Value").SetValue(cell, newDamage, null);
-                                        }
-                                    }
-                                }
-
-                                damageTypes.RemoveAt(index);
-                            }
-
-                            if (baseDamage == 0 && checkBoxDoTrueRandom.Checked)
-                            {
-                                int dtype = r.Next(4);
                                 foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
                                 {
-                                    if (cell.Def.Name == "attackBasePhysics" && dtype == 0)
+                                    if (cell.Def.Name == "equipModelId")
                                     {
+                                        int randomIndex = r.Next(allEquipModelIds.Count);
                                         Type type = cell.GetType();
                                         PropertyInfo prop = type.GetProperty("Value");
-                                        prop.SetValue(cell, r.Next(371) + 20, null);
+                                        if (chkWeaponModels.Checked)
+                                        {
+                                            prop.SetValue(cell, allEquipModelIds[randomIndex], null);
+                                        }
+
+                                        allEquipModelIds.RemoveAt(randomIndex);
                                     }
-                                    else if (cell.Def.Name == "attackBaseMagic" && dtype == 1)
+                                    else if (cell.Def.Name == "attackBasePhysics")
                                     {
+                                        int randomIndex = r.Next(allAttackBasePhysic.Count);
                                         Type type = cell.GetType();
                                         PropertyInfo prop = type.GetProperty("Value");
-                                        prop.SetValue(cell, r.Next(371) + 20, null);
+                                        if (chkWeaponDamage.Checked)
+                                        {
+                                            if (checkBoxDoTrueRandom.Checked)
+                                            {
+                                                //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the damage it does
+                                                if (r.Next(3) == 0)
+                                                {
+                                                    damageTypes.Add(0);
+                                                    int temp = r.Next(371) + 20;
+                                                    baseDamage += temp;
+                                                    prop.SetValue(cell, temp, null);
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, 0, null);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                baseDamage += allAttackBasePhysic[randomIndex];
+                                                prop.SetValue(cell, allAttackBasePhysic[randomIndex], null);
+                                            }
+                                        }
+
+                                        allAttackBasePhysic.RemoveAt(randomIndex);
                                     }
-                                    else if (cell.Def.Name == "attackBaseFire" && dtype == 2)
+                                    else if (cell.Def.Name == "attackBaseMagic")
                                     {
+                                        int randomIndex = r.Next(allAttackBaseMagic.Count);
                                         Type type = cell.GetType();
                                         PropertyInfo prop = type.GetProperty("Value");
-                                        prop.SetValue(cell, r.Next(371) + 20, null);
+                                        if (chkWeaponDamage.Checked)
+                                        {
+                                            if (checkBoxDoTrueRandom.Checked)
+                                            {
+                                                //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the damage it does
+                                                if (r.Next(3) == 0)
+                                                {
+                                                    damageTypes.Add(1);
+                                                    int temp = r.Next(371) + 20;
+                                                    baseDamage += temp;
+                                                    prop.SetValue(cell, temp, null);
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, 0, null);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                baseDamage += allAttackBaseMagic[randomIndex];
+                                                prop.SetValue(cell, allAttackBaseMagic[randomIndex], null);
+                                            }
+                                        }
+
+                                        allAttackBaseMagic.RemoveAt(randomIndex);
                                     }
-                                    else if (cell.Def.Name == "attackBaseThunder" && dtype == 3)
+                                    else if (cell.Def.Name == "attackBaseFire")
+                                    {
+                                        int randomIndex = r.Next(allAttackBaseFire.Count);
+                                        Type type = cell.GetType();
+                                        PropertyInfo prop = type.GetProperty("Value");
+                                        if (chkWeaponDamage.Checked)
+                                        {
+                                            if (checkBoxDoTrueRandom.Checked)
+                                            {
+                                                //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the damage it does
+                                                if (r.Next(3) == 0)
+                                                {
+                                                    damageTypes.Add(2);
+                                                    int temp = r.Next(371) + 20;
+                                                    baseDamage += temp;
+                                                    prop.SetValue(cell, temp, null);
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, 0, null);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                baseDamage += allAttackBaseFire[randomIndex];
+                                                prop.SetValue(cell, allAttackBaseFire[randomIndex], null);
+                                            }
+                                        }
+
+                                        allAttackBaseFire.RemoveAt(randomIndex);
+                                    }
+                                    else if (cell.Def.Name == "attackBaseThunder")
+                                    {
+                                        int randomIndex = r.Next(allAttackBaseThunder.Count);
+                                        Type type = cell.GetType();
+                                        PropertyInfo prop = type.GetProperty("Value");
+                                        if (chkWeaponDamage.Checked)
+                                        {
+                                            if (checkBoxDoTrueRandom.Checked)
+                                            {
+                                                //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the damage it does
+                                                if (r.Next(3) == 0)
+                                                {
+                                                    damageTypes.Add(3);
+                                                    int temp = r.Next(371) + 20;
+                                                    baseDamage += temp;
+                                                    prop.SetValue(cell, temp, null);
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, 0, null);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                baseDamage += allAttackBaseThunder[randomIndex];
+                                                prop.SetValue(cell, allAttackBaseThunder[randomIndex], null);
+                                            }
+                                        }
+
+                                        allAttackBaseThunder.RemoveAt(randomIndex);
+                                    }
+                                    else if (cell.Def.Name == "correctStrength")
+                                    {
+                                        int randomIndex = r.Next(allAttackCorrectStrength.Count);
+                                        Type type = cell.GetType();
+                                        PropertyInfo prop = type.GetProperty("Value");
+                                        if (checkBoxWeaponScaling.Checked)
+                                        {
+                                            if (checkBoxDoTrueRandom.Checked)
+                                            {
+                                                //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the scaling it does
+                                                if (r.Next(3) == 0)
+                                                {
+                                                    //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                                    if (r.Next(20) == 0)
+                                                    {
+                                                        //215 is the cap for a stat (tin crystallization catalyst)
+                                                        prop.SetValue(cell, r.Next(116) + 100, null);
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, r.Next(101), null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, r.Next(0), null);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                prop.SetValue(cell, allAttackCorrectStrength[randomIndex], null);
+                                            }
+                                        }
+
+                                        allAttackCorrectStrength.RemoveAt(randomIndex);
+                                    }
+                                    else if (cell.Def.Name == "correctAgility")
+                                    {
+                                        int randomIndex = r.Next(allAttackCorrectAgility.Count);
+                                        Type type = cell.GetType();
+                                        PropertyInfo prop = type.GetProperty("Value");
+                                        if (checkBoxWeaponScaling.Checked)
+                                        {
+                                            if (checkBoxDoTrueRandom.Checked)
+                                            {
+                                                //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the scaling it does
+                                                if (r.Next(3) == 0)
+                                                {
+                                                    //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                                    if (r.Next(20) == 0)
+                                                    {
+                                                        //215 is the cap for a stat (tin crystallization catalyst)
+                                                        prop.SetValue(cell, r.Next(116) + 100, null);
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, r.Next(101), null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, r.Next(0), null);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                prop.SetValue(cell, allAttackCorrectAgility[randomIndex], null);
+                                            }
+                                        }
+
+                                        allAttackCorrectAgility.RemoveAt(randomIndex);
+                                    }
+                                    else if (cell.Def.Name == "correctMagic")
+                                    {
+                                        int randomIndex = r.Next(allAttackCorrectMagic.Count);
+                                        Type type = cell.GetType();
+                                        PropertyInfo prop = type.GetProperty("Value");
+                                        if (checkBoxWeaponScaling.Checked)
+                                        {
+                                            if (checkBoxDoTrueRandom.Checked)
+                                            {
+                                                //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the scaling it does
+                                                if (r.Next(3) == 0)
+                                                {
+                                                    //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                                    if (r.Next(20) == 0)
+                                                    {
+                                                        //215 is the cap for a stat (tin crystallization catalyst)
+                                                        prop.SetValue(cell, r.Next(116) + 100, null);
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, r.Next(101), null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, r.Next(0), null);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                prop.SetValue(cell, allAttackCorrectMagic[randomIndex], null);
+                                            }
+                                        }
+
+                                        allAttackCorrectMagic.RemoveAt(randomIndex);
+                                    }
+                                    else if (cell.Def.Name == "correctFaith")
+                                    {
+                                        int randomIndex = r.Next(allAttackCorrectFaith.Count);
+                                        Type type = cell.GetType();
+                                        PropertyInfo prop = type.GetProperty("Value");
+                                        if (checkBoxWeaponScaling.Checked)
+                                        {
+                                            if (checkBoxDoTrueRandom.Checked)
+                                            {
+                                                //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the scaling it does
+                                                if (r.Next(3) == 0)
+                                                {
+                                                    //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                                    if (r.Next(20) == 0)
+                                                    {
+                                                        //215 is the cap for a stat (tin crystallization catalyst)
+                                                        prop.SetValue(cell, r.Next(116) + 100, null);
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, r.Next(101), null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, r.Next(0), null);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                prop.SetValue(cell, allAttackCorrectFaith[randomIndex], null);
+                                            }
+                                        }
+
+                                        allAttackCorrectFaith.RemoveAt(randomIndex);
+                                    }
+                                    else if (cell.Def.Name == "properStrength")
+                                    {
+                                        int randomIndex = r.Next(allAttackProperStrength.Count);
+                                        Type type = cell.GetType();
+                                        PropertyInfo prop = type.GetProperty("Value");
+                                        if (checkBoxWeaponStatMin.Checked)
+                                        {
+                                            if (checkBoxDoTrueRandom.Checked)
+                                            {
+                                                //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the stat requirements
+                                                if (r.Next(3) == 0)
+                                                {
+                                                    //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                                    if (r.Next(20) == 0)
+                                                    {
+                                                        //58 is the cap
+                                                        prop.SetValue(cell, r.Next(34) + 25, null);
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, r.Next(26), null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, r.Next(0), null);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                prop.SetValue(cell, allAttackProperStrength[randomIndex], null);
+                                            }
+                                        }
+
+                                        allAttackProperStrength.RemoveAt(randomIndex);
+                                    }
+                                    else if (cell.Def.Name == "properAgility")
+                                    {
+                                        int randomIndex = r.Next(allAttackProperAgility.Count);
+                                        Type type = cell.GetType();
+                                        PropertyInfo prop = type.GetProperty("Value");
+                                        if (checkBoxWeaponStatMin.Checked)
+                                        {
+                                            if (checkBoxDoTrueRandom.Checked)
+                                            {
+                                                //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the stat requirements
+                                                if (r.Next(3) == 0)
+                                                {
+                                                    //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                                    if (r.Next(20) == 0)
+                                                    {
+                                                        //58 is the cap
+                                                        prop.SetValue(cell, r.Next(34) + 25, null);
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, r.Next(26), null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, r.Next(0), null);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                prop.SetValue(cell, allAttackProperAgility[randomIndex], null);
+                                            }
+                                        }
+
+                                        allAttackProperAgility.RemoveAt(randomIndex);
+                                    }
+                                    else if (cell.Def.Name == "properMagic")
+                                    {
+                                        int randomIndex = r.Next(allAttackProperMagic.Count);
+                                        Type type = cell.GetType();
+                                        PropertyInfo prop = type.GetProperty("Value");
+                                        if (checkBoxWeaponStatMin.Checked)
+                                        {
+                                            if (checkBoxDoTrueRandom.Checked)
+                                            {
+                                                //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the stat requirements
+                                                if (r.Next(3) == 0)
+                                                {
+                                                    //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                                    if (r.Next(20) == 0)
+                                                    {
+                                                        //58 is the cap
+                                                        prop.SetValue(cell, r.Next(34) + 25, null);
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, r.Next(26), null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, r.Next(0), null);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                prop.SetValue(cell, allAttackProperMagic[randomIndex], null);
+                                            }
+                                        }
+
+                                        allAttackProperMagic.RemoveAt(randomIndex);
+                                    }
+                                    else if (cell.Def.Name == "properFaith")
+                                    {
+                                        int randomIndex = r.Next(allAttackProperFaith.Count);
+                                        Type type = cell.GetType();
+                                        PropertyInfo prop = type.GetProperty("Value");
+                                        if (checkBoxWeaponStatMin.Checked)
+                                        {
+                                            if (checkBoxDoTrueRandom.Checked)
+                                            {
+                                                //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the stat requirements
+                                                if (r.Next(3) == 0)
+                                                {
+                                                    //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                                    if (r.Next(20) == 0)
+                                                    {
+                                                        //58 is the cap
+                                                        prop.SetValue(cell, r.Next(34) + 25, null);
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, r.Next(26), null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, r.Next(0), null);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                prop.SetValue(cell, allAttackProperFaith[randomIndex], null);
+                                            }
+                                        }
+
+                                        allAttackProperFaith.RemoveAt(randomIndex);
+                                    }
+                                    else if (cell.Def.Name == "weight")
+                                    {
+                                        MeowDSIO.DataTypes.PARAM.ParamCellValueRef fistCheckCell = paramRow.Cells.First(c => c.Def.Name == "sortId");
+                                        Type fistchecktype = fistCheckCell.GetType();
+                                        PropertyInfo fistcheckprop = fistchecktype.GetProperty("Value");
+
+                                        int randomIndex = r.Next(allWepWeight.Count);
+                                        Type type = cell.GetType();
+                                        PropertyInfo prop = type.GetProperty("Value");
+                                        //fists dont get weight
+                                        if (checkBoxWeaponWeight.Checked && Convert.ToInt32(fistcheckprop.GetValue(fistCheckCell, null)) != 1750)
+                                        {
+                                            if (checkBoxDoTrueRandom.Checked)
+                                            {
+                                                //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                                if (r.Next(20) == 0)
+                                                {
+                                                    //28 is the cap; weight is randomized in half steps
+                                                    prop.SetValue(cell, (r.Next(37) + 20) / 2.0, null);
+                                                }
+                                                else
+                                                {
+                                                    //10 is soft cap; weight is randomized in half steps
+                                                    prop.SetValue(cell, (r.Next(21)) / 2.0, null);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                prop.SetValue(cell, allWepWeight[randomIndex], null);
+                                            }
+                                        }
+
+                                        allWepWeight.RemoveAt(randomIndex);
+                                    }
+                                    else if (cell.Def.Name == "attackBaseStamina")
+                                    {
+                                        int randomIndex = r.Next(allAttackBaseStamina.Count);
+                                        Type type = cell.GetType();
+                                        PropertyInfo prop = type.GetProperty("Value");
+                                        if (checkBoxWeaponStamina.Checked)
+                                        {
+                                            if (checkBoxDoTrueRandom.Checked)
+                                            {
+                                                if (r.Next(3) == 0)
+                                                {
+                                                    //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                                    if (r.Next(33) == 0)
+                                                    {
+                                                        //100 is the cap
+                                                        prop.SetValue(cell, r.Next(61) + 40, null);
+                                                    }
+                                                    else
+                                                    {
+                                                        //40 is 2nd soft cap
+                                                        prop.SetValue(cell, r.Next(16) + 25, null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    //first soft cap of 25
+                                                    prop.SetValue(cell, r.Next(25) + 1, null);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                prop.SetValue(cell, allAttackBaseStamina[randomIndex], null);
+                                            }
+                                        }
+
+                                        allAttackBaseStamina.RemoveAt(randomIndex);
+                                    }
+                                    else if (cell.Def.Name == "enableMagic" || cell.Def.Name == "enableVowMagic" || cell.Def.Name == "enableSorcery")
                                     {
                                         Type type = cell.GetType();
                                         PropertyInfo prop = type.GetProperty("Value");
-                                        prop.SetValue(cell, r.Next(371) + 20, null);
+                                        if (castsMagic && checkBoxUniversalizeCasters.Checked)
+                                        {
+                                            prop.SetValue(cell, true, null);
+                                        }
+                                    }
+                                    else if (cell.Def.Name == "spEffectBehaviorId0")
+                                    {
+                                        //if not fists
+                                        if (paramRow.ID != 900000)
+                                        {
+                                            int randomIndex = r.Next(allspEffectBehavior.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (chkWeaponSpeffects.Checked)
+                                            {
+                                                prop.SetValue(cell, allspEffectBehavior[randomIndex], null);
+                                            }
+
+                                            allspEffectBehavior.RemoveAt(randomIndex);
+                                        }
+                                    }
+                                    else if (cell.Def.Name == "spEffectBehaviorId1")
+                                    {
+                                        //if not fists
+                                        if (paramRow.ID != 900000)
+                                        {
+                                            int randomIndex = r.Next(allspEffectBehavior2.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (chkWeaponSpeffects.Checked)
+                                            {
+                                                prop.SetValue(cell, allspEffectBehavior2[randomIndex], null);
+                                            }
+
+                                            allspEffectBehavior2.RemoveAt(randomIndex);
+                                        }
+                                    }
+                                    else if (cell.Def.Name == "residentSpEffectId")
+                                    {
+                                        //if not fists
+                                        if (paramRow.ID != 900000)
+                                        {
+                                            int randomIndex = r.Next(allresidentspEffect.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (chkWeaponSpeffects.Checked)
+                                            {
+                                                prop.SetValue(cell, allresidentspEffect[randomIndex], null);
+                                            }
+
+                                            allresidentspEffect.RemoveAt(randomIndex);
+                                        }
+                                    }
+                                    else if (cell.Def.Name == "physGuardCutRate")
+                                    {
+                                        //if not fists
+                                        if (paramRow.ID != 900000)
+                                        {
+                                            int randomIndex = r.Next(allPhysicalGuard.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (checkBoxWeaponDefense.Checked)
+                                            {
+                                                prop.SetValue(cell, allPhysicalGuard[randomIndex], null);
+                                            }
+
+                                            allPhysicalGuard.RemoveAt(randomIndex);
+                                        }
+                                    }
+                                    else if (cell.Def.Name == "magGuardCutRate")
+                                    {
+                                        //if not fists
+                                        if (paramRow.ID != 900000)
+                                        {
+                                            int randomIndex = r.Next(allMagicGuard.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (checkBoxWeaponDefense.Checked)
+                                            {
+                                                prop.SetValue(cell, allMagicGuard[randomIndex], null);
+                                            }
+
+                                            allMagicGuard.RemoveAt(randomIndex);
+                                        }
+                                    }
+                                    else if (cell.Def.Name == "fireGuardCutRate")
+                                    {
+                                        //if not fists
+                                        if (paramRow.ID != 900000)
+                                        {
+                                            int randomIndex = r.Next(allFireGuard.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (checkBoxWeaponDefense.Checked)
+                                            {
+                                                prop.SetValue(cell, allFireGuard[randomIndex], null);
+                                            }
+
+                                            allFireGuard.RemoveAt(randomIndex);
+                                        }
+                                    }
+                                    else if (cell.Def.Name == "thunGuardCutRate")
+                                    {
+                                        //if not fists
+                                        if (paramRow.ID != 900000)
+                                        {
+                                            int randomIndex = r.Next(allThunderGuard.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (checkBoxWeaponDefense.Checked)
+                                            {
+                                                prop.SetValue(cell, allThunderGuard[randomIndex], null);
+                                            }
+
+                                            allThunderGuard.RemoveAt(randomIndex);
+                                        }
+                                    }
+                                    else if (cell.Def.Name == "staminaGuardDef")
+                                    {
+                                        //if not fists
+                                        if (paramRow.ID != 900000)
+                                        {
+                                            int randomIndex = r.Next(allGuardStability.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (checkBoxWeaponDefense.Checked)
+                                            {
+                                                prop.SetValue(cell, allGuardStability[randomIndex], null);
+                                            }
+
+                                            allGuardStability.RemoveAt(randomIndex);
+                                        }
+                                    }
+                                    else if (cell.Def.Name == "poisonGuardResist")
+                                    {
+                                        //if not fists
+                                        if (paramRow.ID != 900000)
+                                        {
+                                            int randomIndex = r.Next(allPoisonResist.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (checkBoxWeaponDefense.Checked)
+                                            {
+                                                prop.SetValue(cell, allPoisonResist[randomIndex], null);
+                                            }
+
+                                            allPoisonResist.RemoveAt(randomIndex);
+                                        }
+                                    }
+                                    else if (cell.Def.Name == "diseaseGuardResist")
+                                    {
+                                        //if not fists
+                                        if (paramRow.ID != 900000)
+                                        {
+                                            int randomIndex = r.Next(allDiseaseResist.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (checkBoxWeaponDefense.Checked)
+                                            {
+                                                prop.SetValue(cell, allDiseaseResist[randomIndex], null);
+                                            }
+
+                                            allDiseaseResist.RemoveAt(randomIndex);
+                                        }
+                                    }
+                                    else if (cell.Def.Name == "bloodGuardResist")
+                                    {
+                                        //if not fists
+                                        if (paramRow.ID != 900000)
+                                        {
+                                            int randomIndex = r.Next(allBloodResist.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (checkBoxWeaponDefense.Checked)
+                                            {
+                                                prop.SetValue(cell, allBloodResist[randomIndex], null);
+                                            }
+
+                                            allBloodResist.RemoveAt(randomIndex);
+                                        }
+                                    }
+                                    else if (cell.Def.Name == "curseGuardResist")
+                                    {
+                                        //if not fists
+                                        if (paramRow.ID != 900000)
+                                        {
+                                            int randomIndex = r.Next(allCurseResist.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (checkBoxWeaponDefense.Checked)
+                                            {
+                                                prop.SetValue(cell, allCurseResist[randomIndex], null);
+                                            }
+
+                                            allCurseResist.RemoveAt(randomIndex);
+                                        }
+                                    }
+                                    else if (cell.Def.Name == "guardBaseRepel")
+                                    {
+                                        //if not fists
+                                        if (paramRow.ID != 900000)
+                                        {
+                                            int randomIndex = r.Next(allGuardBaseRepel.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (checkBoxWeaponDefense.Checked)
+                                            {
+                                                prop.SetValue(cell, allGuardBaseRepel[randomIndex], null);
+                                            }
+
+                                            allGuardBaseRepel.RemoveAt(randomIndex);
+                                        }
+                                    }
+                                    else if (cell.Def.Name == "attackBaseRepel")
+                                    {
+                                        //if not fists
+                                        if (paramRow.ID != 900000)
+                                        {
+                                            int randomIndex = r.Next(allAttackBaseRepel.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (checkBoxWeaponDefense.Checked)
+                                            {
+                                                prop.SetValue(cell, allAttackBaseRepel[randomIndex], null);
+                                            }
+
+                                            allAttackBaseRepel.RemoveAt(randomIndex);
+                                        }
+                                    }
+                                }
+
+                                //damage dropoff when rolling more than one damage type (Dont randomize by shuffle mode only, shuffle mode will have an empty damagetypes list)
+                                while (damageTypes.Count > 0)
+                                {
+                                    int index = r.Next(damageTypes.Count);
+                                    int type = damageTypes[index];
+
+                                    //new damage of this damage type = (rolled damage / total damage types);
+                                    //new damage will be the same as rolled damage if only one damage type was rolled
+                                    //or if this is the last of the damage types that dropoff is applied to
+                                    if (type == 0) //if physical
+                                    {
+                                        foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                        {
+                                            if (cell.Def.Name == "attackBasePhysics")
+                                            {
+                                                int newDamage = Convert.ToInt32(cell.GetType().GetProperty("Value").GetValue(cell, null)) / damageTypes.Count;
+                                                cell.GetType().GetProperty("Value").SetValue(cell, newDamage, null);
+                                            }
+                                        }
+                                    }
+                                    else if (type == 1) //if magic
+                                    {
+                                        foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                        {
+                                            if (cell.Def.Name == "attackBaseMagic")
+                                            {
+                                                int newDamage = Convert.ToInt32(cell.GetType().GetProperty("Value").GetValue(cell, null)) / damageTypes.Count;
+                                                cell.GetType().GetProperty("Value").SetValue(cell, newDamage, null);
+                                            }
+                                        }
+                                    }
+                                    else if (type == 2) // if fire
+                                    {
+                                        foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                        {
+                                            if (cell.Def.Name == "attackBaseFire")
+                                            {
+                                                int newDamage = Convert.ToInt32(cell.GetType().GetProperty("Value").GetValue(cell, null)) / damageTypes.Count;
+                                                cell.GetType().GetProperty("Value").SetValue(cell, newDamage, null);
+                                            }
+                                        }
+                                    }
+                                    else if (type == 3) //if thunder
+                                    {
+                                        foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                        {
+                                            if (cell.Def.Name == "attackBaseThunder")
+                                            {
+                                                int newDamage = Convert.ToInt32(cell.GetType().GetProperty("Value").GetValue(cell, null)) / damageTypes.Count;
+                                                cell.GetType().GetProperty("Value").SetValue(cell, newDamage, null);
+                                            }
+                                        }
+                                    }
+
+                                    damageTypes.RemoveAt(index);
+                                }
+
+                                if (baseDamage == 0 && checkBoxDoTrueRandom.Checked)
+                                {
+                                    int dtype = r.Next(4);
+                                    foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                    {
+                                        if (cell.Def.Name == "attackBasePhysics" && dtype == 0)
+                                        {
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            prop.SetValue(cell, r.Next(371) + 20, null);
+                                        }
+                                        else if (cell.Def.Name == "attackBaseMagic" && dtype == 1)
+                                        {
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            prop.SetValue(cell, r.Next(371) + 20, null);
+                                        }
+                                        else if (cell.Def.Name == "attackBaseFire" && dtype == 2)
+                                        {
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            prop.SetValue(cell, r.Next(371) + 20, null);
+                                        }
+                                        else if (cell.Def.Name == "attackBaseThunder" && dtype == 3)
+                                        {
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            prop.SetValue(cell, r.Next(371) + 20, null);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    //now if shields are treated seperately do everything again with only shields this time (additions to weapons above should be added to shield logic below)
+                    if(checkBoxWeaponShieldSplit.Checked)
+                    {
+                        foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
+                        {
+                            //if is a shield
+                            if (allShieldIDs.Contains(paramRow.ID))
+                            {
+                                //check not to randomize moveset of bows which defeats the purpose of bullet rando. Try disabling this check and see what happens maybe
+                                MeowDSIO.DataTypes.PARAM.ParamCellValueRef bowCheckCell = paramRow.Cells.First(c => c.Def.Name == "bowDistRate");
+                                Type bowchecktype = bowCheckCell.GetType();
+                                PropertyInfo bowcheckprop = bowchecktype.GetProperty("Value");
+
+                                //if dont modify fists is off or if not fist
+                                if (!checkBoxWeaponFistNo.Checked || paramRow.ID != 900000)
+                                {
+                                    if (Convert.ToInt32(bowcheckprop.GetValue(bowCheckCell, null)) < 0)
+                                    {
+                                        foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                        {
+                                            if (cell.Def.Name == "wepmotionCategory")
+                                            {
+                                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                                allWepmotionCats.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                            }
+                                            else if (cell.Def.Name == "wepmotionOneHandId")
+                                            {
+                                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                                allWepmotion1hCats.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                            }
+                                            else if (cell.Def.Name == "wepmotionBothHandId")
+                                            {
+                                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                                allWepmotion2hCats.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                            }
+                                            else if (cell.Def.Name == "spAtkcategory")
+                                            {
+                                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                                allspAtkcategories.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                            }
+                                        }
+                                    }
+
+                                    foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                    {
+                                        if (cell.Def.Name == "equipModelId")
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allEquipModelIds.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                        else if (cell.Def.Name == "attackBasePhysics")
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allAttackBasePhysic.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                        else if (cell.Def.Name == "attackBaseMagic")
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allAttackBaseMagic.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                        else if (cell.Def.Name == "attackBaseFire")
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allAttackBaseFire.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                        else if (cell.Def.Name == "attackBaseThunder")
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allAttackBaseThunder.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                        else if (cell.Def.Name == "correctStrength")
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allAttackCorrectStrength.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                        else if (cell.Def.Name == "correctAgility")
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allAttackCorrectAgility.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                        else if (cell.Def.Name == "correctMagic")
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allAttackCorrectMagic.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                        else if (cell.Def.Name == "correctFaith")
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allAttackCorrectFaith.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                        else if (cell.Def.Name == "properStrength")
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allAttackProperStrength.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                        else if (cell.Def.Name == "properAgility")
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allAttackProperAgility.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                        else if (cell.Def.Name == "properMagic")
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allAttackProperMagic.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                        else if (cell.Def.Name == "properFaith")
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allAttackProperFaith.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                        else if (cell.Def.Name == "weight")
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allWepWeight.Add(Convert.ToDouble(prop.GetValue(cell, null)));
+                                        }
+                                        else if (cell.Def.Name == "attackBaseStamina")
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allAttackBaseStamina.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                        else if (cell.Def.Name == "spEffectBehaviorId0")
+                                        {
+                                            //if not fists
+                                            if (paramRow.ID != 900000)
+                                            {
+                                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                                allspEffectBehavior.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "spEffectBehaviorId1")
+                                        {
+                                            //if not fists
+                                            if (paramRow.ID != 900000)
+                                            {
+                                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                                allspEffectBehavior2.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "physGuardCutRate")
+                                        {
+                                            //if not fists
+                                            if (paramRow.ID != 900000)
+                                            {
+                                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                                allPhysicalGuard.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "magGuardCutRate")
+                                        {
+                                            //if not fists
+                                            if (paramRow.ID != 900000)
+                                            {
+                                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                                allMagicGuard.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "fireGuardCutRate")
+                                        {
+                                            //if not fists
+                                            if (paramRow.ID != 900000)
+                                            {
+                                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                                allFireGuard.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "thunGuardCutRate")
+                                        {
+                                            //if not fists
+                                            if (paramRow.ID != 900000)
+                                            {
+                                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                                allThunderGuard.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "staminaGuardDef")
+                                        {
+                                            //if not fists
+                                            if (paramRow.ID != 900000)
+                                            {
+                                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                                allGuardStability.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "poisonGuardResist")
+                                        {
+                                            //if not fists
+                                            if (paramRow.ID != 900000)
+                                            {
+                                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                                allPoisonResist.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "diseaseGuardResist")
+                                        {
+                                            //if not fists
+                                            if (paramRow.ID != 900000)
+                                            {
+                                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                                allDiseaseResist.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "bloodGuardResist")
+                                        {
+                                            //if not fists
+                                            if (paramRow.ID != 900000)
+                                            {
+                                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                                allBloodResist.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "curseGuardResist")
+                                        {
+                                            //if not fists
+                                            if (paramRow.ID != 900000)
+                                            {
+                                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                                allCurseResist.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "guardBaseRepel")
+                                        {
+                                            //if not fists
+                                            if (paramRow.ID != 900000)
+                                            {
+                                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                                allGuardBaseRepel.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "attackBaseRepel")
+                                        {
+                                            //if not fists
+                                            if (paramRow.ID != 900000)
+                                            {
+                                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                                allAttackBaseRepel.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        //loop again to set a random value per entry
+                        foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
+                        {
+                            //if is a shield
+                            if (allShieldIDs.Contains(paramRow.ID))
+                            {
+                                MeowDSIO.DataTypes.PARAM.ParamCellValueRef bowCheckCell = paramRow.Cells.First(c => c.Def.Name == "bowDistRate");
+                                Type bowchecktype = bowCheckCell.GetType();
+                                PropertyInfo bowcheckprop = bowchecktype.GetProperty("Value");
+
+                                //if dont modify fists is off or if not fist
+                                if (!checkBoxWeaponFistNo.Checked || paramRow.ID != 900000)
+                                {
+                                    if (Convert.ToInt32(bowcheckprop.GetValue(bowCheckCell, null)) < 0)
+                                    {
+                                        foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                        {
+                                            if (cell.Def.Name == "wepmotionCategory")
+                                            {
+                                                int randomIndex = r.Next(allWepmotionCats.Count);
+                                                Type type = cell.GetType();
+                                                PropertyInfo prop = type.GetProperty("Value");
+                                                if (chkWeaponMoveset.Checked)
+                                                {
+                                                    prop.SetValue(cell, allWepmotionCats[randomIndex], null);
+                                                }
+
+                                                allWepmotionCats.RemoveAt(randomIndex);
+                                            }
+                                            else if (cell.Def.Name == "wepmotionOneHandId")
+                                            {
+                                                int randomIndex = r.Next(allWepmotion1hCats.Count);
+                                                Type type = cell.GetType();
+                                                PropertyInfo prop = type.GetProperty("Value");
+                                                if (chkWeaponMoveset.Checked)
+                                                {
+                                                    prop.SetValue(cell, allWepmotion1hCats[randomIndex], null);
+                                                }
+
+                                                allWepmotion1hCats.RemoveAt(randomIndex);
+                                            }
+                                            else if (cell.Def.Name == "wepmotionBothHandId")
+                                            {
+                                                int randomIndex = r.Next(allWepmotion2hCats.Count);
+                                                Type type = cell.GetType();
+                                                PropertyInfo prop = type.GetProperty("Value");
+                                                if (chkWeaponMoveset.Checked)
+                                                {
+                                                    prop.SetValue(cell, allWepmotion2hCats[randomIndex], null);
+                                                }
+
+                                                allWepmotion2hCats.RemoveAt(randomIndex);
+                                            }
+                                            else if (cell.Def.Name == "spAtkcategory")
+                                            {
+                                                int randomIndex = r.Next(allspAtkcategories.Count);
+                                                Type type = cell.GetType();
+                                                PropertyInfo prop = type.GetProperty("Value");
+
+                                                if (chkWeaponMoveset.Checked)
+                                                {
+                                                    prop.SetValue(cell, allspAtkcategories[randomIndex], null);
+                                                }
+
+                                                allspAtkcategories.RemoveAt(randomIndex);
+                                            }
+                                        }
+                                    }
+
+                                    int baseDamage = 0;
+                                    bool castsMagic = false;
+                                    List<int> damageTypes = new List<int>(); //values 0-3; phys, magic, fire, thunder
+                                                                             //check if casts magic first
+                                    foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                    {
+                                        if (cell.Def.Name == "enableMagic" || cell.Def.Name == "enableVowMagic" || cell.Def.Name == "enableSorcery")
+                                        {
+                                            if (Convert.ToBoolean(cell.GetType().GetProperty("Value").GetValue(cell, null)) == true)
+                                            {
+                                                castsMagic = true;
+                                            }
+                                        }
+                                    }
+                                    foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                    {
+                                        if (cell.Def.Name == "equipModelId")
+                                        {
+                                            int randomIndex = r.Next(allEquipModelIds.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (chkWeaponModels.Checked)
+                                            {
+                                                prop.SetValue(cell, allEquipModelIds[randomIndex], null);
+                                            }
+
+                                            allEquipModelIds.RemoveAt(randomIndex);
+                                        }
+                                        else if (cell.Def.Name == "attackBasePhysics")
+                                        {
+                                            int randomIndex = r.Next(allAttackBasePhysic.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (chkWeaponDamage.Checked)
+                                            {
+                                                if (checkBoxDoTrueRandom.Checked)
+                                                {
+                                                    //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the damage it does
+                                                    if (r.Next(3) == 0)
+                                                    {
+                                                        damageTypes.Add(0);
+                                                        int temp = r.Next(61) + 30;
+                                                        baseDamage += temp;
+                                                        prop.SetValue(cell, temp, null);
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, 0, null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    baseDamage += allAttackBasePhysic[randomIndex];
+                                                    prop.SetValue(cell, allAttackBasePhysic[randomIndex], null);
+                                                }
+                                            }
+
+                                            allAttackBasePhysic.RemoveAt(randomIndex);
+                                        }
+                                        else if (cell.Def.Name == "attackBaseMagic")
+                                        {
+                                            int randomIndex = r.Next(allAttackBaseMagic.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (chkWeaponDamage.Checked)
+                                            {
+                                                if (checkBoxDoTrueRandom.Checked)
+                                                {
+                                                    //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the damage it does
+                                                    if (r.Next(3) == 0)
+                                                    {
+                                                        damageTypes.Add(1);
+                                                        int temp = r.Next(61) + 30;
+                                                        baseDamage += temp;
+                                                        prop.SetValue(cell, temp, null);
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, 0, null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    baseDamage += allAttackBaseMagic[randomIndex];
+                                                    prop.SetValue(cell, allAttackBaseMagic[randomIndex], null);
+                                                }
+                                            }
+
+                                            allAttackBaseMagic.RemoveAt(randomIndex);
+                                        }
+                                        else if (cell.Def.Name == "attackBaseFire")
+                                        {
+                                            int randomIndex = r.Next(allAttackBaseFire.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (chkWeaponDamage.Checked)
+                                            {
+                                                if (checkBoxDoTrueRandom.Checked)
+                                                {
+                                                    //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the damage it does
+                                                    if (r.Next(3) == 0)
+                                                    {
+                                                        damageTypes.Add(2);
+                                                        int temp = r.Next(61) + 30;
+                                                        baseDamage += temp;
+                                                        prop.SetValue(cell, temp, null);
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, 0, null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    baseDamage += allAttackBaseFire[randomIndex];
+                                                    prop.SetValue(cell, allAttackBaseFire[randomIndex], null);
+                                                }
+                                            }
+
+                                            allAttackBaseFire.RemoveAt(randomIndex);
+                                        }
+                                        else if (cell.Def.Name == "attackBaseThunder")
+                                        {
+                                            int randomIndex = r.Next(allAttackBaseThunder.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (chkWeaponDamage.Checked)
+                                            {
+                                                if (checkBoxDoTrueRandom.Checked)
+                                                {
+                                                    //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the damage it does
+                                                    if (r.Next(3) == 0)
+                                                    {
+                                                        damageTypes.Add(3);
+                                                        int temp = r.Next(61) + 30;
+                                                        baseDamage += temp;
+                                                        prop.SetValue(cell, temp, null);
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, 0, null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    baseDamage += allAttackBaseThunder[randomIndex];
+                                                    prop.SetValue(cell, allAttackBaseThunder[randomIndex], null);
+                                                }
+                                            }
+
+                                            allAttackBaseThunder.RemoveAt(randomIndex);
+                                        }
+                                        else if (cell.Def.Name == "correctStrength")
+                                        {
+                                            int randomIndex = r.Next(allAttackCorrectStrength.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (checkBoxWeaponScaling.Checked)
+                                            {
+                                                if (checkBoxDoTrueRandom.Checked)
+                                                {
+                                                    //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the scaling it does
+                                                    if (r.Next(3) == 0)
+                                                    {
+                                                        //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                                        if (r.Next(20) == 0)
+                                                        {
+                                                            //215 is the cap for a stat (tin crystallization catalyst)
+                                                            prop.SetValue(cell, r.Next(116) + 100, null);
+                                                        }
+                                                        else
+                                                        {
+                                                            prop.SetValue(cell, r.Next(101), null);
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, r.Next(0), null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, allAttackCorrectStrength[randomIndex], null);
+                                                }
+                                            }
+
+                                            allAttackCorrectStrength.RemoveAt(randomIndex);
+                                        }
+                                        else if (cell.Def.Name == "correctAgility")
+                                        {
+                                            int randomIndex = r.Next(allAttackCorrectAgility.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (checkBoxWeaponScaling.Checked)
+                                            {
+                                                if (checkBoxDoTrueRandom.Checked)
+                                                {
+                                                    //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the scaling it does
+                                                    if (r.Next(3) == 0)
+                                                    {
+                                                        //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                                        if (r.Next(20) == 0)
+                                                        {
+                                                            //215 is the cap for a stat (tin crystallization catalyst)
+                                                            prop.SetValue(cell, r.Next(116) + 100, null);
+                                                        }
+                                                        else
+                                                        {
+                                                            prop.SetValue(cell, r.Next(101), null);
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, r.Next(0), null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, allAttackCorrectAgility[randomIndex], null);
+                                                }
+                                            }
+
+                                            allAttackCorrectAgility.RemoveAt(randomIndex);
+                                        }
+                                        else if (cell.Def.Name == "correctMagic")
+                                        {
+                                            int randomIndex = r.Next(allAttackCorrectMagic.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (checkBoxWeaponScaling.Checked)
+                                            {
+                                                if (checkBoxDoTrueRandom.Checked)
+                                                {
+                                                    //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the scaling it does
+                                                    if (r.Next(3) == 0)
+                                                    {
+                                                        //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                                        if (r.Next(20) == 0)
+                                                        {
+                                                            //215 is the cap for a stat (tin crystallization catalyst)
+                                                            prop.SetValue(cell, r.Next(116) + 100, null);
+                                                        }
+                                                        else
+                                                        {
+                                                            prop.SetValue(cell, r.Next(101), null);
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, r.Next(0), null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, allAttackCorrectMagic[randomIndex], null);
+                                                }
+                                            }
+
+                                            allAttackCorrectMagic.RemoveAt(randomIndex);
+                                        }
+                                        else if (cell.Def.Name == "correctFaith")
+                                        {
+                                            int randomIndex = r.Next(allAttackCorrectFaith.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (checkBoxWeaponScaling.Checked)
+                                            {
+                                                if (checkBoxDoTrueRandom.Checked)
+                                                {
+                                                    //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the scaling it does
+                                                    if (r.Next(3) == 0)
+                                                    {
+                                                        //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                                        if (r.Next(20) == 0)
+                                                        {
+                                                            //215 is the cap for a stat (tin crystallization catalyst)
+                                                            prop.SetValue(cell, r.Next(116) + 100, null);
+                                                        }
+                                                        else
+                                                        {
+                                                            prop.SetValue(cell, r.Next(101), null);
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, r.Next(0), null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, allAttackCorrectFaith[randomIndex], null);
+                                                }
+                                            }
+
+                                            allAttackCorrectFaith.RemoveAt(randomIndex);
+                                        }
+                                        else if (cell.Def.Name == "properStrength")
+                                        {
+                                            int randomIndex = r.Next(allAttackProperStrength.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (checkBoxWeaponStatMin.Checked)
+                                            {
+                                                if (checkBoxDoTrueRandom.Checked)
+                                                {
+                                                    //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the stat requirements
+                                                    if (r.Next(3) == 0)
+                                                    {
+                                                        //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                                        if (r.Next(20) == 0)
+                                                        {
+                                                            //58 is the cap
+                                                            prop.SetValue(cell, r.Next(34) + 25, null);
+                                                        }
+                                                        else
+                                                        {
+                                                            prop.SetValue(cell, r.Next(26), null);
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, r.Next(0), null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, allAttackProperStrength[randomIndex], null);
+                                                }
+                                            }
+
+                                            allAttackProperStrength.RemoveAt(randomIndex);
+                                        }
+                                        else if (cell.Def.Name == "properAgility")
+                                        {
+                                            int randomIndex = r.Next(allAttackProperAgility.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (checkBoxWeaponStatMin.Checked)
+                                            {
+                                                if (checkBoxDoTrueRandom.Checked)
+                                                {
+                                                    //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the stat requirements
+                                                    if (r.Next(3) == 0)
+                                                    {
+                                                        //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                                        if (r.Next(20) == 0)
+                                                        {
+                                                            //58 is the cap
+                                                            prop.SetValue(cell, r.Next(34) + 25, null);
+                                                        }
+                                                        else
+                                                        {
+                                                            prop.SetValue(cell, r.Next(26), null);
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, r.Next(0), null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, allAttackProperAgility[randomIndex], null);
+                                                }
+                                            }
+
+                                            allAttackProperAgility.RemoveAt(randomIndex);
+                                        }
+                                        else if (cell.Def.Name == "properMagic")
+                                        {
+                                            int randomIndex = r.Next(allAttackProperMagic.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (checkBoxWeaponStatMin.Checked)
+                                            {
+                                                if (checkBoxDoTrueRandom.Checked)
+                                                {
+                                                    //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the stat requirements
+                                                    if (r.Next(3) == 0)
+                                                    {
+                                                        //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                                        if (r.Next(20) == 0)
+                                                        {
+                                                            //58 is the cap
+                                                            prop.SetValue(cell, r.Next(34) + 25, null);
+                                                        }
+                                                        else
+                                                        {
+                                                            prop.SetValue(cell, r.Next(26), null);
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, r.Next(0), null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, allAttackProperMagic[randomIndex], null);
+                                                }
+                                            }
+
+                                            allAttackProperMagic.RemoveAt(randomIndex);
+                                        }
+                                        else if (cell.Def.Name == "properFaith")
+                                        {
+                                            int randomIndex = r.Next(allAttackProperFaith.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (checkBoxWeaponStatMin.Checked)
+                                            {
+                                                if (checkBoxDoTrueRandom.Checked)
+                                                {
+                                                    //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the stat requirements
+                                                    if (r.Next(3) == 0)
+                                                    {
+                                                        //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                                        if (r.Next(20) == 0)
+                                                        {
+                                                            //58 is the cap
+                                                            prop.SetValue(cell, r.Next(34) + 25, null);
+                                                        }
+                                                        else
+                                                        {
+                                                            prop.SetValue(cell, r.Next(26), null);
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, r.Next(0), null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, allAttackProperFaith[randomIndex], null);
+                                                }
+                                            }
+
+                                            allAttackProperFaith.RemoveAt(randomIndex);
+                                        }
+                                        else if (cell.Def.Name == "weight")
+                                        {
+                                            MeowDSIO.DataTypes.PARAM.ParamCellValueRef fistCheckCell = paramRow.Cells.First(c => c.Def.Name == "sortId");
+                                            Type fistchecktype = fistCheckCell.GetType();
+                                            PropertyInfo fistcheckprop = fistchecktype.GetProperty("Value");
+
+                                            int randomIndex = r.Next(allWepWeight.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            //fists dont get weight
+                                            if (checkBoxWeaponWeight.Checked && Convert.ToInt32(fistcheckprop.GetValue(fistCheckCell, null)) != 1750)
+                                            {
+                                                if (checkBoxDoTrueRandom.Checked)
+                                                {
+                                                    //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                                    if (r.Next(20) == 0)
+                                                    {
+                                                        //28 is the cap; weight is randomized in half steps
+                                                        prop.SetValue(cell, (r.Next(37) + 20) / 2.0, null);
+                                                    }
+                                                    else
+                                                    {
+                                                        //10 is soft cap; weight is randomized in half steps
+                                                        prop.SetValue(cell, (r.Next(21)) / 2.0, null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, allWepWeight[randomIndex], null);
+                                                }
+                                            }
+
+                                            allWepWeight.RemoveAt(randomIndex);
+                                        }
+                                        else if (cell.Def.Name == "attackBaseStamina")
+                                        {
+                                            int randomIndex = r.Next(allAttackBaseStamina.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (checkBoxWeaponStamina.Checked)
+                                            {
+                                                if (checkBoxDoTrueRandom.Checked)
+                                                {
+                                                    if (r.Next(3) == 0)
+                                                    {
+                                                        //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                                        if (r.Next(33) == 0)
+                                                        {
+                                                            //100 is the cap
+                                                            prop.SetValue(cell, r.Next(61) + 40, null);
+                                                        }
+                                                        else
+                                                        {
+                                                            //40 is 2nd soft cap
+                                                            prop.SetValue(cell, r.Next(16) + 25, null);
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        //first soft cap of 25
+                                                        prop.SetValue(cell, r.Next(25) + 1, null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, allAttackBaseStamina[randomIndex], null);
+                                                }
+                                            }
+
+                                            allAttackBaseStamina.RemoveAt(randomIndex);
+                                        }
+                                        else if (cell.Def.Name == "enableMagic" || cell.Def.Name == "enableVowMagic" || cell.Def.Name == "enableSorcery")
+                                        {
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (castsMagic && checkBoxUniversalizeCasters.Checked)
+                                            {
+                                                prop.SetValue(cell, true, null);
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "spEffectBehaviorId0")
+                                        {
+                                            //if not fists
+                                            if (paramRow.ID != 900000)
+                                            {
+                                                int randomIndex = r.Next(allspEffectBehavior.Count);
+                                                Type type = cell.GetType();
+                                                PropertyInfo prop = type.GetProperty("Value");
+                                                if (chkWeaponSpeffects.Checked)
+                                                {
+                                                    prop.SetValue(cell, allspEffectBehavior[randomIndex], null);
+                                                }
+
+                                                allspEffectBehavior.RemoveAt(randomIndex);
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "spEffectBehaviorId1")
+                                        {
+                                            //if not fists
+                                            if (paramRow.ID != 900000)
+                                            {
+                                                int randomIndex = r.Next(allspEffectBehavior2.Count);
+                                                Type type = cell.GetType();
+                                                PropertyInfo prop = type.GetProperty("Value");
+                                                if (chkWeaponSpeffects.Checked)
+                                                {
+                                                    prop.SetValue(cell, allspEffectBehavior2[randomIndex], null);
+                                                }
+
+                                                allspEffectBehavior2.RemoveAt(randomIndex);
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "residentSpEffectId")
+                                        {
+                                            //if not fists
+                                            if (paramRow.ID != 900000)
+                                            {
+                                                int randomIndex = r.Next(allresidentspEffect.Count);
+                                                Type type = cell.GetType();
+                                                PropertyInfo prop = type.GetProperty("Value");
+                                                if (chkWeaponSpeffects.Checked)
+                                                {
+                                                    prop.SetValue(cell, allresidentspEffect[randomIndex], null);
+                                                }
+
+                                                allresidentspEffect.RemoveAt(randomIndex);
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "physGuardCutRate")
+                                        {
+                                            //if not fists
+                                            if (paramRow.ID != 900000)
+                                            {
+                                                int randomIndex = r.Next(allPhysicalGuard.Count);
+                                                Type type = cell.GetType();
+                                                PropertyInfo prop = type.GetProperty("Value");
+                                                if (checkBoxWeaponDefense.Checked)
+                                                {
+                                                    prop.SetValue(cell, allPhysicalGuard[randomIndex], null);
+                                                }
+
+                                                allPhysicalGuard.RemoveAt(randomIndex);
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "magGuardCutRate")
+                                        {
+                                            //if not fists
+                                            if (paramRow.ID != 900000)
+                                            {
+                                                int randomIndex = r.Next(allMagicGuard.Count);
+                                                Type type = cell.GetType();
+                                                PropertyInfo prop = type.GetProperty("Value");
+                                                if (checkBoxWeaponDefense.Checked)
+                                                {
+                                                    prop.SetValue(cell, allMagicGuard[randomIndex], null);
+                                                }
+
+                                                allMagicGuard.RemoveAt(randomIndex);
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "fireGuardCutRate")
+                                        {
+                                            //if not fists
+                                            if (paramRow.ID != 900000)
+                                            {
+                                                int randomIndex = r.Next(allFireGuard.Count);
+                                                Type type = cell.GetType();
+                                                PropertyInfo prop = type.GetProperty("Value");
+                                                if (checkBoxWeaponDefense.Checked)
+                                                {
+                                                    prop.SetValue(cell, allFireGuard[randomIndex], null);
+                                                }
+
+                                                allFireGuard.RemoveAt(randomIndex);
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "thunGuardCutRate")
+                                        {
+                                            //if not fists
+                                            if (paramRow.ID != 900000)
+                                            {
+                                                int randomIndex = r.Next(allThunderGuard.Count);
+                                                Type type = cell.GetType();
+                                                PropertyInfo prop = type.GetProperty("Value");
+                                                if (checkBoxWeaponDefense.Checked)
+                                                {
+                                                    prop.SetValue(cell, allThunderGuard[randomIndex], null);
+                                                }
+
+                                                allThunderGuard.RemoveAt(randomIndex);
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "staminaGuardDef")
+                                        {
+                                            //if not fists
+                                            if (paramRow.ID != 900000)
+                                            {
+                                                int randomIndex = r.Next(allGuardStability.Count);
+                                                Type type = cell.GetType();
+                                                PropertyInfo prop = type.GetProperty("Value");
+                                                if (checkBoxWeaponDefense.Checked)
+                                                {
+                                                    prop.SetValue(cell, allGuardStability[randomIndex], null);
+                                                }
+
+                                                allGuardStability.RemoveAt(randomIndex);
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "poisonGuardResist")
+                                        {
+                                            //if not fists
+                                            if (paramRow.ID != 900000)
+                                            {
+                                                int randomIndex = r.Next(allPoisonResist.Count);
+                                                Type type = cell.GetType();
+                                                PropertyInfo prop = type.GetProperty("Value");
+                                                if (checkBoxWeaponDefense.Checked)
+                                                {
+                                                    prop.SetValue(cell, allPoisonResist[randomIndex], null);
+                                                }
+
+                                                allPoisonResist.RemoveAt(randomIndex);
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "diseaseGuardResist")
+                                        {
+                                            //if not fists
+                                            if (paramRow.ID != 900000)
+                                            {
+                                                int randomIndex = r.Next(allDiseaseResist.Count);
+                                                Type type = cell.GetType();
+                                                PropertyInfo prop = type.GetProperty("Value");
+                                                if (checkBoxWeaponDefense.Checked)
+                                                {
+                                                    prop.SetValue(cell, allDiseaseResist[randomIndex], null);
+                                                }
+
+                                                allDiseaseResist.RemoveAt(randomIndex);
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "bloodGuardResist")
+                                        {
+                                            //if not fists
+                                            if (paramRow.ID != 900000)
+                                            {
+                                                int randomIndex = r.Next(allBloodResist.Count);
+                                                Type type = cell.GetType();
+                                                PropertyInfo prop = type.GetProperty("Value");
+                                                if (checkBoxWeaponDefense.Checked)
+                                                {
+                                                    prop.SetValue(cell, allBloodResist[randomIndex], null);
+                                                }
+
+                                                allBloodResist.RemoveAt(randomIndex);
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "curseGuardResist")
+                                        {
+                                            //if not fists
+                                            if (paramRow.ID != 900000)
+                                            {
+                                                int randomIndex = r.Next(allCurseResist.Count);
+                                                Type type = cell.GetType();
+                                                PropertyInfo prop = type.GetProperty("Value");
+                                                if (checkBoxWeaponDefense.Checked)
+                                                {
+                                                    prop.SetValue(cell, allCurseResist[randomIndex], null);
+                                                }
+
+                                                allCurseResist.RemoveAt(randomIndex);
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "guardBaseRepel")
+                                        {
+                                            //if not fists
+                                            if (paramRow.ID != 900000)
+                                            {
+                                                int randomIndex = r.Next(allGuardBaseRepel.Count);
+                                                Type type = cell.GetType();
+                                                PropertyInfo prop = type.GetProperty("Value");
+                                                if (checkBoxWeaponDefense.Checked)
+                                                {
+                                                    prop.SetValue(cell, allGuardBaseRepel[randomIndex], null);
+                                                }
+
+                                                allGuardBaseRepel.RemoveAt(randomIndex);
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "attackBaseRepel")
+                                        {
+                                            //if not fists
+                                            if (paramRow.ID != 900000)
+                                            {
+                                                int randomIndex = r.Next(allAttackBaseRepel.Count);
+                                                Type type = cell.GetType();
+                                                PropertyInfo prop = type.GetProperty("Value");
+                                                if (checkBoxWeaponDefense.Checked)
+                                                {
+                                                    prop.SetValue(cell, allAttackBaseRepel[randomIndex], null);
+                                                }
+
+                                                allAttackBaseRepel.RemoveAt(randomIndex);
+                                            }
+                                        }
+                                    }
+
+                                    //damage dropoff when rolling more than one damage type (Dont randomize by shuffle mode only, shuffle mode will have an empty damagetypes list)
+                                    while (damageTypes.Count > 0)
+                                    {
+                                        int index = r.Next(damageTypes.Count);
+                                        int type = damageTypes[index];
+
+                                        //new damage of this damage type = (rolled damage / total damage types);
+                                        //new damage will be the same as rolled damage if only one damage type was rolled
+                                        //or if this is the last of the damage types that dropoff is applied to
+                                        if (type == 0) //if physical
+                                        {
+                                            foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                            {
+                                                if (cell.Def.Name == "attackBasePhysics")
+                                                {
+                                                    int newDamage = Convert.ToInt32(cell.GetType().GetProperty("Value").GetValue(cell, null)) / damageTypes.Count;
+                                                    cell.GetType().GetProperty("Value").SetValue(cell, newDamage, null);
+                                                }
+                                            }
+                                        }
+                                        else if (type == 1) //if magic
+                                        {
+                                            foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                            {
+                                                if (cell.Def.Name == "attackBaseMagic")
+                                                {
+                                                    int newDamage = Convert.ToInt32(cell.GetType().GetProperty("Value").GetValue(cell, null)) / damageTypes.Count;
+                                                    cell.GetType().GetProperty("Value").SetValue(cell, newDamage, null);
+                                                }
+                                            }
+                                        }
+                                        else if (type == 2) // if fire
+                                        {
+                                            foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                            {
+                                                if (cell.Def.Name == "attackBaseFire")
+                                                {
+                                                    int newDamage = Convert.ToInt32(cell.GetType().GetProperty("Value").GetValue(cell, null)) / damageTypes.Count;
+                                                    cell.GetType().GetProperty("Value").SetValue(cell, newDamage, null);
+                                                }
+                                            }
+                                        }
+                                        else if (type == 3) //if thunder
+                                        {
+                                            foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                            {
+                                                if (cell.Def.Name == "attackBaseThunder")
+                                                {
+                                                    int newDamage = Convert.ToInt32(cell.GetType().GetProperty("Value").GetValue(cell, null)) / damageTypes.Count;
+                                                    cell.GetType().GetProperty("Value").SetValue(cell, newDamage, null);
+                                                }
+                                            }
+                                        }
+
+                                        damageTypes.RemoveAt(index);
+                                    }
+
+                                    if (baseDamage == 0 && checkBoxDoTrueRandom.Checked)
+                                    {
+                                        int dtype = r.Next(4);
+                                        foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                        {
+                                            if (cell.Def.Name == "attackBasePhysics" && dtype == 0)
+                                            {
+                                                Type type = cell.GetType();
+                                                PropertyInfo prop = type.GetProperty("Value");
+                                                prop.SetValue(cell, r.Next(61) + 30, null);
+                                            }
+                                            else if (cell.Def.Name == "attackBaseMagic" && dtype == 1)
+                                            {
+                                                Type type = cell.GetType();
+                                                PropertyInfo prop = type.GetProperty("Value");
+                                                prop.SetValue(cell, r.Next(61) + 30, null);
+                                            }
+                                            else if (cell.Def.Name == "attackBaseFire" && dtype == 2)
+                                            {
+                                                Type type = cell.GetType();
+                                                PropertyInfo prop = type.GetProperty("Value");
+                                                prop.SetValue(cell, r.Next(61) + 30, null);
+                                            }
+                                            else if (cell.Def.Name == "attackBaseThunder" && dtype == 3)
+                                            {
+                                                Type type = cell.GetType();
+                                                PropertyInfo prop = type.GetProperty("Value");
+                                                prop.SetValue(cell, r.Next(61) + 30, null);
+                                            }
+                                        }
                                     }
                                 }
                             }
