@@ -400,7 +400,9 @@
             this.checkBoxWeaponStatMin.Size = new System.Drawing.Size(188, 17);
             this.checkBoxWeaponStatMin.TabIndex = 25;
             this.checkBoxWeaponStatMin.Text = "Randomize weapon minimum stats";
-            this.tooltip.SetToolTip(this.checkBoxWeaponStatMin, "Randomizes the minimum stats for a weapon.\nEffected by Don\'t randomize by shuffle" +
+            this.tooltip.SetToolTip(this.checkBoxWeaponStatMin, "Randomizes the minimum stats for a weapon.\n" +
+                "Fists will be effected unless don't modify fists is enabled\n" +
+                "If enabled the straight sword hilt will have no stat requirements. (To prevent softlocking from starting with no useable weapons)\nEffected by Don\'t randomize by shuffle" +
         ".");
             this.checkBoxWeaponStatMin.UseVisualStyleBackColor = true;
             // 

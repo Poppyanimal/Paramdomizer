@@ -1496,23 +1496,39 @@ namespace Paramdomizer
                                     }
                                     else if (cell.Def.Name == "properStrength")
                                     {
-                                        PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                        allAttackProperStrength.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        //if not straightsword hilt
+                                        if(paramRow.ID != 212000)
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allAttackProperStrength.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
                                     }
                                     else if (cell.Def.Name == "properAgility")
                                     {
-                                        PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                        allAttackProperAgility.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        //if not straightsword hilt
+                                        if (paramRow.ID != 212000)
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allAttackProperAgility.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
                                     }
                                     else if (cell.Def.Name == "properMagic")
                                     {
-                                        PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                        allAttackProperMagic.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        //if not straightsword hilt
+                                        if (paramRow.ID != 212000)
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allAttackProperMagic.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
                                     }
                                     else if (cell.Def.Name == "properFaith")
                                     {
-                                        PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                        allAttackProperFaith.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        //if not straightsword hilt
+                                        if (paramRow.ID != 212000)
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allAttackProperFaith.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
                                     }
                                     else if (cell.Def.Name == "weight")
                                     {
@@ -1730,7 +1746,7 @@ namespace Paramdomizer
                                                                          //check if casts magic first
                                 foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
                                 {
-                                    if (cell.Def.Name == "enableMagic" || cell.Def.Name == "enableVowMagic" || cell.Def.Name == "enableSorcery")
+                                    if (cell.Def.Name == "enableMagic:1" || cell.Def.Name == "enableVowMagic:1" || cell.Def.Name == "enableSorcery:1")
                                     {
                                         if (Convert.ToBoolean(cell.GetType().GetProperty("Value").GetValue(cell, null)) == true)
                                         {
@@ -2022,147 +2038,199 @@ namespace Paramdomizer
                                     }
                                     else if (cell.Def.Name == "properStrength")
                                     {
-                                        int randomIndex = r.Next(allAttackProperStrength.Count);
-                                        Type type = cell.GetType();
-                                        PropertyInfo prop = type.GetProperty("Value");
-                                        if (checkBoxWeaponStatMin.Checked)
+                                        //if not straightsword hilt
+                                        if (paramRow.ID != 212000)
                                         {
-                                            if (checkBoxDoTrueRandom.Checked)
+                                            int randomIndex = r.Next(allAttackProperStrength.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (checkBoxWeaponStatMin.Checked)
                                             {
-                                                //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the stat requirements
-                                                if (r.Next(3) == 0)
+                                                if (checkBoxDoTrueRandom.Checked)
                                                 {
-                                                    //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
-                                                    if (r.Next(20) == 0)
+                                                    //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the stat requirements
+                                                    if (r.Next(3) == 0)
                                                     {
-                                                        //58 is the cap
-                                                        prop.SetValue(cell, r.Next(34) + 25, null);
+                                                        //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                                        if (r.Next(20) == 0)
+                                                        {
+                                                            //58 is the cap
+                                                            prop.SetValue(cell, r.Next(34) + 25, null);
+                                                        }
+                                                        else
+                                                        {
+                                                            prop.SetValue(cell, r.Next(26), null);
+                                                        }
                                                     }
                                                     else
                                                     {
-                                                        prop.SetValue(cell, r.Next(26), null);
+                                                        prop.SetValue(cell, r.Next(0), null);
                                                     }
                                                 }
                                                 else
                                                 {
-                                                    prop.SetValue(cell, r.Next(0), null);
+                                                    prop.SetValue(cell, allAttackProperStrength[randomIndex], null);
                                                 }
                                             }
-                                            else
+
+                                            allAttackProperStrength.RemoveAt(randomIndex);
+                                        }
+                                        else
+                                        {
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (checkBoxWeaponStatMin.Checked)
                                             {
-                                                prop.SetValue(cell, allAttackProperStrength[randomIndex], null);
+                                                prop.SetValue(cell, 0, null);
                                             }
                                         }
-
-                                        allAttackProperStrength.RemoveAt(randomIndex);
                                     }
                                     else if (cell.Def.Name == "properAgility")
                                     {
-                                        int randomIndex = r.Next(allAttackProperAgility.Count);
-                                        Type type = cell.GetType();
-                                        PropertyInfo prop = type.GetProperty("Value");
-                                        if (checkBoxWeaponStatMin.Checked)
+                                        //if not straightsword hilt
+                                        if (paramRow.ID != 212000)
                                         {
-                                            if (checkBoxDoTrueRandom.Checked)
+                                            int randomIndex = r.Next(allAttackProperAgility.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (checkBoxWeaponStatMin.Checked)
                                             {
-                                                //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the stat requirements
-                                                if (r.Next(3) == 0)
+                                                if (checkBoxDoTrueRandom.Checked)
                                                 {
-                                                    //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
-                                                    if (r.Next(20) == 0)
+                                                    //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the stat requirements
+                                                    if (r.Next(3) == 0)
                                                     {
-                                                        //58 is the cap
-                                                        prop.SetValue(cell, r.Next(34) + 25, null);
+                                                        //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                                        if (r.Next(20) == 0)
+                                                        {
+                                                            //58 is the cap
+                                                            prop.SetValue(cell, r.Next(34) + 25, null);
+                                                        }
+                                                        else
+                                                        {
+                                                            prop.SetValue(cell, r.Next(26), null);
+                                                        }
                                                     }
                                                     else
                                                     {
-                                                        prop.SetValue(cell, r.Next(26), null);
+                                                        prop.SetValue(cell, r.Next(0), null);
                                                     }
                                                 }
                                                 else
                                                 {
-                                                    prop.SetValue(cell, r.Next(0), null);
+                                                    prop.SetValue(cell, allAttackProperAgility[randomIndex], null);
                                                 }
                                             }
-                                            else
+
+                                            allAttackProperAgility.RemoveAt(randomIndex);
+                                        }
+                                        else
+                                        {
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (checkBoxWeaponStatMin.Checked)
                                             {
-                                                prop.SetValue(cell, allAttackProperAgility[randomIndex], null);
+                                                prop.SetValue(cell, 0, null);
                                             }
                                         }
-
-                                        allAttackProperAgility.RemoveAt(randomIndex);
                                     }
                                     else if (cell.Def.Name == "properMagic")
                                     {
-                                        int randomIndex = r.Next(allAttackProperMagic.Count);
-                                        Type type = cell.GetType();
-                                        PropertyInfo prop = type.GetProperty("Value");
-                                        if (checkBoxWeaponStatMin.Checked)
+                                        //if not straightsword hilt
+                                        if (paramRow.ID != 212000)
                                         {
-                                            if (checkBoxDoTrueRandom.Checked)
+                                            int randomIndex = r.Next(allAttackProperMagic.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (checkBoxWeaponStatMin.Checked)
                                             {
-                                                //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the stat requirements
-                                                if (r.Next(3) == 0)
+                                                if (checkBoxDoTrueRandom.Checked)
                                                 {
-                                                    //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
-                                                    if (r.Next(20) == 0)
+                                                    //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the stat requirements
+                                                    if (r.Next(3) == 0)
                                                     {
-                                                        //58 is the cap
-                                                        prop.SetValue(cell, r.Next(34) + 25, null);
+                                                        //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                                        if (r.Next(20) == 0)
+                                                        {
+                                                            //58 is the cap
+                                                            prop.SetValue(cell, r.Next(34) + 25, null);
+                                                        }
+                                                        else
+                                                        {
+                                                            prop.SetValue(cell, r.Next(26), null);
+                                                        }
                                                     }
                                                     else
                                                     {
-                                                        prop.SetValue(cell, r.Next(26), null);
+                                                        prop.SetValue(cell, r.Next(0), null);
                                                     }
                                                 }
                                                 else
                                                 {
-                                                    prop.SetValue(cell, r.Next(0), null);
+                                                    prop.SetValue(cell, allAttackProperMagic[randomIndex], null);
                                                 }
                                             }
-                                            else
+
+                                            allAttackProperMagic.RemoveAt(randomIndex);
+                                        }
+                                        else
+                                        {
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (checkBoxWeaponStatMin.Checked)
                                             {
-                                                prop.SetValue(cell, allAttackProperMagic[randomIndex], null);
+                                                prop.SetValue(cell, 0, null);
                                             }
                                         }
-
-                                        allAttackProperMagic.RemoveAt(randomIndex);
                                     }
                                     else if (cell.Def.Name == "properFaith")
                                     {
-                                        int randomIndex = r.Next(allAttackProperFaith.Count);
-                                        Type type = cell.GetType();
-                                        PropertyInfo prop = type.GetProperty("Value");
-                                        if (checkBoxWeaponStatMin.Checked)
+                                        //if not straightsword hilt
+                                        if (paramRow.ID != 212000)
                                         {
-                                            if (checkBoxDoTrueRandom.Checked)
+                                            int randomIndex = r.Next(allAttackProperFaith.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (checkBoxWeaponStatMin.Checked)
                                             {
-                                                //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the stat requirements
-                                                if (r.Next(3) == 0)
+                                                if (checkBoxDoTrueRandom.Checked)
                                                 {
-                                                    //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
-                                                    if (r.Next(20) == 0)
+                                                    //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the stat requirements
+                                                    if (r.Next(3) == 0)
                                                     {
-                                                        //58 is the cap
-                                                        prop.SetValue(cell, r.Next(34) + 25, null);
+                                                        //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                                        if (r.Next(20) == 0)
+                                                        {
+                                                            //58 is the cap
+                                                            prop.SetValue(cell, r.Next(34) + 25, null);
+                                                        }
+                                                        else
+                                                        {
+                                                            prop.SetValue(cell, r.Next(26), null);
+                                                        }
                                                     }
                                                     else
                                                     {
-                                                        prop.SetValue(cell, r.Next(26), null);
+                                                        prop.SetValue(cell, r.Next(0), null);
                                                     }
                                                 }
                                                 else
                                                 {
-                                                    prop.SetValue(cell, r.Next(0), null);
+                                                    prop.SetValue(cell, allAttackProperFaith[randomIndex], null);
                                                 }
                                             }
-                                            else
+
+                                            allAttackProperFaith.RemoveAt(randomIndex);
+                                        }
+                                        else
+                                        {
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (checkBoxWeaponStatMin.Checked)
                                             {
-                                                prop.SetValue(cell, allAttackProperFaith[randomIndex], null);
+                                                prop.SetValue(cell, 0, null);
                                             }
                                         }
-
-                                        allAttackProperFaith.RemoveAt(randomIndex);
                                     }
                                     else if (cell.Def.Name == "weight")
                                     {
@@ -2235,7 +2303,7 @@ namespace Paramdomizer
 
                                         allAttackBaseStamina.RemoveAt(randomIndex);
                                     }
-                                    else if (cell.Def.Name == "enableMagic" || cell.Def.Name == "enableVowMagic" || cell.Def.Name == "enableSorcery")
+                                    else if (cell.Def.Name == "enableMagic:1" || cell.Def.Name == "enableVowMagic:1" || cell.Def.Name == "enableSorcery:1")
                                     {
                                         Type type = cell.GetType();
                                         PropertyInfo prop = type.GetProperty("Value");
