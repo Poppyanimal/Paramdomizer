@@ -74,6 +74,7 @@
             this.checkBoxPreventSpellGifts = new System.Windows.Forms.CheckBox();
             this.checkBoxNerfHumanityBullets = new System.Windows.Forms.CheckBox();
             this.checkBoxStartingGiftsAmount = new System.Windows.Forms.CheckBox();
+            this.checkBoxStartingClasses = new System.Windows.Forms.CheckBox();
             this.tooltip = new System.Windows.Forms.ToolTip(this.components);
             this.gbWeaponCategory = new System.Windows.Forms.GroupBox();
             this.gbSpellCategory = new System.Windows.Forms.GroupBox();
@@ -400,10 +401,7 @@
             this.checkBoxWeaponStatMin.Size = new System.Drawing.Size(188, 17);
             this.checkBoxWeaponStatMin.TabIndex = 25;
             this.checkBoxWeaponStatMin.Text = "Randomize weapon minimum stats";
-            this.tooltip.SetToolTip(this.checkBoxWeaponStatMin, "Randomizes the minimum stats for a weapon.\n" +
-                "Fists will be effected unless don't modify fists is enabled\n" +
-                "If enabled the straight sword hilt will have no stat requirements. (To prevent softlocking from starting with no useable weapons)\nEffected by Don\'t randomize by shuffle" +
-        ".");
+            this.tooltip.SetToolTip(this.checkBoxWeaponStatMin, resources.GetString("checkBoxWeaponStatMin.ToolTip"));
             this.checkBoxWeaponStatMin.UseVisualStyleBackColor = true;
             // 
             // checkBoxWeaponWeight
@@ -642,10 +640,24 @@
             this.checkBoxStartingGiftsAmount.Name = "checkBoxStartingGiftsAmount";
             this.checkBoxStartingGiftsAmount.Size = new System.Drawing.Size(176, 17);
             this.checkBoxStartingGiftsAmount.TabIndex = 44;
-            this.checkBoxStartingGiftsAmount.Text = "Randomize Starting Gift Amount";
+            this.checkBoxStartingGiftsAmount.Text = "Randomize starting gift amount";
             this.tooltip.SetToolTip(this.checkBoxStartingGiftsAmount, "Randomizes the amount each starting gift is. (ei 10 firebombs)\nThis feature never" +
         " randomizes by shuffle, even when dont randomize by shuffle is off.");
             this.checkBoxStartingGiftsAmount.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxStartingClasses
+            // 
+            this.checkBoxStartingClasses.AutoSize = true;
+            this.checkBoxStartingClasses.Checked = true;
+            this.checkBoxStartingClasses.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxStartingClasses.Location = new System.Drawing.Point(739, 313);
+            this.checkBoxStartingClasses.Name = "checkBoxStartingClasses";
+            this.checkBoxStartingClasses.Size = new System.Drawing.Size(157, 17);
+            this.checkBoxStartingClasses.TabIndex = 44;
+            this.checkBoxStartingClasses.Text = "Randomize starting classes";
+            this.tooltip.SetToolTip(this.checkBoxStartingClasses, "Randomizes the stats of the starting classes but make sure they keep their existi" +
+        "ng stat totals.\nWill make the straightsword hilt have no stat requirements to use to prevent some softlocks.\nAlso shuffles starting level.");
+            this.checkBoxStartingClasses.UseVisualStyleBackColor = true;
             // 
             // tooltip
             // 
@@ -760,6 +772,7 @@
             this.Controls.Add(this.checkBoxStartingGifts);
             this.Controls.Add(this.checkBoxPreventSpellGifts);
             this.Controls.Add(this.checkBoxStartingGiftsAmount);
+            this.Controls.Add(this.checkBoxStartingClasses);
             this.Controls.Add(this.chkBullets);
             this.Controls.Add(this.chkKnockback);
             this.Controls.Add(this.chkSpeffects);
@@ -837,6 +850,7 @@
         private System.Windows.Forms.CheckBox checkBoxPreventSpellGifts;
         private System.Windows.Forms.CheckBox checkBoxNerfHumanityBullets;
         private System.Windows.Forms.CheckBox checkBoxStartingGiftsAmount;
+        private System.Windows.Forms.CheckBox checkBoxStartingClasses;
         private System.Windows.Forms.ToolTip tooltip;
         private System.Windows.Forms.GroupBox gbWeaponCategory;
         private System.Windows.Forms.GroupBox gbSpellCategory;

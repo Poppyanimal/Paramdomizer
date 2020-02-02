@@ -120,6 +120,12 @@
   <metadata name="tooltip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="checkBoxWeaponStatMin.ToolTip" xml:space="preserve">
+    <value>Randomizes the minimum stats for a weapon.
+Fists will be effected unless don't modify fists is enabled
+If enabled the straight sword hilt will have no stat requirements. (To prevent softlocking from starting with no useable weapons)
+Effected by Don't randomize by shuffle.</value>
+  </data>
   <data name="checkBoxDoTrueRandom.ToolTip" xml:space="preserve">
     <value>Instead of the defualt behavior which is just to randomly shuffle the randomized element, this will attempt to randomize items by not shuffling them.
 Seeds may not be persistant across different settings if this is enabled.

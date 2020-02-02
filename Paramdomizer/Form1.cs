@@ -2079,7 +2079,7 @@ namespace Paramdomizer
                                         {
                                             Type type = cell.GetType();
                                             PropertyInfo prop = type.GetProperty("Value");
-                                            if (checkBoxWeaponStatMin.Checked)
+                                            if (checkBoxWeaponStatMin.Checked || checkBoxStartingClasses.Checked)
                                             {
                                                 prop.SetValue(cell, 0, null);
                                             }
@@ -2128,7 +2128,7 @@ namespace Paramdomizer
                                         {
                                             Type type = cell.GetType();
                                             PropertyInfo prop = type.GetProperty("Value");
-                                            if (checkBoxWeaponStatMin.Checked)
+                                            if (checkBoxWeaponStatMin.Checked || checkBoxStartingClasses.Checked)
                                             {
                                                 prop.SetValue(cell, 0, null);
                                             }
@@ -2177,7 +2177,7 @@ namespace Paramdomizer
                                         {
                                             Type type = cell.GetType();
                                             PropertyInfo prop = type.GetProperty("Value");
-                                            if (checkBoxWeaponStatMin.Checked)
+                                            if (checkBoxWeaponStatMin.Checked || checkBoxStartingClasses.Checked)
                                             {
                                                 prop.SetValue(cell, 0, null);
                                             }
@@ -2226,7 +2226,7 @@ namespace Paramdomizer
                                         {
                                             Type type = cell.GetType();
                                             PropertyInfo prop = type.GetProperty("Value");
-                                            if (checkBoxWeaponStatMin.Checked)
+                                            if (checkBoxWeaponStatMin.Checked || checkBoxStartingClasses.Checked)
                                             {
                                                 prop.SetValue(cell, 0, null);
                                             }
@@ -5700,6 +5700,8 @@ namespace Paramdomizer
                     List<int> validItems = new List<int>();
                     List<int> validUnstackableItems = new List<int>();
                     List<int> validRings = new List<int>();
+                    List<int> classStartingLevel = new List<int>();
+                    List<int> classStatTotals = new List<int>();
                     if(checkBoxStartingGifts.Checked)
                     {
                         //add validUnstackableItems
@@ -5853,16 +5855,119 @@ namespace Paramdomizer
                         }
                     }
 
+                    //read values
+                    foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
+                    {
+                        //if is a starting class
+                        if(paramRow.ID >= 3000 && paramRow.ID <= 3009)
+                        {
+                            int statTotal = 0;
+                            foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                            {
+                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                if (cell.Def.Name == "soulLv")
+                                {
+                                    classStartingLevel.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                }
+                                else if (cell.Def.Name == "baseVit" || cell.Def.Name == "baseWil" || cell.Def.Name == "baseEnd" || cell.Def.Name == "baseStr" ||
+                                    cell.Def.Name == "baseDex" || cell.Def.Name == "baseMag" || cell.Def.Name == "baseFai" || cell.Def.Name == "baseDurability")
+                                {
+                                    statTotal += Convert.ToInt32(prop.GetValue(cell, null));
+                                }
+                            }
+                            classStatTotals.Add(statTotal);
+                        }
+                    }
+
+                    //set values
                     foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
                     {
                         MeowDSIO.DataTypes.PARAM.ParamCellValueRef bowCheckCell = paramRow.Cells.First(c => c.Def.Name == "npcPlayerFaceGenId");
                         Type bowchecktype = bowCheckCell.GetType();
                         PropertyInfo bowcheckprop = bowchecktype.GetProperty("Value");
+                        
+                        //if is a starting class and randomizing starting classes
+                        if (paramRow.ID >= 3000 && paramRow.ID <= 3009 && checkBoxStartingClasses.Checked)
+                        {
+                            int indexOfLevel = r.Next(classStartingLevel.Count);
+                            int indexOfStatTotal = r.Next(classStatTotals.Count);
 
+                            int level = classStartingLevel[indexOfLevel];
+                            int culledStatTotal = classStatTotals[indexOfStatTotal] - 8;
+
+                            double VitWeight = r.NextDouble();
+                            double WilWeight = r.NextDouble();
+                            double EndWeight = r.NextDouble();
+                            double StrWeight = r.NextDouble();
+                            double DexWeight = r.NextDouble();
+                            double MagWeight = r.NextDouble();
+                            double FaiWeight = r.NextDouble();
+                            double ResistanceWeight = r.NextDouble(); //basedurability
+
+                            double totalWeight = VitWeight + WilWeight + EndWeight + StrWeight + DexWeight + MagWeight + FaiWeight + ResistanceWeight;
+
+                            int Vit = (int)(culledStatTotal * (VitWeight / totalWeight)) + 1;
+                            int Wil = (int)(culledStatTotal * (WilWeight / totalWeight)) + 1;
+                            int End = (int)(culledStatTotal * (EndWeight / totalWeight)) + 1;
+                            int Str = (int)(culledStatTotal * (StrWeight / totalWeight)) + 1;
+                            int Dex = (int)(culledStatTotal * (DexWeight / totalWeight)) + 1;
+                            int Mag = (int)(culledStatTotal * (MagWeight / totalWeight)) + 1;
+                            int Fai = (int)(culledStatTotal * (FaiWeight / totalWeight)) + 1;
+                            int Res = (culledStatTotal - (Vit + Wil + End + Str + Dex + Mag + Fai)) + 1;
+                            if (Res < 1)
+                            {
+                                Res = 1;
+                            }
+
+                            foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                            {
+                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                if (cell.Def.Name == "soulLv")
+                                {
+                                    prop.SetValue(cell, level, null);
+                                }
+                                else if (cell.Def.Name == "baseVit")
+                                {
+                                    prop.SetValue(cell, Vit, null);
+                                }
+                                else if (cell.Def.Name == "baseWil")
+                                {
+                                    prop.SetValue(cell, Wil, null);
+                                }
+                                else if (cell.Def.Name == "baseEnd")
+                                {
+                                    prop.SetValue(cell, End, null);
+                                }
+                                else if (cell.Def.Name == "baseStr")
+                                {
+                                    prop.SetValue(cell, Str, null);
+                                }
+                                else if (cell.Def.Name == "baseDex")
+                                {
+                                    prop.SetValue(cell, Dex, null);
+                                }
+                                else if (cell.Def.Name == "baseMag")
+                                {
+                                    prop.SetValue(cell, Mag, null);
+                                }
+                                else if (cell.Def.Name == "baseFai")
+                                {
+                                    prop.SetValue(cell, Fai, null);
+                                }
+                                else if (cell.Def.Name == "baseDurability")
+                                {
+                                    prop.SetValue(cell, Res, null);
+                                }
+                            }
+                            
+                            classStartingLevel.RemoveAt(indexOfLevel);
+                            classStatTotals.RemoveAt(indexOfStatTotal);
+                        }
+                        
                         //IDs 2400 to 2408 are gifts: None, Goddess's Blessing, Black Firebomb, Twin Humanities, Binoculars, Pendant, Master Key, Tiny Being's Ring, Old Witch's Ring
 
                         //Goddess's Blessing to Binoculars
-                        if(paramRow.ID >= 2401 && paramRow.ID <= 2404)
+                        if (paramRow.ID >= 2401 && paramRow.ID <= 2404)
                         {
                             foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
                             {
