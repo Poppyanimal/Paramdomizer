@@ -73,6 +73,7 @@
             this.checkBoxStartingGifts = new System.Windows.Forms.CheckBox();
             this.checkBoxPreventSpellGifts = new System.Windows.Forms.CheckBox();
             this.checkBoxNerfHumanityBullets = new System.Windows.Forms.CheckBox();
+            this.checkBoxStartingGiftsAmount = new System.Windows.Forms.CheckBox();
             this.tooltip = new System.Windows.Forms.ToolTip(this.components);
             this.gbWeaponCategory = new System.Windows.Forms.GroupBox();
             this.gbSpellCategory = new System.Windows.Forms.GroupBox();
@@ -630,6 +631,20 @@
             this.tooltip.SetToolTip(this.checkBoxNerfHumanityBullets, resources.GetString("checkBoxNerfHumanityBullets.ToolTip"));
             this.checkBoxNerfHumanityBullets.UseVisualStyleBackColor = true;
             // 
+            // checkBoxStartingGiftsAmount
+            // 
+            this.checkBoxStartingGiftsAmount.AutoSize = true;
+            this.checkBoxStartingGiftsAmount.Checked = true;
+            this.checkBoxStartingGiftsAmount.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxStartingGiftsAmount.Location = new System.Drawing.Point(504, 313);
+            this.checkBoxStartingGiftsAmount.Name = "checkBoxStartingGiftsAmount";
+            this.checkBoxStartingGiftsAmount.Size = new System.Drawing.Size(176, 17);
+            this.checkBoxStartingGiftsAmount.TabIndex = 44;
+            this.checkBoxStartingGiftsAmount.Text = "Randomize Starting Gift Amount";
+            this.tooltip.SetToolTip(this.checkBoxStartingGiftsAmount, "Randomizes the amount each starting gift is. (ei 10 firebombs)\nThis feature never" +
+        " randomizes by shuffle, even when dont randomize by shuffle is off.");
+            this.checkBoxStartingGiftsAmount.UseVisualStyleBackColor = true;
+            // 
             // tooltip
             // 
             this.tooltip.AutoPopDelay = 32767;
@@ -671,7 +686,7 @@
             this.gbOtherCategory.AutoSize = true;
             this.gbOtherCategory.Location = new System.Drawing.Point(482, 214);
             this.gbOtherCategory.Name = "gbOtherCategory";
-            this.gbOtherCategory.Size = new System.Drawing.Size(465, 93);
+            this.gbOtherCategory.Size = new System.Drawing.Size(466, 116);
             this.gbOtherCategory.TabIndex = 35;
             this.gbOtherCategory.TabStop = false;
             this.gbOtherCategory.Text = "Other Settings:";
@@ -742,6 +757,7 @@
             this.Controls.Add(this.checkBoxArmorspEffect);
             this.Controls.Add(this.checkBoxStartingGifts);
             this.Controls.Add(this.checkBoxPreventSpellGifts);
+            this.Controls.Add(this.checkBoxStartingGiftsAmount);
             this.Controls.Add(this.chkBullets);
             this.Controls.Add(this.chkKnockback);
             this.Controls.Add(this.chkSpeffects);
@@ -818,6 +834,7 @@
         private System.Windows.Forms.CheckBox checkBoxStartingGifts;
         private System.Windows.Forms.CheckBox checkBoxPreventSpellGifts;
         private System.Windows.Forms.CheckBox checkBoxNerfHumanityBullets;
+        private System.Windows.Forms.CheckBox checkBoxStartingGiftsAmount;
         private System.Windows.Forms.ToolTip tooltip;
         private System.Windows.Forms.GroupBox gbWeaponCategory;
         private System.Windows.Forms.GroupBox gbSpellCategory;

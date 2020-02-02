@@ -5630,14 +5630,29 @@ namespace Paramdomizer
                 else if (paramFile.ID == "CHARACTER_INIT_PARAM")
                 {
                     List<int> validItems = new List<int>();
+                    List<int> validUnstackableItems = new List<int>();
                     List<int> validRings = new List<int>();
                     if(checkBoxStartingGifts.Checked)
                     {
+                        //add validUnstackableItems
+                        validUnstackableItems.Add(100); //white soapstone
+                        validUnstackableItems.Add(101); //red soapstone
+                        validUnstackableItems.Add(106); //orange soapstone
+                        validUnstackableItems.Add(220); //silver pendant
+                        validUnstackableItems.Add(371); //Binoculars
+                        validUnstackableItems.Add(376); //Pendant
+                        validUnstackableItems.Add(385); //Dried Finger
+                        for (int i = 0; i < 5; i++) //carvings
+                        {
+                            validUnstackableItems.Add(510 + i);
+                        }
+                        for (int i = 0; i < 3; i++) //smith and repair boxes
+                        {
+                            validUnstackableItems.Add(2600 + i);
+                        }
+                        validUnstackableItems.Add(2608); //Bottomless Box
+
                         //add validItems
-                        validItems.Add(100); //white soapstone
-                        validItems.Add(101); //red soapstone
-                        validItems.Add(106); //orange soapstone
-                        validItems.Add(220); //silver pendant
                         validItems.Add(240); //divine blessing
                         validItems.Add(260); //green blossom
                         for (int i = 0; i < 6; i++)
@@ -5660,19 +5675,16 @@ namespace Paramdomizer
                             validItems.Add(310 + i);
                         }
                         validItems.Add(330); //Homeward Bone
-                        for (int i = 0; i < 7; i++)
+                        for (int i = 0; i < 6; i++)
                         {
-                            if (i != 2)
+                            if (i != 1 && i != 2)
                             {
                                 validItems.Add(370 + i);
                             }
                         }
-                        for (int i = 0; i < 6; i++)
+                        for (int i = 0; i < 4; i++)
                         {
-                            if (i != 4)
-                            {
-                                validItems.Add(380 + i);
-                            }
+                            validItems.Add(380 + i);
                         }
                         for (int i = 0; i < 7; i++)
                         {
@@ -5684,10 +5696,6 @@ namespace Paramdomizer
                         }
                         validItems.Add(500); //Humanity
                         validItems.Add(501); //Twin Humanities
-                        for (int i = 0; i < 5; i++) //carvings
-                        {
-                            validItems.Add(510 + i);
-                        }
                         for (int i = 0; i < 12; i++) //boss souls
                         {
                             validItems.Add(700 + i);
@@ -5696,11 +5704,6 @@ namespace Paramdomizer
                         {
                             validItems.Add(1000 + (i*10));
                         }
-                        for (int i = 0; i < 3; i++) //smith and repair boxes
-                        {
-                            validItems.Add(2600 + i);
-                        }
-                        validItems.Add(2608); //Bottomless Box
                         if(!checkBoxPreventSpellGifts.Checked) //spells, miracles, pyromancies start here
                         {
                             for (int i = 0; i < 13; i++) //sorceries
@@ -5790,8 +5793,8 @@ namespace Paramdomizer
 
                         //IDs 2400 to 2408 are gifts: None, Goddess's Blessing, Black Firebomb, Twin Humanities, Binoculars, Pendant, Master Key, Tiny Being's Ring, Old Witch's Ring
 
-                        //Goddess's Blessing to Pendant
-                        if(paramRow.ID >= 2401 && paramRow.ID <= 2405)
+                        //Goddess's Blessing to Binoculars
+                        if(paramRow.ID >= 2401 && paramRow.ID <= 2404)
                         {
                             foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
                             {
@@ -5812,16 +5815,88 @@ namespace Paramdomizer
                                 {
                                     Type type = cell.GetType();
                                     PropertyInfo prop = type.GetProperty("Value");
+                                    int itemAmount = Convert.ToInt32(prop.GetValue(cell, null));
                                     if (checkBoxStartingGifts.Checked)
                                     {
-                                        itemStartingGiftsAmount.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        //if randomize starting gift amount
+                                        if (checkBoxStartingGiftsAmount.Checked)
+                                        {
+                                            int newAmount = 1;
+                                            // 2/5 chance to be greater than 1
+                                            if(r.Next(5) <= 1)
+                                            {
+                                                newAmount = r.Next(9) + 2;
+                                            }
+                                            prop.SetValue(cell, newAmount, null);
+                                            itemAmount = newAmount;
+                                        }
+                                        itemStartingGiftsAmount.Add(itemAmount);
+                                    }
+                                }
+                            }
+                        }
+                        //Pendant (unstackable items only)
+                        if (paramRow.ID == 2405)
+                        {
+                            bool isStackable = false;
+                            foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                            {
+                                if (cell.Def.Name == "item_01")
+                                {
+                                    Type type = cell.GetType();
+                                    PropertyInfo prop = type.GetProperty("Value");
+                                    if (checkBoxStartingGifts.Checked)
+                                    {
+                                        // 1/3 chance to randomize into a stackable item
+                                        if(r.Next(3) == 0)
+                                        {
+                                            isStackable = true;
+                                            int randomIndex = r.Next(validItems.Count);
+                                            int itemId = validItems[randomIndex];
+                                            itemStartingGifts.Add(itemId);
+                                            prop.SetValue(cell, itemId, null);
+                                            validItems.RemoveAt(randomIndex);
+                                        }
+                                        else
+                                        {
+                                            int randomIndex = r.Next(validUnstackableItems.Count);
+                                            int itemId = validUnstackableItems[randomIndex];
+                                            itemStartingGifts.Add(itemId);
+                                            prop.SetValue(cell, itemId, null);
+                                            validUnstackableItems.RemoveAt(randomIndex);
+                                        }
+                                    }
+                                }
+                            }
+                            foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                            {
+                                if (cell.Def.Name == "itemNum_01")
+                                {
+                                    Type type = cell.GetType();
+                                    PropertyInfo prop = type.GetProperty("Value");
+                                    int itemAmount = Convert.ToInt32(prop.GetValue(cell, null));
+                                    if (checkBoxStartingGifts.Checked)
+                                    {
+                                        //if randomize starting gift amount
+                                        if (checkBoxStartingGiftsAmount.Checked)
+                                        {
+                                            int newAmount = 1;
+                                            // 2/5 chance to be greater than 1; will only be greater than 1 if item is stackable
+                                            if (r.Next(5) <= 1 && isStackable)
+                                            {
+                                                newAmount = r.Next(9) + 2;
+                                            }
+                                            prop.SetValue(cell, newAmount, null);
+                                            itemAmount = newAmount;
+                                        }
+                                        itemStartingGiftsAmount.Add(itemAmount);
                                     }
                                 }
                             }
                         }
 
                         //Tiny Being's Ring and Old Witch's Ring
-                        if(paramRow.ID == 2407 || paramRow.ID == 2408)
+                        if (paramRow.ID == 2407 || paramRow.ID == 2408)
                         {
                             foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
                             {
@@ -5892,13 +5967,13 @@ namespace Paramdomizer
                 List<bool> ringDoneStartingNames = new List<bool>() { false, false };
                 List<bool> ringDoneStartingDescr = new List<bool>() { false, false };
 
-                //get the list strings
+                //get the list strings (not patch)
                 foreach (var itemMsgBndEntry in itemMSGBND)
                 {
                     var itemMsgKey = itemMsgBndEntry.Key;
                     var itemMsgFMG = itemMsgBndEntry.Value;
-
-                    if(itemMsgKey == MeowDSIO.DataTypes.FMGBND.FmgType.ItemNames || itemMsgKey == MeowDSIO.DataTypes.FMGBND.FmgType.ItemNames_Patch)
+                    
+                    if(itemMsgKey == MeowDSIO.DataTypes.FMGBND.FmgType.ItemNames)
                     {
                         foreach (var FMG in itemMsgFMG)
                         {
@@ -5909,7 +5984,7 @@ namespace Paramdomizer
                             }
                         }
                     }
-                    else if (itemMsgKey == MeowDSIO.DataTypes.FMGBND.FmgType.ItemLongDescriptions || itemMsgKey == MeowDSIO.DataTypes.FMGBND.FmgType.ItemLongDescriptions_Patch)
+                    else if (itemMsgKey == MeowDSIO.DataTypes.FMGBND.FmgType.ItemLongDescriptions)
                     {
                         foreach (var FMG in itemMsgFMG)
                         {
@@ -5920,7 +5995,7 @@ namespace Paramdomizer
                             }
                         }
                     }
-                    else if (itemMsgKey == MeowDSIO.DataTypes.FMGBND.FmgType.RingNames || itemMsgKey == MeowDSIO.DataTypes.FMGBND.FmgType.RingNames_Patch)
+                    else if (itemMsgKey == MeowDSIO.DataTypes.FMGBND.FmgType.RingNames)
                     {
                         foreach (var FMG in itemMsgFMG)
                         {
@@ -5931,7 +6006,7 @@ namespace Paramdomizer
                             }
                         }
                     }
-                    else if (itemMsgKey == MeowDSIO.DataTypes.FMGBND.FmgType.RingLongDescriptions || itemMsgKey == MeowDSIO.DataTypes.FMGBND.FmgType.RingLongDescriptions_Patch)
+                    else if (itemMsgKey == MeowDSIO.DataTypes.FMGBND.FmgType.RingLongDescriptions)
                     {
                         foreach (var FMG in itemMsgFMG)
                         {
@@ -5939,6 +6014,70 @@ namespace Paramdomizer
                             {
                                 int index = ringStartingGifts.IndexOf(FMG.Key);
                                 ringStartingDescr[index] = FMG.Value;
+                            }
+                        }
+                    }
+                }
+
+                //get the list strings (patch)
+                foreach (var menuMsgBndEntry in menuMSGBND)
+                {
+                    var menuMsgKey = menuMsgBndEntry.Key;
+                    var menuMsgFMG = menuMsgBndEntry.Value;
+
+                    if (menuMsgKey == MeowDSIO.DataTypes.FMGBND.FmgType.ItemNames_Patch)
+                    {
+                        foreach (var FMG in menuMsgFMG)
+                        {
+                            if (itemStartingGifts.Contains(FMG.Key))
+                            {
+                                int index = itemStartingGifts.IndexOf(FMG.Key);
+                                if(!FMG.Value.Equals("<null>") && FMG.Value != null)
+                                {
+                                    itemStartingNames[index] = FMG.Value;
+                                }
+                            }
+                        }
+                    }
+                    else if (menuMsgKey == MeowDSIO.DataTypes.FMGBND.FmgType.ItemLongDescriptions_Patch)
+                    {
+                        foreach (var FMG in menuMsgFMG)
+                        {
+                            if (itemStartingGifts.Contains(FMG.Key))
+                            {
+                                int index = itemStartingGifts.IndexOf(FMG.Key);
+                                if (!FMG.Value.Equals("<null>") && FMG.Value != null)
+                                {
+                                    itemStartingDescr[index] = FMG.Value;
+                                }
+                            }
+                        }
+                    }
+                    else if (menuMsgKey == MeowDSIO.DataTypes.FMGBND.FmgType.RingNames_Patch)
+                    {
+                        foreach (var FMG in menuMsgFMG)
+                        {
+                            if (ringStartingGifts.Contains(FMG.Key))
+                            {
+                                int index = ringStartingGifts.IndexOf(FMG.Key);
+                                if (!FMG.Value.Equals("<null>") && FMG.Value != null)
+                                {
+                                    ringStartingNames[index] = FMG.Value;
+                                }
+                            }
+                        }
+                    }
+                    else if (menuMsgKey == MeowDSIO.DataTypes.FMGBND.FmgType.RingLongDescriptions_Patch)
+                    {
+                        foreach (var FMG in menuMsgFMG)
+                        {
+                            if (ringStartingGifts.Contains(FMG.Key))
+                            {
+                                int index = ringStartingGifts.IndexOf(FMG.Key);
+                                if (!FMG.Value.Equals("<null>") && FMG.Value != null)
+                                {
+                                    ringStartingDescr[index] = FMG.Value;
+                                }
                             }
                         }
                     }
