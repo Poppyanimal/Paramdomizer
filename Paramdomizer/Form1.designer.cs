@@ -73,12 +73,12 @@
             this.checkBoxStartingGifts = new System.Windows.Forms.CheckBox();
             this.checkBoxPreventSpellGifts = new System.Windows.Forms.CheckBox();
             this.tooltip = new System.Windows.Forms.ToolTip(this.components);
-            this.lblWeaponCategory = new System.Windows.Forms.Label();
-            this.lblSpellCategory = new System.Windows.Forms.Label();
-            this.lblEnemiesCategory = new System.Windows.Forms.Label();
-            this.lblOtherCategory = new System.Windows.Forms.Label();
-            this.lblSharedCategory = new System.Windows.Forms.Label();
-            this.lblArmorCategory = new System.Windows.Forms.Label();
+            this.gbWeaponCategory = new System.Windows.Forms.GroupBox();
+            this.gbSpellCategory = new System.Windows.Forms.GroupBox();
+            this.gbEnemiesCategory = new System.Windows.Forms.GroupBox();
+            this.gbOtherCategory = new System.Windows.Forms.GroupBox();
+            this.gbSharedCategory = new System.Windows.Forms.GroupBox();
+            this.gbArmorCategory = new System.Windows.Forms.GroupBox();
             this.lblVersion = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -142,7 +142,7 @@
             // lblMessage
             // 
             this.lblMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblMessage.Location = new System.Drawing.Point(230, 610);
+            this.lblMessage.Location = new System.Drawing.Point(203, 617);
             this.lblMessage.Name = "lblMessage";
             this.lblMessage.Size = new System.Drawing.Size(243, 43);
             this.lblMessage.TabIndex = 6;
@@ -638,66 +638,72 @@
             this.tooltip.InitialDelay = 500;
             this.tooltip.ReshowDelay = 100;
             // 
-            // lblWeaponCategory
+            // gbWeaponCategory
             // 
-            this.lblWeaponCategory.AutoSize = true;
-            this.lblWeaponCategory.Location = new System.Drawing.Point(8, 64);
-            this.lblWeaponCategory.Name = "lblWeaponCategory";
-            this.lblWeaponCategory.Size = new System.Drawing.Size(92, 13);
-            this.lblWeaponCategory.TabIndex = 32;
-            this.lblWeaponCategory.Text = "Weapon Settings:";
+            this.gbWeaponCategory.AutoSize = true;
+            this.gbWeaponCategory.Location = new System.Drawing.Point(8, 64);
+            this.gbWeaponCategory.Name = "gbWeaponCategory";
+            this.gbWeaponCategory.Size = new System.Drawing.Size(465, 161);
+            this.gbWeaponCategory.TabIndex = 32;
+            this.gbWeaponCategory.TabStop = false;
+            this.gbWeaponCategory.Text = "Weapon Settings:";
             // 
-            // lblSpellCategory
+            // gbSpellCategory
             // 
-            this.lblSpellCategory.AutoSize = true;
-            this.lblSpellCategory.Location = new System.Drawing.Point(8, 289);
-            this.lblSpellCategory.Name = "lblSpellCategory";
-            this.lblSpellCategory.Size = new System.Drawing.Size(74, 13);
-            this.lblSpellCategory.TabIndex = 33;
-            this.lblSpellCategory.Text = "Spell Settings:";
+            this.gbSpellCategory.AutoSize = true;
+            this.gbSpellCategory.Location = new System.Drawing.Point(8, 289);
+            this.gbSpellCategory.Name = "gbSpellCategory";
+            this.gbSpellCategory.Size = new System.Drawing.Size(465, 85);
+            this.gbSpellCategory.TabIndex = 33;
+            this.gbSpellCategory.TabStop = false;
+            this.gbSpellCategory.Text = "Spell Settings:";
             // 
-            // lblEnemiesCategory
+            // gbEnemiesCategory
             // 
-            this.lblEnemiesCategory.AutoSize = true;
-            this.lblEnemiesCategory.Location = new System.Drawing.Point(8, 377);
-            this.lblEnemiesCategory.Name = "lblEnemiesCategory";
-            this.lblEnemiesCategory.Size = new System.Drawing.Size(83, 13);
-            this.lblEnemiesCategory.TabIndex = 34;
-            this.lblEnemiesCategory.Text = "Enemy Settings:";
+            this.gbEnemiesCategory.AutoSize = true;
+            this.gbEnemiesCategory.Location = new System.Drawing.Point(8, 377);
+            this.gbEnemiesCategory.Name = "gbEnemiesCategory";
+            this.gbEnemiesCategory.Size = new System.Drawing.Size(465, 64);
+            this.gbEnemiesCategory.TabIndex = 34;
+            this.gbEnemiesCategory.TabStop = false;
+            this.gbEnemiesCategory.Text = "Enemy Settings:";
             // 
-            // lblOtherCategory
+            // gbOtherCategory
             // 
-            this.lblOtherCategory.AutoSize = true;
-            this.lblOtherCategory.Location = new System.Drawing.Point(8, 519);
-            this.lblOtherCategory.Name = "lblOtherCategory";
-            this.lblOtherCategory.Size = new System.Drawing.Size(77, 13);
-            this.lblOtherCategory.TabIndex = 35;
-            this.lblOtherCategory.Text = "Other Settings:";
+            this.gbOtherCategory.AutoSize = true;
+            this.gbOtherCategory.Location = new System.Drawing.Point(8, 519);
+            this.gbOtherCategory.Name = "gbOtherCategory";
+            this.gbOtherCategory.Size = new System.Drawing.Size(465, 95);
+            this.gbOtherCategory.TabIndex = 35;
+            this.gbOtherCategory.TabStop = false;
+            this.gbOtherCategory.Text = "Other Settings:";
             // 
-            // lblSharedCategory
+            // gbSharedCategory
             // 
-            this.lblSharedCategory.AutoSize = true;
-            this.lblSharedCategory.Location = new System.Drawing.Point(8, 447);
-            this.lblSharedCategory.Name = "lblSharedCategory";
-            this.lblSharedCategory.Size = new System.Drawing.Size(142, 13);
-            this.lblSharedCategory.TabIndex = 36;
-            this.lblSharedCategory.Text = "Enemy (and Player) Settings:";
+            this.gbSharedCategory.AutoSize = true;
+            this.gbSharedCategory.Location = new System.Drawing.Point(8, 447);
+            this.gbSharedCategory.Name = "gbSharedCategory";
+            this.gbSharedCategory.Size = new System.Drawing.Size(465, 66);
+            this.gbSharedCategory.TabIndex = 36;
+            this.gbSharedCategory.TabStop = false;
+            this.gbSharedCategory.Text = "Enemy (and Player) Settings:";
             // 
-            // lblArmorCategory
+            // gbArmorCategory
             // 
-            this.lblArmorCategory.AutoSize = true;
-            this.lblArmorCategory.Location = new System.Drawing.Point(8, 227);
-            this.lblArmorCategory.Name = "lblArmorCategory";
-            this.lblArmorCategory.Size = new System.Drawing.Size(78, 13);
-            this.lblArmorCategory.TabIndex = 41;
-            this.lblArmorCategory.Text = "Armor Settings:";
+            this.gbArmorCategory.AutoSize = true;
+            this.gbArmorCategory.Location = new System.Drawing.Point(8, 230);
+            this.gbArmorCategory.Name = "gbArmorCategory";
+            this.gbArmorCategory.Size = new System.Drawing.Size(465, 58);
+            this.gbArmorCategory.TabIndex = 41;
+            this.gbArmorCategory.TabStop = false;
+            this.gbArmorCategory.Text = "Armor Settings:";
             // 
             // lblVersion
             // 
             this.lblVersion.AutoSize = true;
             this.lblVersion.Location = new System.Drawing.Point(262, 662);
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(84, 13);
+            this.lblVersion.Size = new System.Drawing.Size(90, 13);
             this.lblVersion.TabIndex = 41;
             this.lblVersion.Text = "DEV version 0.3b";
             // 
@@ -706,9 +712,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(500, 680);
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Controls.Add(this.checkBoxRemaster);
             this.Controls.Add(this.chkRandomFaceData);
             this.Controls.Add(this.btnOpenFolderDialog);
@@ -751,14 +754,17 @@
             this.Controls.Add(this.lblGamePath);
             this.Controls.Add(this.lblSeed);
             this.Controls.Add(this.txtSeed);
-            this.Controls.Add(this.lblWeaponCategory);
-            this.Controls.Add(this.lblSpellCategory);
-            this.Controls.Add(this.lblEnemiesCategory);
-            this.Controls.Add(this.lblOtherCategory);
-            this.Controls.Add(this.lblSharedCategory);
-            this.Controls.Add(this.lblArmorCategory);
+            this.Controls.Add(this.gbWeaponCategory);
+            this.Controls.Add(this.gbSpellCategory);
+            this.Controls.Add(this.gbEnemiesCategory);
+            this.Controls.Add(this.gbOtherCategory);
+            this.Controls.Add(this.gbSharedCategory);
+            this.Controls.Add(this.gbArmorCategory);
             this.Controls.Add(this.lblVersion);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Form1";
             this.ShowIcon = false;
             this.Text = "Paramdomizer";
@@ -813,12 +819,12 @@
         private System.Windows.Forms.CheckBox checkBoxStartingGifts;
         private System.Windows.Forms.CheckBox checkBoxPreventSpellGifts;
         private System.Windows.Forms.ToolTip tooltip;
-        private System.Windows.Forms.Label lblWeaponCategory;
-        private System.Windows.Forms.Label lblSpellCategory;
-        private System.Windows.Forms.Label lblEnemiesCategory;
-        private System.Windows.Forms.Label lblOtherCategory;
-        private System.Windows.Forms.Label lblSharedCategory;
-        private System.Windows.Forms.Label lblArmorCategory;
+        private System.Windows.Forms.GroupBox gbWeaponCategory;
+        private System.Windows.Forms.GroupBox gbSpellCategory;
+        private System.Windows.Forms.GroupBox gbEnemiesCategory;
+        private System.Windows.Forms.GroupBox gbOtherCategory;
+        private System.Windows.Forms.GroupBox gbSharedCategory;
+        private System.Windows.Forms.GroupBox gbArmorCategory;
         private System.Windows.Forms.Label lblVersion;
     }
 }
