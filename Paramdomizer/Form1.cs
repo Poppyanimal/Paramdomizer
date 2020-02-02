@@ -2526,7 +2526,7 @@ namespace Paramdomizer
                                     damageTypes.RemoveAt(index);
                                 }
 
-                                if (baseDamage == 0 && checkBoxDoTrueRandom.Checked)
+                                if (baseDamage == 0)
                                 {
                                     int dtype = r.Next(4);
                                     foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
@@ -3684,7 +3684,7 @@ namespace Paramdomizer
                                         damageTypes.RemoveAt(index);
                                     }
 
-                                    if (baseDamage == 0 && checkBoxDoTrueRandom.Checked)
+                                    if (baseDamage == 0)
                                     {
                                         int dtype = r.Next(4);
                                         foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
