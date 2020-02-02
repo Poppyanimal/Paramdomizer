@@ -5788,14 +5788,14 @@ namespace Paramdomizer
                                 {
                                     Type type = cell.GetType();
                                     PropertyInfo prop = type.GetProperty("Value");
-                                    int randomIndex = r.Next(validItems.Count);
                                     if(checkBoxStartingGifts.Checked)
                                     {
+                                        int randomIndex = r.Next(validItems.Count);
                                         int itemId = validItems[randomIndex];
                                         itemStartingGifts.Add(itemId);
                                         prop.SetValue(cell, itemId, null);
+                                        validItems.RemoveAt(randomIndex);
                                     }
-                                    validItems.RemoveAt(randomIndex);
                                 }
                             }
                         }
@@ -5809,14 +5809,14 @@ namespace Paramdomizer
                                 {
                                     Type type = cell.GetType();
                                     PropertyInfo prop = type.GetProperty("Value");
-                                    int randomIndex = r.Next(validRings.Count);
                                     if (checkBoxStartingGifts.Checked)
                                     {
+                                        int randomIndex = r.Next(validRings.Count);
                                         int ringId = validRings[randomIndex];
                                         ringStartingGifts.Add(ringId);
                                         prop.SetValue(cell, ringId, null);
+                                        validRings.RemoveAt(randomIndex);
                                     }
-                                    validRings.RemoveAt(randomIndex);
                                 }
                             }
                         }
