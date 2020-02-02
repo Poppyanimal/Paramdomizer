@@ -79,6 +79,7 @@
             this.lblOtherCategory = new System.Windows.Forms.Label();
             this.lblSharedCategory = new System.Windows.Forms.Label();
             this.lblArmorCategory = new System.Windows.Forms.Label();
+            this.lblVersion = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtSeed
@@ -608,9 +609,9 @@
             this.checkBoxStartingGifts.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxStartingGifts.Location = new System.Drawing.Point(30, 595);
             this.checkBoxStartingGifts.Name = "checkBoxStartingGifts";
-            this.checkBoxStartingGifts.Size = new System.Drawing.Size(142, 17);
+            this.checkBoxStartingGifts.Size = new System.Drawing.Size(138, 17);
             this.checkBoxStartingGifts.TabIndex = 44;
-            this.checkBoxStartingGifts.Text = "Randomize starting gifts*";
+            this.checkBoxStartingGifts.Text = "Randomize starting gifts";
             this.tooltip.SetToolTip(this.checkBoxStartingGifts, "Randomizes the starting gifts and changes the english menus to correspend with th" +
         "e changes.\nNoteworthy: the 2 starting rings get randomized into other rings and " +
         "the master key does not get randomized");
@@ -630,6 +631,12 @@
             this.tooltip.SetToolTip(this.checkBoxPreventSpellGifts, "Prevents Sorceries, Miracles, or Pyromancies from being valid starting gifts.\nonl" +
         "y applies if starting gifts are randomized");
             this.checkBoxPreventSpellGifts.UseVisualStyleBackColor = true;
+            // 
+            // tooltip
+            // 
+            this.tooltip.AutoPopDelay = 32767;
+            this.tooltip.InitialDelay = 500;
+            this.tooltip.ReshowDelay = 100;
             // 
             // lblWeaponCategory
             // 
@@ -685,9 +692,17 @@
             this.lblArmorCategory.TabIndex = 41;
             this.lblArmorCategory.Text = "Armor Settings:";
             // 
+            // lblVersion
+            // 
+            this.lblVersion.AutoSize = true;
+            this.lblVersion.Location = new System.Drawing.Point(262, 662);
+            this.lblVersion.Name = "lblVersion";
+            this.lblVersion.Size = new System.Drawing.Size(84, 13);
+            this.lblVersion.TabIndex = 41;
+            this.lblVersion.Text = "DEV version 0.3a";
+            // 
             // Form1
             // 
-            this.tooltip.AutoPopDelay = 32767;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(500, 680);
@@ -739,6 +754,7 @@
             this.Controls.Add(this.lblOtherCategory);
             this.Controls.Add(this.lblSharedCategory);
             this.Controls.Add(this.lblArmorCategory);
+            this.Controls.Add(this.lblVersion);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.ShowIcon = false;
@@ -800,6 +816,7 @@
         private System.Windows.Forms.Label lblOtherCategory;
         private System.Windows.Forms.Label lblSharedCategory;
         private System.Windows.Forms.Label lblArmorCategory;
+        private System.Windows.Forms.Label lblVersion;
     }
 }
 
