@@ -125,6 +125,11 @@
 Seeds may not be persistant across different settings if this is enabled.
 Supported settings will have tooltip text indicating that it works with this option.</value>
   </data>
+  <data name="checkBoxNerfHumanityBullets.ToolTip" xml:space="preserve">
+    <value>Requires randomize bullets to be enabled.
+Removes Humanity sprites from the projectile randomization pool, preventing scenarios like humanity spamming Wrath of God.
+This setting can be turned off for those who consider themselves hardcore.</value>
+  </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>48</value>
   </metadata>
