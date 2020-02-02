@@ -5879,6 +5879,57 @@ namespace Paramdomizer
                         }
                     }
 
+                    int[] classLevels = new int[10];
+                    int[,] classStats = new int[10, 8];
+
+                    //determine levels and stats of each class
+                    for(int i = 0; i < 10; i++)
+                    {
+                        int indexOfLevel = r.Next(classStartingLevel.Count);
+                        int indexOfStatTotal = r.Next(classStatTotals.Count);
+
+                        int level = classStartingLevel[indexOfLevel];
+                        int culledStatTotal = classStatTotals[indexOfStatTotal] - 8;
+
+                        double VitWeight = r.NextDouble();
+                        double WilWeight = r.NextDouble();
+                        double EndWeight = r.NextDouble();
+                        double StrWeight = r.NextDouble();
+                        double DexWeight = r.NextDouble();
+                        double MagWeight = r.NextDouble();
+                        double FaiWeight = r.NextDouble();
+                        double ResistanceWeight = r.NextDouble(); //basedurability
+
+                        double totalWeight = VitWeight + WilWeight + EndWeight + StrWeight + DexWeight + MagWeight + FaiWeight + ResistanceWeight;
+
+                        int Vit = (int)(culledStatTotal * (VitWeight / totalWeight)) + 1;
+                        int Wil = (int)(culledStatTotal * (WilWeight / totalWeight)) + 1;
+                        int End = (int)(culledStatTotal * (EndWeight / totalWeight)) + 1;
+                        int Str = (int)(culledStatTotal * (StrWeight / totalWeight)) + 1;
+                        int Dex = (int)(culledStatTotal * (DexWeight / totalWeight)) + 1;
+                        int Mag = (int)(culledStatTotal * (MagWeight / totalWeight)) + 1;
+                        int Fai = (int)(culledStatTotal * (FaiWeight / totalWeight)) + 1;
+                        int Res = (culledStatTotal - (Vit + Wil + End + Str + Dex + Mag + Fai)) + 1;
+                        if (Res < 1)
+                        {
+                            Res = 1;
+                        }
+
+                        classLevels[i] = level;
+                        classStats[i, 0] = Vit;
+                        classStats[i, 1] = Wil;
+                        classStats[i, 2] = End;
+                        classStats[i, 3] = Str;
+                        classStats[i, 4] = Dex;
+                        classStats[i, 5] = Mag;
+                        classStats[i, 6] = Fai;
+                        classStats[i, 7] = Res;
+
+                        classStartingLevel.RemoveAt(indexOfLevel);
+                        classStatTotals.RemoveAt(indexOfStatTotal);
+                    }
+
+
                     //set values
                     foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
                     {
@@ -5887,81 +5938,58 @@ namespace Paramdomizer
                         PropertyInfo bowcheckprop = bowchecktype.GetProperty("Value");
                         
                         //if is a starting class and randomizing starting classes
-                        if (paramRow.ID >= 3000 && paramRow.ID <= 3009 && checkBoxStartingClasses.Checked)
+                        if (checkBoxStartingClasses.Checked && ((paramRow.ID >= 3000 && paramRow.ID <= 3009) || (paramRow.ID >= 2000 && paramRow.ID <= 2009)))
                         {
-                            int indexOfLevel = r.Next(classStartingLevel.Count);
-                            int indexOfStatTotal = r.Next(classStatTotals.Count);
-
-                            int level = classStartingLevel[indexOfLevel];
-                            int culledStatTotal = classStatTotals[indexOfStatTotal] - 8;
-
-                            double VitWeight = r.NextDouble();
-                            double WilWeight = r.NextDouble();
-                            double EndWeight = r.NextDouble();
-                            double StrWeight = r.NextDouble();
-                            double DexWeight = r.NextDouble();
-                            double MagWeight = r.NextDouble();
-                            double FaiWeight = r.NextDouble();
-                            double ResistanceWeight = r.NextDouble(); //basedurability
-
-                            double totalWeight = VitWeight + WilWeight + EndWeight + StrWeight + DexWeight + MagWeight + FaiWeight + ResistanceWeight;
-
-                            int Vit = (int)(culledStatTotal * (VitWeight / totalWeight)) + 1;
-                            int Wil = (int)(culledStatTotal * (WilWeight / totalWeight)) + 1;
-                            int End = (int)(culledStatTotal * (EndWeight / totalWeight)) + 1;
-                            int Str = (int)(culledStatTotal * (StrWeight / totalWeight)) + 1;
-                            int Dex = (int)(culledStatTotal * (DexWeight / totalWeight)) + 1;
-                            int Mag = (int)(culledStatTotal * (MagWeight / totalWeight)) + 1;
-                            int Fai = (int)(culledStatTotal * (FaiWeight / totalWeight)) + 1;
-                            int Res = (culledStatTotal - (Vit + Wil + End + Str + Dex + Mag + Fai)) + 1;
-                            if (Res < 1)
+                            int classNumber; //0-9
+                            if(paramRow.ID >= 3000)
                             {
-                                Res = 1;
+                                classNumber = paramRow.ID - 3000;
                             }
-
+                            else
+                            {
+                                classNumber = paramRow.ID - 2000;
+                            }
                             foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
                             {
                                 PropertyInfo prop = cell.GetType().GetProperty("Value");
                                 if (cell.Def.Name == "soulLv")
                                 {
-                                    prop.SetValue(cell, level, null);
+                                    prop.SetValue(cell, classLevels[classNumber], null);
                                 }
                                 else if (cell.Def.Name == "baseVit")
                                 {
-                                    prop.SetValue(cell, Vit, null);
+                                    prop.SetValue(cell, classStats[classNumber, 0], null);
                                 }
                                 else if (cell.Def.Name == "baseWil")
                                 {
-                                    prop.SetValue(cell, Wil, null);
+                                    prop.SetValue(cell, classStats[classNumber, 1], null);
                                 }
                                 else if (cell.Def.Name == "baseEnd")
                                 {
-                                    prop.SetValue(cell, End, null);
+                                    prop.SetValue(cell, classStats[classNumber, 2], null);
                                 }
                                 else if (cell.Def.Name == "baseStr")
                                 {
-                                    prop.SetValue(cell, Str, null);
+                                    prop.SetValue(cell, classStats[classNumber, 3], null);
                                 }
                                 else if (cell.Def.Name == "baseDex")
                                 {
-                                    prop.SetValue(cell, Dex, null);
+                                    prop.SetValue(cell, classStats[classNumber, 4], null);
                                 }
                                 else if (cell.Def.Name == "baseMag")
                                 {
-                                    prop.SetValue(cell, Mag, null);
+                                    prop.SetValue(cell, classStats[classNumber, 5], null);
                                 }
                                 else if (cell.Def.Name == "baseFai")
                                 {
-                                    prop.SetValue(cell, Fai, null);
+                                    prop.SetValue(cell, classStats[classNumber, 6], null);
                                 }
                                 else if (cell.Def.Name == "baseDurability")
                                 {
-                                    prop.SetValue(cell, Res, null);
+                                    prop.SetValue(cell, classStats[classNumber, 7], null);
                                 }
                             }
                             
-                            classStartingLevel.RemoveAt(indexOfLevel);
-                            classStatTotals.RemoveAt(indexOfStatTotal);
                         }
                         
                         //IDs 2400 to 2408 are gifts: None, Goddess's Blessing, Black Firebomb, Twin Humanities, Binoculars, Pendant, Master Key, Tiny Being's Ring, Old Witch's Ring
