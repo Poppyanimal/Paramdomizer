@@ -221,6 +221,7 @@ namespace Paramdomizer
 
             //used for name assignment when randomizing starting gifts
             List<int> itemStartingGifts = new List<int>();
+            List<int> itemStartingGiftsAmount = new List<int>();
             List<int> ringStartingGifts = new List<int>();
 
             foreach (var paramBndEntry in gameparamBnd)
@@ -5797,6 +5798,15 @@ namespace Paramdomizer
                                         validItems.RemoveAt(randomIndex);
                                     }
                                 }
+                                else if (cell.Def.Name == "itemNum_01")
+                                {
+                                    Type type = cell.GetType();
+                                    PropertyInfo prop = type.GetProperty("Value");
+                                    if (checkBoxStartingGifts.Checked)
+                                    {
+                                        itemStartingGiftsAmount.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                    }
+                                }
                             }
                         }
 
@@ -5983,35 +5993,60 @@ namespace Paramdomizer
                             if (FMG.Key == 132051 && !itemDoneStartingNames[0]) //blessing name
                             {
                                 menuMsgFMG.Remove(FMG.Key);
-                                menuMsgFMG.Add(FMG.Key, itemStartingNames[0]);
+                                String name = itemStartingNames[0];
+                                if(itemStartingGiftsAmount[0] > 1)
+                                {
+                                    name += " [" + itemStartingGiftsAmount[0] + "]";
+                                }
+                                menuMsgFMG.Add(FMG.Key, name);
                                 itemDoneStartingNames[0] = true;
                                 i--;
                             }
                             else if (FMG.Key == 132052 && !itemDoneStartingNames[1]) //firebomb name
                             {
                                 menuMsgFMG.Remove(FMG.Key);
-                                menuMsgFMG.Add(FMG.Key, itemStartingNames[1]);
+                                String name = itemStartingNames[1];
+                                if (itemStartingGiftsAmount[1] > 1)
+                                {
+                                    name += " [" + itemStartingGiftsAmount[1] + "]";
+                                }
+                                menuMsgFMG.Add(FMG.Key, name);
                                 itemDoneStartingNames[1] = true;
                                 i--;
                             }
                             else if (FMG.Key == 132053 && !itemDoneStartingNames[2]) //twin humanity name
                             {
                                 menuMsgFMG.Remove(FMG.Key);
-                                menuMsgFMG.Add(FMG.Key, itemStartingNames[2]);
+                                String name = itemStartingNames[2];
+                                if (itemStartingGiftsAmount[2] > 1)
+                                {
+                                    name += " [" + itemStartingGiftsAmount[2] + "]";
+                                }
+                                menuMsgFMG.Add(FMG.Key, name);
                                 itemDoneStartingNames[2] = true;
                                 i--;
                             }
                             else if (FMG.Key == 132054 && !itemDoneStartingNames[3]) //binoculars name
                             {
                                 menuMsgFMG.Remove(FMG.Key);
-                                menuMsgFMG.Add(FMG.Key, itemStartingNames[3]);
+                                String name = itemStartingNames[3];
+                                if (itemStartingGiftsAmount[3] > 1)
+                                {
+                                    name += " [" + itemStartingGiftsAmount[3] + "]";
+                                }
+                                menuMsgFMG.Add(FMG.Key, name);
                                 itemDoneStartingNames[3] = true;
                                 i--;
                             }
                             else if (FMG.Key == 132055 && !itemDoneStartingNames[4]) //pendant name
                             {
                                 menuMsgFMG.Remove(FMG.Key);
-                                menuMsgFMG.Add(FMG.Key, itemStartingNames[4]);
+                                String name = itemStartingNames[4];
+                                if (itemStartingGiftsAmount[4] > 1)
+                                {
+                                    name += " [" + itemStartingGiftsAmount[4] + "]";
+                                }
+                                menuMsgFMG.Add(FMG.Key, name);
                                 itemDoneStartingNames[4] = true;
                                 i--;
                             }
