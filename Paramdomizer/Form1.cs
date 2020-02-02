@@ -5889,7 +5889,7 @@ namespace Paramdomizer
                         int indexOfStatTotal = r.Next(classStatTotals.Count);
 
                         int level = classStartingLevel[indexOfLevel];
-                        int culledStatTotal = classStatTotals[indexOfStatTotal] - 8;
+                        int culledStatTotal = classStatTotals[indexOfStatTotal];
 
                         double VitWeight = r.NextDouble();
                         double WilWeight = r.NextDouble();
@@ -5909,7 +5909,7 @@ namespace Paramdomizer
                         int Dex = (int)(culledStatTotal * (DexWeight / totalWeight)) + 1;
                         int Mag = (int)(culledStatTotal * (MagWeight / totalWeight)) + 1;
                         int Fai = (int)(culledStatTotal * (FaiWeight / totalWeight)) + 1;
-                        int Res = (culledStatTotal - (Vit + Wil + End + Str + Dex + Mag + Fai)) + 1;
+                        int Res = (culledStatTotal - (Vit + Wil + End + Str + Dex + Mag + Fai));
                         if (Res < 1)
                         {
                             Res = 1;
