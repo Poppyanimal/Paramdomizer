@@ -35,6 +35,7 @@
             this.lblGamePath = new System.Windows.Forms.Label();
             this.txtGamePath = new System.Windows.Forms.TextBox();
             this.btnSubmit = new System.Windows.Forms.Button();
+            this.checkBoxLoadFromBackup = new System.Windows.Forms.CheckBox();
             this.chkRingSpeffects = new System.Windows.Forms.CheckBox();
             this.lblMessage = new System.Windows.Forms.Label();
             this.chkWeaponModels = new System.Windows.Forms.CheckBox();
@@ -134,6 +135,22 @@
             this.btnSubmit.UseVisualStyleBackColor = true;
             this.btnSubmit.Click += new System.EventHandler(this.btnSubmit_Click);
             // 
+            // checkBoxLoadFromBackup
+            // 
+            this.checkBoxLoadFromBackup.AutoSize = true;
+            this.checkBoxLoadFromBackup.Checked = true;
+            this.checkBoxLoadFromBackup.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxLoadFromBackup.Location = new System.Drawing.Point(268, 440);
+            this.checkBoxLoadFromBackup.Name = "checkBoxLoadFromBackup";
+            this.checkBoxLoadFromBackup.Size = new System.Drawing.Size(204, 17);
+            this.checkBoxLoadFromBackup.TabIndex = 45;
+            this.checkBoxLoadFromBackup.Text = "Load from backup before randomizing";
+            this.tooltip.SetToolTip(this.checkBoxLoadFromBackup, "If paramdomizer randomized your game in the past, it will load an unrandomized ba" +
+        "ckup before randomizing again.\nuseful to remove some of the effects of the rando" +
+        "mizer before randomizing it again.\nparamdomizer now uses a different extension for backuping files to make it easier for it as well as you to accurately tell what the file was like before changes were made. (or to differentiate backups from different randomizers)\n" +
+        "WARNING: WILL NOT RETURN TO VANILLA IF THE ORIGINAL BACKUP WASNT VANILLA (happens if you run a different randomizer prior to paramdomizer)");
+            this.checkBoxLoadFromBackup.UseVisualStyleBackColor = true;
+            // 
             // chkRingSpeffects
             // 
             this.chkRingSpeffects.AutoSize = true;
@@ -206,9 +223,7 @@
             this.chkBullets.Size = new System.Drawing.Size(112, 17);
             this.chkBullets.TabIndex = 9;
             this.chkBullets.Text = "Randomize bullets";
-            this.tooltip.SetToolTip(this.chkBullets, "Randomizes bullets in a lot of ways. ei: it\'s damage, damage type, movement, amon" +
-        "g other things.\nAppears to effect both player and enemy projectiles.\n" +
-        "Can result in a lot of magic classes having unusable spells.");
+            this.tooltip.SetToolTip(this.chkBullets, resources.GetString("chkBullets.ToolTip"));
             this.chkBullets.UseVisualStyleBackColor = true;
             // 
             // chkKnockback
@@ -797,6 +812,7 @@
             this.ClientSize = new System.Drawing.Size(960, 470);
             this.Controls.Add(this.btnLoadPreset);
             this.Controls.Add(this.btnSavePreset);
+            this.Controls.Add(this.checkBoxLoadFromBackup);
             this.Controls.Add(this.checkBoxNerfHumanityBullets);
             this.Controls.Add(this.checkBoxRemaster);
             this.Controls.Add(this.chkRandomFaceData);
@@ -874,6 +890,7 @@
         private System.Windows.Forms.TextBox txtGamePath;
         private System.Windows.Forms.Button btnSubmit;
         private System.Windows.Forms.Label lblMessage;
+        private System.Windows.Forms.CheckBox checkBoxLoadFromBackup;
         private System.Windows.Forms.CheckBox chkWeaponModels;
         private System.Windows.Forms.CheckBox chkWeaponDamage;
         private System.Windows.Forms.CheckBox chkWeaponMoveset;

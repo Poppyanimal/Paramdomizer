@@ -182,28 +182,42 @@ namespace Paramdomizer
 
             string seed = txtSeed.Text;
 
+            //restore files from backup if load from backup is enabled
+            if (checkBoxLoadFromBackup.Checked && File.Exists(gameDirectory + $"\\param\\GameParam\\GameParam.parambnd{(checkBoxRemaster.Checked ? ".dcx" : "")}.paramdomizerbak"))
+            {
+                File.Delete(gameDirectory + $"\\param\\GameParam\\GameParam.parambnd{(checkBoxRemaster.Checked ? ".dcx" : "")}");
+                File.Copy(gameDirectory + $"\\param\\GameParam\\GameParam.parambnd{(checkBoxRemaster.Checked ? ".dcx" : "")}.paramdomizerbak",
+                    gameDirectory + $"\\param\\GameParam\\GameParam.parambnd{(checkBoxRemaster.Checked ? ".dcx" : "")}");
+            }
+            if (checkBoxLoadFromBackup.Checked && File.Exists(gameDirectory + $"\\msg\\ENGLISH\\menu.msgbnd{(checkBoxRemaster.Checked ? ".dcx" : "")}.paramdomizerbak"))
+            {
+                File.Delete(gameDirectory + $"\\msg\\ENGLISH\\menu.msgbnd{(checkBoxRemaster.Checked ? ".dcx" : "")}");
+                File.Copy(gameDirectory + $"\\msg\\ENGLISH\\menu.msgbnd{(checkBoxRemaster.Checked ? ".dcx" : "")}.paramdomizerbak",
+                    gameDirectory + $"\\msg\\ENGLISH\\menu.msgbnd{(checkBoxRemaster.Checked ? ".dcx" : "")}");
+            }
+
             //create backup of gameparam
-            if (!File.Exists(gameDirectory + $"\\param\\GameParam\\GameParam.parambnd{(checkBoxRemaster.Checked ? ".dcx" : "")}.bak"))
+            if (!File.Exists(gameDirectory + $"\\param\\GameParam\\GameParam.parambnd{(checkBoxRemaster.Checked ? ".dcx" : "")}.paramdomizerbak"))
             {
                 File.Copy(gameDirectory + $"\\param\\GameParam\\GameParam.parambnd{(checkBoxRemaster.Checked ? ".dcx" : "")}", 
-                    gameDirectory + $"\\param\\GameParam\\GameParam.parambnd{(checkBoxRemaster.Checked ? ".dcx" : "")}.bak");
+                    gameDirectory + $"\\param\\GameParam\\GameParam.parambnd{(checkBoxRemaster.Checked ? ".dcx" : "")}.paramdomizerbak");
                 lblMessage.Text = $"Backed up GameParam.parambnd{(checkBoxRemaster.Checked ? ".dcx" : "")} \n\n";
                 lblMessage.ForeColor = Color.Black;
                 lblMessage.Visible = true;
             }
             //create backups of msgbnds
-            if (!File.Exists(gameDirectory + $"\\msg\\ENGLISH\\item.msgbnd{(checkBoxRemaster.Checked ? ".dcx" : "")}.bak"))
+            if (!File.Exists(gameDirectory + $"\\msg\\ENGLISH\\item.msgbnd{(checkBoxRemaster.Checked ? ".dcx" : "")}.paramdomizerbak"))
             {
                 File.Copy(gameDirectory + $"\\msg\\ENGLISH\\item.msgbnd{(checkBoxRemaster.Checked ? ".dcx" : "")}",
-                    gameDirectory + $"\\msg\\ENGLISH\\item.msgbnd{(checkBoxRemaster.Checked ? ".dcx" : "")}.bak");
+                    gameDirectory + $"\\msg\\ENGLISH\\item.msgbnd{(checkBoxRemaster.Checked ? ".dcx" : "")}.paramdomizerbak");
                 lblMessage.Text = $"Backed up item.msgbnd{(checkBoxRemaster.Checked ? ".dcx" : "")} \n\n";
                 lblMessage.ForeColor = Color.Black;
                 lblMessage.Visible = true;
             }
-            if(!File.Exists(gameDirectory + $"\\msg\\ENGLISH\\menu.msgbnd{(checkBoxRemaster.Checked ? ".dcx" : "")}.bak"))
+            if(!File.Exists(gameDirectory + $"\\msg\\ENGLISH\\menu.msgbnd{(checkBoxRemaster.Checked ? ".dcx" : "")}.paramdomizerbak"))
             {
                 File.Copy(gameDirectory + $"\\msg\\ENGLISH\\menu.msgbnd{(checkBoxRemaster.Checked ? ".dcx" : "")}",
-                    gameDirectory + $"\\msg\\ENGLISH\\menu.msgbnd{(checkBoxRemaster.Checked ? ".dcx" : "")}.bak");
+                    gameDirectory + $"\\msg\\ENGLISH\\menu.msgbnd{(checkBoxRemaster.Checked ? ".dcx" : "")}.paramdomizerbak");
                 lblMessage.Text = $"Backed up menu.msgbnd{(checkBoxRemaster.Checked ? ".dcx" : "")} \n\n";
                 lblMessage.ForeColor = Color.Black;
                 lblMessage.Visible = true;
@@ -213,6 +227,7 @@ namespace Paramdomizer
 
             MSGBND menuMSGBND = DataFile.LoadFromFile<MSGBND>(gameDirectory + $"\\msg\\ENGLISH\\menu.msgbnd{(checkBoxRemaster.Checked ? ".dcx" : "")}");
             MSGBND itemMSGBND = DataFile.LoadFromFile<MSGBND>(gameDirectory + $"\\msg\\ENGLISH\\item.msgbnd{(checkBoxRemaster.Checked ? ".dcx" : "")}");
+
 
             gameparamBnd.ApplyDefaultParamDefs();
 

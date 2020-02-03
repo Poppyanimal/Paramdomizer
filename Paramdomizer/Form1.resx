@@ -120,6 +120,11 @@
   <metadata name="tooltip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="chkBullets.ToolTip" xml:space="preserve">
+    <value>Randomizes bullets in a lot of ways. ei: it's damage, damage type, movement, among other things.
+Appears to effect both player and enemy projectiles.
+Can result in a lot of magic classes having unusable spells.</value>
+  </data>
   <data name="checkBoxWeaponStatMin.ToolTip" xml:space="preserve">
     <value>Randomizes the minimum stats for a weapon.
 Fists will be effected unless don't modify fists is enabled
