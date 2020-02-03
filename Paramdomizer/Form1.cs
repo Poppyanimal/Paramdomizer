@@ -6989,5 +6989,227 @@ namespace Paramdomizer
         {
 
         }
+
+        private void btnLoadPreset_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "presets (*.prndpr)|*.prndpr|All files (*.*)|*.*";
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                String presetName = dialog.FileName;
+                Stream s = dialog.OpenFile();
+
+                Console.WriteLine("Loading...");
+
+                //header (aka check if is valid config)
+                byte[] header = new byte[10];
+                s.Read(header, 0, 10);
+                if(header[0] != 30 || header[1] != 10 || header[2] != 40 || header[3] != 10 || header[4] != 50 || 
+                    header[5] != 90 || header[6] != 20 || header[7] != 60 || header[8] != 50 || header[9] != 30 )
+                {
+                    lblMessage.Name = "";
+                    lblMessage.Text = "Invalid Preset File!";
+                    lblMessage.ForeColor = Color.Red;
+                    lblMessage.Visible = true;
+                    s.Close();
+                    return;
+                }
+
+                //seed string
+                byte[] stringBytes = new byte[128];
+                s.Read(stringBytes, 0, 128);
+                txtSeed.Text = System.Text.Encoding.ASCII.GetString(stringBytes);
+
+                //byte reading now so that the checkbox setting can be done in any order (byte reading MUST be done in the order presets have saved)
+                int w1 = s.ReadByte(); //weapon's 1st byte
+                int w2 = s.ReadByte(); //weapon's 2nd byte
+                int e1 = s.ReadByte(); //enemies byte
+                int ep1 = s.ReadByte(); //enemy and player byte
+                int a1 = s.ReadByte(); //armor byte
+                int s1 = s.ReadByte(); //spells byte
+                int o1 = s.ReadByte(); //other settings byte (options in the other settings tab)
+                int altRand1 = s.ReadByte(); //alternative randomization (don't randomize by shuffle)
+
+
+                //weapons 1st byte
+                chkWeaponDamage.Checked = getState(w1, 0);
+                chkWeaponMoveset.Checked = getState(w1, 1);
+                chkWeaponModels.Checked = getState(w1, 2);
+                checkBoxWeaponWeight.Checked = getState(w1, 3);
+                checkBoxWeaponScaling.Checked = getState(w1, 4);
+                checkBoxWeaponStamina.Checked = getState(w1, 5);
+                checkBoxWeaponStatMin.Checked = getState(w1, 6);
+                chkWeaponSpeffects.Checked = getState(w1, 7);
+
+                //weapons 2nd byte
+                checkBoxWeaponDefense.Checked = getState(w2, 0);
+                checkBoxWeaponShieldSplit.Checked = getState(w2, 1);
+                checkBoxWeaponFistNo.Checked = getState(w2, 2);
+                checkBoxForceUseableStartWeapons.Checked = getState(w2, 3);
+
+                //enemies byte
+                chkAggroRadius.Checked = getState(e1, 0);
+                chkTurnSpeeds.Checked = getState(e1, 1);
+                chkSpeffects.Checked = getState(e1, 2);
+
+                //enemy and player byte
+                chkStaggerLevels.Checked = getState(ep1, 0);
+                chkKnockback.Checked = getState(ep1, 1);
+                chkBullets.Checked = getState(ep1, 2);
+                chkHitboxSizes.Checked = getState(ep1, 3);
+                checkBoxNerfHumanityBullets.Checked = getState(ep1, 4);
+
+                //armor byte
+                checkBoxArmorResistance.Checked = getState(a1, 0);
+                checkBoxArmorWeight.Checked = getState(a1, 1);
+                checkBoxArmorPoise.Checked = getState(a1, 2);
+                checkBoxArmorspEffect.Checked = getState(a1, 3);
+
+                //spells byte
+                checkBoxUniversalizeCasters.Checked = getState(s1, 0);
+                checkBoxRandomizeSpellRequirements.Checked = getState(s1, 1);
+                checkBoxRandomizeSpellSlotSize.Checked = getState(s1, 2);
+                checkBoxRandomizeSpellQuantity.Checked = getState(s1, 3);
+                chkMagicAnimations.Checked = getState(s1, 4);
+                checkBoxForceUseableStartSpells.Checked = getState(s1, 5);
+
+                //other settings byte (options in the other settings tab)
+                chkItemAnimations.Checked = getState(o1, 0);
+                chkRandomFaceData.Checked = getState(o1, 1);
+                chkRingSpeffects.Checked = getState(o1, 2);
+                chkVoices.Checked = getState(o1, 3);
+                checkBoxStartingGifts.Checked = getState(o1, 4);
+                checkBoxPreventSpellGifts.Checked = getState(o1, 5);
+                checkBoxStartingGiftsAmount.Checked = getState(o1, 6);
+                checkBoxStartingClasses.Checked = getState(o1, 7);
+
+                //alternative randomization (don't randomize by shuffle)
+                checkBoxDoTrueRandom.Checked = getState(altRand1, 0);
+
+
+
+                lblMessage.Name = "";
+                lblMessage.Text = "Preset Loaded!";
+                lblMessage.ForeColor = Color.Black;
+                lblMessage.Visible = true;
+                s.Close();
+            }
+        }
+
+        private void btnSavePreset_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "presets (*.prndpr)|*.prndpr|All files (*.*)|*.*";
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                String presetName = dialog.FileName;
+                Stream s = dialog.OpenFile();
+
+                Console.WriteLine("Saving...");
+
+
+                //Write a 10 byte header to identify the config file; uses first 10 digits of pi multiplied by 10
+                byte[] header = new byte[] { 30, 10, 40, 10, 50, 90, 20, 60, 50, 30 };
+                s.Write(header, 0, 10);
+
+
+                byte[] stringBytes = System.Text.Encoding.ASCII.GetBytes(txtSeed.Text);
+                if(stringBytes.Length > 128) //has more than 128 characters
+                {
+                    lblMessage.Name = "";
+                    lblMessage.Text = "Preset may not have seeds longer than 128 characters.";
+                    lblMessage.ForeColor = Color.Red;
+                    lblMessage.Visible = true;
+                    s.Close();
+                    return;
+                }
+
+                //seed string
+                Array.Resize<byte>(ref stringBytes, 128);
+                s.Write(stringBytes, 0, 128);
+
+
+
+                //weapons 1st byte
+                writeByte(s, chkWeaponDamage.Checked, chkWeaponMoveset.Checked, chkWeaponModels.Checked, checkBoxWeaponWeight.Checked, 
+                   checkBoxWeaponScaling.Checked, checkBoxWeaponStamina.Checked, checkBoxWeaponStatMin.Checked, chkWeaponSpeffects.Checked);
+
+                //weapons 2nd byte
+                writeByte(s, checkBoxWeaponDefense.Checked, checkBoxWeaponShieldSplit.Checked, checkBoxWeaponFistNo.Checked, checkBoxForceUseableStartWeapons.Checked);
+
+                //enemies byte
+                writeByte(s, chkAggroRadius.Checked, chkTurnSpeeds.Checked, chkSpeffects.Checked);
+
+                //enemy and player byte
+                writeByte(s, chkStaggerLevels.Checked, chkKnockback.Checked, chkBullets.Checked, chkHitboxSizes.Checked,
+                    checkBoxNerfHumanityBullets.Checked);
+
+                //armor byte
+                writeByte(s, checkBoxArmorResistance.Checked, checkBoxArmorWeight.Checked, checkBoxArmorPoise.Checked, checkBoxArmorspEffect.Checked);
+
+                //spells byte
+                writeByte(s, checkBoxUniversalizeCasters.Checked, checkBoxRandomizeSpellRequirements.Checked, checkBoxRandomizeSpellSlotSize.Checked, checkBoxRandomizeSpellQuantity.Checked,
+                    chkMagicAnimations.Checked, checkBoxForceUseableStartSpells.Checked);
+
+                //other settings byte (options in the other settings tab)
+                writeByte(s, chkItemAnimations.Checked, chkRandomFaceData.Checked, chkRingSpeffects.Checked, chkVoices.Checked,
+                    checkBoxStartingGifts.Checked, checkBoxPreventSpellGifts.Checked, checkBoxStartingGiftsAmount.Checked, checkBoxStartingClasses.Checked);
+
+                //alternative randomization (don't randomize by shuffle)
+                writeByte(s, checkBoxDoTrueRandom.Checked);
+
+
+
+                lblMessage.Name = "";
+                lblMessage.Text = "Preset Saved!";
+                lblMessage.ForeColor = Color.Black;
+                lblMessage.Visible = true;
+                s.Close();
+            }
+        }
+
+        private void writeByte(Stream s, params bool[] bits)
+        {
+            if(bits.Length > 8)
+            {
+                throw new Exception("can't assign more than 8 bits per byte");
+            }
+            byte val = 0;
+            for(int i = 0; i < bits.Length; i++)
+            {
+                if(bits[i])
+                {
+                    val += (byte)(Math.Pow(2, i));
+                }
+            }
+            s.WriteByte(val);
+        }
+
+        private bool getState(int b, int index)
+        {
+            //if at end of stream (old preset) defaults newer features that were not included in that preset as unchecked/disabled
+            if(b == -1)
+            {
+                return false;
+            }
+
+            bool state;
+            if(index >= 8)
+            {
+                throw new Exception("can't read more than 8 bits from a byte");
+            }
+            else if(index < 0)
+            {
+                throw new Exception("can't read from a negative index");
+            }
+            uint x = (uint)b;
+
+            x %= (uint)Math.Pow(2, index + 1);
+            x /= (uint)Math.Pow(2, index);
+            
+            state = x == 1;
+            return state;
+        }
+
     }
 }

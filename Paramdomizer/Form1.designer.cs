@@ -85,6 +85,8 @@
             this.gbSharedCategory = new System.Windows.Forms.GroupBox();
             this.gbArmorCategory = new System.Windows.Forms.GroupBox();
             this.lblVersion = new System.Windows.Forms.Label();
+            this.btnSavePreset = new System.Windows.Forms.Button();
+            this.btnLoadPreset = new System.Windows.Forms.Button();
             this.gbWeaponCategory.SuspendLayout();
             this.gbSpellCategory.SuspendLayout();
             this.SuspendLayout();
@@ -205,7 +207,8 @@
             this.chkBullets.TabIndex = 9;
             this.chkBullets.Text = "Randomize bullets";
             this.tooltip.SetToolTip(this.chkBullets, "Randomizes bullets in a lot of ways. ei: it\'s damage, damage type, movement, amon" +
-        "g other things.\nAppears to effect both player and enemy projectiles.");
+        "g other things.\nAppears to effect both player and enemy projectiles.\n" +
+        "Can result in a lot of magic classes having unusable spells.");
             this.chkBullets.UseVisualStyleBackColor = true;
             // 
             // chkKnockback
@@ -767,11 +770,33 @@
             this.lblVersion.TabIndex = 41;
             this.lblVersion.Text = "DEV version 0.3d";
             // 
+            // btnSavePreset
+            // 
+            this.btnSavePreset.Location = new System.Drawing.Point(844, 27);
+            this.btnSavePreset.Name = "btnSavePreset";
+            this.btnSavePreset.Size = new System.Drawing.Size(100, 25);
+            this.btnSavePreset.TabIndex = 46;
+            this.btnSavePreset.Text = "Save Preset";
+            this.btnSavePreset.UseVisualStyleBackColor = true;
+            this.btnSavePreset.Click += new System.EventHandler(this.btnSavePreset_Click);
+            // 
+            // btnLoadPreset
+            // 
+            this.btnLoadPreset.Location = new System.Drawing.Point(738, 27);
+            this.btnLoadPreset.Name = "btnLoadPreset";
+            this.btnLoadPreset.Size = new System.Drawing.Size(100, 25);
+            this.btnLoadPreset.TabIndex = 47;
+            this.btnLoadPreset.Text = "Load Preset";
+            this.btnLoadPreset.UseVisualStyleBackColor = true;
+            this.btnLoadPreset.Click += new System.EventHandler(this.btnLoadPreset_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(960, 470);
+            this.Controls.Add(this.btnLoadPreset);
+            this.Controls.Add(this.btnSavePreset);
             this.Controls.Add(this.checkBoxNerfHumanityBullets);
             this.Controls.Add(this.checkBoxRemaster);
             this.Controls.Add(this.chkRandomFaceData);
@@ -898,6 +923,8 @@
         private System.Windows.Forms.GroupBox gbSharedCategory;
         private System.Windows.Forms.GroupBox gbArmorCategory;
         private System.Windows.Forms.Label lblVersion;
+        private System.Windows.Forms.Button btnSavePreset;
+        private System.Windows.Forms.Button btnLoadPreset;
     }
 }
 
