@@ -75,6 +75,8 @@
             this.checkBoxNerfHumanityBullets = new System.Windows.Forms.CheckBox();
             this.checkBoxStartingGiftsAmount = new System.Windows.Forms.CheckBox();
             this.checkBoxStartingClasses = new System.Windows.Forms.CheckBox();
+            this.checkBoxForceUseableStartSpells = new System.Windows.Forms.CheckBox();
+            this.checkBoxForceUseableStartWeapons = new System.Windows.Forms.CheckBox();
             this.tooltip = new System.Windows.Forms.ToolTip(this.components);
             this.gbWeaponCategory = new System.Windows.Forms.GroupBox();
             this.gbSpellCategory = new System.Windows.Forms.GroupBox();
@@ -83,6 +85,8 @@
             this.gbSharedCategory = new System.Windows.Forms.GroupBox();
             this.gbArmorCategory = new System.Windows.Forms.GroupBox();
             this.lblVersion = new System.Windows.Forms.Label();
+            this.gbWeaponCategory.SuspendLayout();
+            this.gbSpellCategory.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtSeed
@@ -638,7 +642,7 @@
             this.checkBoxStartingGiftsAmount.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxStartingGiftsAmount.Location = new System.Drawing.Point(504, 313);
             this.checkBoxStartingGiftsAmount.Name = "checkBoxStartingGiftsAmount";
-            this.checkBoxStartingGiftsAmount.Size = new System.Drawing.Size(176, 17);
+            this.checkBoxStartingGiftsAmount.Size = new System.Drawing.Size(171, 17);
             this.checkBoxStartingGiftsAmount.TabIndex = 44;
             this.checkBoxStartingGiftsAmount.Text = "Randomize starting gift amount";
             this.tooltip.SetToolTip(this.checkBoxStartingGiftsAmount, "Randomizes the amount each starting gift is. (ei 10 firebombs)\nThis feature never" +
@@ -652,12 +656,39 @@
             this.checkBoxStartingClasses.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxStartingClasses.Location = new System.Drawing.Point(739, 313);
             this.checkBoxStartingClasses.Name = "checkBoxStartingClasses";
-            this.checkBoxStartingClasses.Size = new System.Drawing.Size(157, 17);
+            this.checkBoxStartingClasses.Size = new System.Drawing.Size(154, 17);
             this.checkBoxStartingClasses.TabIndex = 44;
             this.checkBoxStartingClasses.Text = "Randomize starting classes";
-            this.tooltip.SetToolTip(this.checkBoxStartingClasses, "Randomizes the stats of the starting classes but make sure they keep their existi" +
-        "ng stat totals.\nWill make the straightsword hilt have no stat requirements to use to prevent some softlocks.\nAlso shuffles starting level.");
+            this.tooltip.SetToolTip(this.checkBoxStartingClasses, resources.GetString("checkBoxStartingClasses.ToolTip"));
             this.checkBoxStartingClasses.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxForceUseableStartSpells
+            // 
+            this.checkBoxForceUseableStartSpells.AutoSize = true;
+            this.checkBoxForceUseableStartSpells.Checked = true;
+            this.checkBoxForceUseableStartSpells.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxForceUseableStartSpells.Location = new System.Drawing.Point(257, 68);
+            this.checkBoxForceUseableStartSpells.Name = "checkBoxForceUseableStartSpells";
+            this.checkBoxForceUseableStartSpells.Size = new System.Drawing.Size(159, 17);
+            this.checkBoxForceUseableStartSpells.TabIndex = 45;
+            this.checkBoxForceUseableStartSpells.Text = "Force useable starting spells";
+            this.tooltip.SetToolTip(this.checkBoxForceUseableStartSpells, resources.GetString("checkBoxForceUseableStartSpells.ToolTip"));
+            this.checkBoxForceUseableStartSpells.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxForceUseableStartWeapons
+            // 
+            this.checkBoxForceUseableStartWeapons.AutoSize = true;
+            this.checkBoxForceUseableStartWeapons.Checked = true;
+            this.checkBoxForceUseableStartWeapons.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxForceUseableStartWeapons.Location = new System.Drawing.Point(257, 144);
+            this.checkBoxForceUseableStartWeapons.Name = "checkBoxForceUseableStartWeapons";
+            this.checkBoxForceUseableStartWeapons.Size = new System.Drawing.Size(176, 17);
+            this.checkBoxForceUseableStartWeapons.TabIndex = 45;
+            this.checkBoxForceUseableStartWeapons.Text = "Force useable starting weapons";
+            this.tooltip.SetToolTip(this.checkBoxForceUseableStartWeapons, "Forces the weapons that a class starts with to be useable by that class (prevents" +
+        " some softlocking).\nIf this setting is off the straightsword hilt will still be " +
+        "universally useable.");
+            this.checkBoxForceUseableStartWeapons.UseVisualStyleBackColor = true;
             // 
             // tooltip
             // 
@@ -668,9 +699,10 @@
             // gbWeaponCategory
             // 
             this.gbWeaponCategory.AutoSize = true;
+            this.gbWeaponCategory.Controls.Add(this.checkBoxForceUseableStartWeapons);
             this.gbWeaponCategory.Location = new System.Drawing.Point(8, 64);
             this.gbWeaponCategory.Name = "gbWeaponCategory";
-            this.gbWeaponCategory.Size = new System.Drawing.Size(465, 161);
+            this.gbWeaponCategory.Size = new System.Drawing.Size(468, 180);
             this.gbWeaponCategory.TabIndex = 32;
             this.gbWeaponCategory.TabStop = false;
             this.gbWeaponCategory.Text = "Weapon Settings:";
@@ -678,9 +710,10 @@
             // gbSpellCategory
             // 
             this.gbSpellCategory.AutoSize = true;
+            this.gbSpellCategory.Controls.Add(this.checkBoxForceUseableStartSpells);
             this.gbSpellCategory.Location = new System.Drawing.Point(479, 123);
             this.gbSpellCategory.Name = "gbSpellCategory";
-            this.gbSpellCategory.Size = new System.Drawing.Size(465, 85);
+            this.gbSpellCategory.Size = new System.Drawing.Size(465, 104);
             this.gbSpellCategory.TabIndex = 33;
             this.gbSpellCategory.TabStop = false;
             this.gbSpellCategory.Text = "Spell Settings:";
@@ -732,7 +765,7 @@
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(90, 13);
             this.lblVersion.TabIndex = 41;
-            this.lblVersion.Text = "DEV version 0.3c";
+            this.lblVersion.Text = "DEV version 0.3d";
             // 
             // Form1
             // 
@@ -784,13 +817,13 @@
             this.Controls.Add(this.lblGamePath);
             this.Controls.Add(this.lblSeed);
             this.Controls.Add(this.txtSeed);
-            this.Controls.Add(this.gbWeaponCategory);
-            this.Controls.Add(this.gbSpellCategory);
             this.Controls.Add(this.gbEnemiesCategory);
             this.Controls.Add(this.gbOtherCategory);
             this.Controls.Add(this.gbSharedCategory);
             this.Controls.Add(this.gbArmorCategory);
             this.Controls.Add(this.lblVersion);
+            this.Controls.Add(this.gbWeaponCategory);
+            this.Controls.Add(this.gbSpellCategory);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -799,6 +832,10 @@
             this.ShowIcon = false;
             this.Text = "Paramdomizer";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.gbWeaponCategory.ResumeLayout(false);
+            this.gbWeaponCategory.PerformLayout();
+            this.gbSpellCategory.ResumeLayout(false);
+            this.gbSpellCategory.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -851,6 +888,8 @@
         private System.Windows.Forms.CheckBox checkBoxNerfHumanityBullets;
         private System.Windows.Forms.CheckBox checkBoxStartingGiftsAmount;
         private System.Windows.Forms.CheckBox checkBoxStartingClasses;
+        private System.Windows.Forms.CheckBox checkBoxForceUseableStartSpells;
+        private System.Windows.Forms.CheckBox checkBoxForceUseableStartWeapons;
         private System.Windows.Forms.ToolTip tooltip;
         private System.Windows.Forms.GroupBox gbWeaponCategory;
         private System.Windows.Forms.GroupBox gbSpellCategory;

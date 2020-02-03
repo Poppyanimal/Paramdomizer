@@ -224,6 +224,14 @@ namespace Paramdomizer
             List<int> itemStartingGiftsAmount = new List<int>();
             List<int> ringStartingGifts = new List<int>();
 
+            int[] startingSpells = new int[3]; //index 0 is sorcerer, 1 is pyromancer, 2 is cleric
+
+            int[,] startingWeapons = new int[10, 2]; //mainhand first then offhand weapons
+            int[] secondaryStartingWeapons = new int[4]; //starts with hunter, next 3 indexes are the caster's casting item
+
+            int[] classLevels = new int[10];
+            int[,] classStats = new int[10, 8];
+
             foreach (var paramBndEntry in gameparamBnd)
             {
                 var paramShortName = paramBndEntry.Name;
@@ -5861,26 +5869,93 @@ namespace Paramdomizer
                         //if is a starting class
                         if(paramRow.ID >= 3000 && paramRow.ID <= 3009)
                         {
+                            //if is hunter or spellcaster
+                            if(paramRow.ID >= 3005 && paramRow.ID <= 3008)
+                            {
+                                int secondaryIndex = paramRow.ID - 3005;
+                                foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                {
+                                    if (cell.Def.Name == "equip_Subwep_Right")
+                                    {
+                                        PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                        secondaryStartingWeapons[secondaryIndex] = Convert.ToInt32(prop.GetValue(cell, null));
+                                    }
+                                }
+                            }
+                            //if is spellcaster
+                            if(paramRow.ID >= 3006 && paramRow.ID <= 3008)
+                            {
+                                int casterIndex = paramRow.ID - 3006;
+                                foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    if (cell.Def.Name == "equip_Spell_01")
+                                    {
+                                        startingSpells[casterIndex] = Convert.ToInt32(prop.GetValue(cell, null));
+                                    }
+                                }
+                            }
                             int statTotal = 0;
+                            int classId = paramRow.ID - 3000;
                             foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
                             {
                                 PropertyInfo prop = cell.GetType().GetProperty("Value");
                                 if (cell.Def.Name == "soulLv")
                                 {
                                     classStartingLevel.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                    //assign class levels now so they can be read from; will be changed later if randomized
+                                    classLevels[classId] = Convert.ToInt32(prop.GetValue(cell, null));
                                 }
                                 else if (cell.Def.Name == "baseVit" || cell.Def.Name == "baseWil" || cell.Def.Name == "baseEnd" || cell.Def.Name == "baseStr" ||
                                     cell.Def.Name == "baseDex" || cell.Def.Name == "baseMag" || cell.Def.Name == "baseFai" || cell.Def.Name == "baseDurability")
                                 {
                                     statTotal += Convert.ToInt32(prop.GetValue(cell, null));
+                                    //assign class levels now so they can be read from; will be changed later if randomized
+                                    if(cell.Def.Name == "baseVit")
+                                    {
+                                        classStats[classId, 0] = Convert.ToInt32(prop.GetValue(cell, null));
+                                    }
+                                    else if(cell.Def.Name == "baseWil")
+                                    {
+                                        classStats[classId, 1] = Convert.ToInt32(prop.GetValue(cell, null));
+                                    }
+                                    else if (cell.Def.Name == "baseEnd")
+                                    {
+                                        classStats[classId, 2] = Convert.ToInt32(prop.GetValue(cell, null));
+                                    }
+                                    else if (cell.Def.Name == "baseStr")
+                                    {
+                                        classStats[classId, 3] = Convert.ToInt32(prop.GetValue(cell, null));
+                                    }
+                                    else if (cell.Def.Name == "baseDex")
+                                    {
+                                        classStats[classId, 4] = Convert.ToInt32(prop.GetValue(cell, null));
+                                    }
+                                    else if (cell.Def.Name == "baseMag")
+                                    {
+                                        classStats[classId, 5] = Convert.ToInt32(prop.GetValue(cell, null));
+                                    }
+                                    else if (cell.Def.Name == "baseFai")
+                                    {
+                                        classStats[classId, 6] = Convert.ToInt32(prop.GetValue(cell, null));
+                                    }
+                                    else if (cell.Def.Name == "baseDurability")
+                                    {
+                                        classStats[classId, 7] = Convert.ToInt32(prop.GetValue(cell, null));
+                                    }
+                                }
+                                else if (cell.Def.Name == "equip_Wep_Right")
+                                {
+                                    startingWeapons[classId, 0] = Convert.ToInt32(prop.GetValue(cell, null));
+                                }
+                                else if (cell.Def.Name == "equip_Wep_Left")
+                                {
+                                    startingWeapons[classId, 1] = Convert.ToInt32(prop.GetValue(cell, null));
                                 }
                             }
                             classStatTotals.Add(statTotal);
                         }
                     }
-
-                    int[] classLevels = new int[10];
-                    int[,] classStats = new int[10, 8];
 
                     //determine levels and stats of each class
                     for(int i = 0; i < 10; i++)
@@ -6149,6 +6224,220 @@ namespace Paramdomizer
                             if (chkRandomFaceData.Checked)
                             {
                                 prop.SetValue(cell, r.Next((int)cell.Def.Min, (int)cell.Def.Max), null);
+                            }
+                        }
+                    }
+                }
+            }
+
+            //force spells to be useable for their class (the classes's casters too); done after class stats can be changed
+            if (checkBoxForceUseableStartSpells.Checked)
+            {
+                foreach (var paramBndEntry in gameparamBnd)
+                {
+                    var paramShortName = paramBndEntry.Name;
+                    var paramFile = paramBndEntry.Param;
+                    if (paramFile.ID == "MAGIC_PARAM_ST")
+                    {
+                        foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
+                        {
+                            //if is a starting spell
+                            if (startingSpells.Contains(paramRow.ID))
+                            {
+                                int spellId = paramRow.ID;
+                                int classIndex = 6; //sorcerer default in case something goes wrong
+                                for (int i = 0; i < startingSpells.Length; i++) //get class index from starting spell list (assuming sorcerer is index 0)
+                                {
+                                    if (spellId == startingSpells[i])
+                                    {
+                                        classIndex = i + 6; //starting at index of sorcerer
+                                        i = startingSpells.Length;
+                                    }
+                                }
+                                foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    if (cell.Def.Name == "requirementIntellect")
+                                    {
+                                        //if value is greater than it's classes's stats, lower required stats
+                                        if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[classIndex, 5])
+                                        {
+                                            prop.SetValue(cell, classStats[classIndex, 5], null);
+                                        }
+                                    }
+                                    else if (cell.Def.Name == "requirementFaith")
+                                    {
+                                        //if value is greater than it's classes's stats, lower required stats
+                                        if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[classIndex, 6])
+                                        {
+                                            prop.SetValue(cell, classStats[classIndex, 6], null);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else if (paramFile.ID == "EQUIP_PARAM_WEAPON_ST" && !checkBoxForceUseableStartWeapons.Checked) //caster items are already handled if force useable starting weapons is enabled
+                    {
+                        for(int i = 1; i < secondaryStartingWeapons.Length; i++)
+                        {
+                            int casterId = secondaryStartingWeapons[i]; //casting item
+                            int classIndex = i + 5;
+                            foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
+                            {
+                                if(paramRow.ID == casterId)
+                                {
+                                    foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                    {
+                                        PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                        if (cell.Def.Name == "properMagic")
+                                        {
+                                            //if value is greater than it's classes's stats, lower required stats
+                                            if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[classIndex, 5])
+                                            {
+                                                prop.SetValue(cell, classStats[classIndex, 5], null);
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "properFaith")
+                                        {
+                                            //if value is greater than it's classes's stats, lower required stats
+                                            if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[classIndex, 6])
+                                            {
+                                                prop.SetValue(cell, classStats[classIndex, 6], null);
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "properStrength")
+                                        {
+                                            //if value is greater than it's classes's stats, lower required stats
+                                            if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[classIndex, 3])
+                                            {
+                                                prop.SetValue(cell, classStats[classIndex, 3], null);
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "properAgility")
+                                        {
+                                            //if value is greater than it's classes's stats, lower required stats
+                                            if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[classIndex, 4])
+                                            {
+                                                prop.SetValue(cell, classStats[classIndex, 4], null);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+
+                    }
+                }
+            }
+
+            //forces weapons to be useable for their class
+            if(checkBoxForceUseableStartWeapons.Checked)
+            {
+                foreach (var paramBndEntry in gameparamBnd)
+                {
+                    var paramShortName = paramBndEntry.Name;
+                    var paramFile = paramBndEntry.Param;
+                    if (paramFile.ID == "EQUIP_PARAM_WEAPON_ST")
+                    {
+                        //make all main and off hand weapons useable
+                        for(int i = 0; i < 10; i++)
+                        {
+                            for(int j = 0; j < 2; j++)
+                            {
+                                int weaponId = startingWeapons[i, j];
+                                foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
+                                {
+                                    if(paramRow.ID == weaponId)
+                                    {
+                                        foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            if (cell.Def.Name == "properStrength")
+                                            {
+                                                //if value is greater than it's classes's stats, lower required stats
+                                                if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[i, 3])
+                                                {
+                                                    prop.SetValue(cell, classStats[i, 3], null);
+                                                }
+                                            }
+                                            else if (cell.Def.Name == "properAgility")
+                                            {
+                                                //if value is greater than it's classes's stats, lower required stats
+                                                if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[i, 4])
+                                                {
+                                                    prop.SetValue(cell, classStats[i, 4], null);
+                                                }
+                                            }
+                                            else if (cell.Def.Name == "properMagic")
+                                            {
+                                                //if value is greater than it's classes's stats, lower required stats
+                                                if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[i, 5])
+                                                {
+                                                    prop.SetValue(cell, classStats[i, 5], null);
+                                                }
+                                            }
+                                            else if (cell.Def.Name == "properFaith")
+                                            {
+                                                //if value is greater than it's classes's stats, lower required stats
+                                                if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[i, 6])
+                                                {
+                                                    prop.SetValue(cell, classStats[i, 6], null);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                        //make the secondary main hand weapons useable
+                        for(int i = 0; i < secondaryStartingWeapons.Length; i++)
+                        {
+                            int weaponId = secondaryStartingWeapons[i];
+                            int classIndex = i + 5; //starting at hunter (i = 0)
+                            foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
+                            {
+                                if (paramRow.ID == weaponId)
+                                {
+                                    foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                    {
+                                        PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                        if (cell.Def.Name == "properStrength")
+                                        {
+                                            //if value is greater than it's classes's stats, lower required stats
+                                            if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[classIndex, 3])
+                                            {
+                                                prop.SetValue(cell, classStats[classIndex, 3], null);
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "properAgility")
+                                        {
+                                            //if value is greater than it's classes's stats, lower required stats
+                                            if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[classIndex, 4])
+                                            {
+                                                prop.SetValue(cell, classStats[classIndex, 4], null);
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "properMagic")
+                                        {
+                                            //if value is greater than it's classes's stats, lower required stats
+                                            if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[classIndex, 5])
+                                            {
+                                                prop.SetValue(cell, classStats[classIndex, 5], null);
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "properFaith")
+                                        {
+                                            //if value is greater than it's classes's stats, lower required stats
+                                            if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[classIndex, 6])
+                                            {
+                                                prop.SetValue(cell, classStats[classIndex, 6], null);
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }

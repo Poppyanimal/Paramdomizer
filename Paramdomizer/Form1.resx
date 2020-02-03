@@ -120,6 +120,9 @@
   <metadata name="tooltip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <metadata name="tooltip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <data name="checkBoxWeaponStatMin.ToolTip" xml:space="preserve">
     <value>Randomizes the minimum stats for a weapon.
 Fists will be effected unless don't modify fists is enabled
@@ -135,6 +138,15 @@ Supported settings will have tooltip text indicating that it works with this opt
     <value>Requires randomize bullets to be enabled.
 Removes Humanity sprites from the projectile randomization pool, preventing scenarios like humanity spamming Wrath of God.
 This setting can be turned off for those who consider themselves hardcore.</value>
+  </data>
+  <data name="checkBoxStartingClasses.ToolTip" xml:space="preserve">
+    <value>Randomizes the stats of the starting classes but make sure they keep their existing stat totals.
+Will make the straightsword hilt have no stat requirements to use to prevent some softlocks.
+Also shuffles starting level.</value>
+  </data>
+  <data name="checkBoxForceUseableStartSpells.ToolTip" xml:space="preserve">
+    <value>Any spells / pyromancies / miracles that a class starts with will have their stat requirements lowered if that class can't cast it at their starting level.
+Also effects starting caster tools like the pyromancy flame and sorcerer's catalyst.</value>
   </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>48</value>
