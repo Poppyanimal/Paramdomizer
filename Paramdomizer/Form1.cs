@@ -3839,38 +3839,32 @@ namespace Paramdomizer
                                 }
                             }
                         }
-                        //now do info grab
-                        foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                        if (!dontUseSpell)
                         {
-                            if (cell.Def.Name == "refType")
+                            //now do info grab
+                            foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
                             {
-                                PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                allSfxVariationIds.Add(Convert.ToInt32(prop.GetValue(cell, null)));
-                            }
-                            else if (cell.Def.Name == "slotLength")
-                            {
-                                PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                allSlotLengths.Add(Convert.ToInt32(prop.GetValue(cell, null)));
-                            }
-                            else if (cell.Def.Name == "requirementIntellect")
-                            {
-                                if(!dontUseSpell)
+                                if (cell.Def.Name == "refType")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    allSfxVariationIds.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                }
+                                else if (cell.Def.Name == "slotLength")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    allSlotLengths.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                }
+                                else if (cell.Def.Name == "requirementIntellect")
                                 {
                                     PropertyInfo prop = cell.GetType().GetProperty("Value");
                                     allRequirementIntellect.Add(Convert.ToInt32(prop.GetValue(cell, null)));
                                 }
-                            }
-                            else if (cell.Def.Name == "requirementFaith")
-                            {
-                                if(!dontUseSpell)
+                                else if (cell.Def.Name == "requirementFaith")
                                 {
                                     PropertyInfo prop = cell.GetType().GetProperty("Value");
                                     allRequirementFaith.Add(Convert.ToInt32(prop.GetValue(cell, null)));
                                 }
-                            }
-                            else if (cell.Def.Name == "maxQuantity")
-                            {
-                                if(!dontUseSpell)
+                                else if (cell.Def.Name == "maxQuantity")
                                 {
                                     PropertyInfo prop = cell.GetType().GetProperty("Value");
                                     allMaxQuantity.Add(Convert.ToInt32(prop.GetValue(cell, null)));
@@ -3896,37 +3890,37 @@ namespace Paramdomizer
                                 }
                             }
                         }
-                        //now do info insert
-                        foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                        if(!dontUseSpell)
                         {
-                            if (cell.Def.Name == "refType")
+                            //now do info insert
+                            foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
                             {
-                                int randomIndex = r.Next(allSfxVariationIds.Count);
-                                Type type = cell.GetType();
-                                PropertyInfo prop = type.GetProperty("Value");
-
-                                if (chkMagicAnimations.Checked)
+                                if (cell.Def.Name == "refType")
                                 {
-                                    prop.SetValue(cell, allSfxVariationIds[randomIndex], null);
-                                }
+                                    int randomIndex = r.Next(allSfxVariationIds.Count);
+                                    Type type = cell.GetType();
+                                    PropertyInfo prop = type.GetProperty("Value");
 
-                                allSfxVariationIds.RemoveAt(randomIndex);
-                            }
-                            else if (cell.Def.Name == "slotLength")
-                            {
-                                int randomIndex = r.Next(allSlotLengths.Count);
-                                Type type = cell.GetType();
-                                PropertyInfo prop = type.GetProperty("Value");
-                                if (checkBoxRandomizeSpellSlotSize.Checked)
+                                    if (chkMagicAnimations.Checked)
+                                    {
+                                        prop.SetValue(cell, allSfxVariationIds[randomIndex], null);
+                                    }
+
+                                    allSfxVariationIds.RemoveAt(randomIndex);
+                                }
+                                else if (cell.Def.Name == "slotLength")
                                 {
-                                    prop.SetValue(cell, allSlotLengths[randomIndex], null);
-                                }
+                                    int randomIndex = r.Next(allSlotLengths.Count);
+                                    Type type = cell.GetType();
+                                    PropertyInfo prop = type.GetProperty("Value");
+                                    if (checkBoxRandomizeSpellSlotSize.Checked)
+                                    {
+                                        prop.SetValue(cell, allSlotLengths[randomIndex], null);
+                                    }
 
-                                allSlotLengths.RemoveAt(randomIndex);
-                            }
-                            else if (cell.Def.Name == "requirementIntellect")
-                            {
-                                if(!dontUseSpell)
+                                    allSlotLengths.RemoveAt(randomIndex);
+                                }
+                                else if (cell.Def.Name == "requirementIntellect")
                                 {
                                     int randomIndex = r.Next(allRequirementIntellect.Count);
                                     Type type = cell.GetType();
@@ -3938,10 +3932,7 @@ namespace Paramdomizer
 
                                     allRequirementIntellect.RemoveAt(randomIndex);
                                 }
-                            }
-                            else if (cell.Def.Name == "requirementFaith")
-                            {
-                                if(!dontUseSpell)
+                                else if (cell.Def.Name == "requirementFaith")
                                 {
                                     int randomIndex = r.Next(allRequirementFaith.Count);
                                     Type type = cell.GetType();
@@ -3953,10 +3944,7 @@ namespace Paramdomizer
 
                                     allRequirementFaith.RemoveAt(randomIndex);
                                 }
-                            }
-                            else if (cell.Def.Name == "maxQuantity")
-                            {
-                                if(!dontUseSpell)
+                                else if (cell.Def.Name == "maxQuantity")
                                 {
                                     int randomIndex = r.Next(allMaxQuantity.Count);
                                     Type type = cell.GetType();
@@ -3969,6 +3957,7 @@ namespace Paramdomizer
                                     allMaxQuantity.RemoveAt(randomIndex);
                                 }
                             }
+
                         }
                     }
                 }
@@ -4825,7 +4814,10 @@ namespace Paramdomizer
                                 else if (cell.Def.Name == "HitBulletID")
                                 {
                                     PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                    HitBulletIDVals.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                    if(!checkBoxForceUseableBullets.Checked || Convert.ToInt32(prop.GetValue(cell, null)) != -1)
+                                    {
+                                        HitBulletIDVals.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                    }
                                 }
                                 else if (cell.Def.Name == "spEffectId0")
                                 {
@@ -4998,13 +4990,16 @@ namespace Paramdomizer
                                     int randomIndex = r.Next(atkId_BulletVals.Count);
                                     Type type = cell.GetType();
                                     PropertyInfo prop = type.GetProperty("Value");
-                                    if (Convert.ToInt32(prop.GetValue(cell, null)) > 0)
+                                    if (Convert.ToInt32(prop.GetValue(cell, null)) > 0 || checkBoxForceUseableBullets.Checked)
                                     {
                                         if (chkBullets.Checked)
                                         {
                                             prop.SetValue(cell, atkId_BulletVals[randomIndex], null);
                                         }
-                                        atkId_BulletVals.RemoveAt(randomIndex);
+                                        if(!checkBoxForceUseableBullets.Checked)
+                                        {
+                                            atkId_BulletVals.RemoveAt(randomIndex);
+                                        }
                                     }
                                 }
                                 else if (cell.Def.Name == "sfxId_Bullet")
@@ -5230,7 +5225,14 @@ namespace Paramdomizer
 
                                     if (chkBullets.Checked)
                                     {
-                                        prop.SetValue(cell, hitRadiusVals[randomIndex], null);
+                                        if(!checkBoxForceUseableBullets.Checked || hitRadiusVals[randomIndex] >= 0.5)
+                                        {
+                                            prop.SetValue(cell, hitRadiusVals[randomIndex], null);
+                                        }
+                                        else
+                                        {
+                                            prop.SetValue(cell, 0.5, null);
+                                        }
                                     }
 
                                     hitRadiusVals.RemoveAt(randomIndex);
@@ -5305,13 +5307,15 @@ namespace Paramdomizer
                                     int randomIndex = r.Next(HitBulletIDVals.Count);
                                     Type type = cell.GetType();
                                     PropertyInfo prop = type.GetProperty("Value");
-
-                                    if (chkBullets.Checked)
+                                    if (!checkBoxForceUseableBullets.Checked || Convert.ToInt32(prop.GetValue(cell, null)) != -1)
                                     {
-                                        prop.SetValue(cell, HitBulletIDVals[randomIndex], null);
-                                    }
+                                        if (chkBullets.Checked)
+                                        {
+                                            prop.SetValue(cell, HitBulletIDVals[randomIndex], null);
+                                        }
 
-                                    HitBulletIDVals.RemoveAt(randomIndex);
+                                        HitBulletIDVals.RemoveAt(randomIndex);
+                                    }
                                 }
                                 else if (cell.Def.Name == "spEffectId0")
                                 {
@@ -5723,6 +5727,8 @@ namespace Paramdomizer
                 else if (paramFile.ID == "CHARACTER_INIT_PARAM")
                 {
                     List<int> validItems = new List<int>();
+                    List<int> validTitaniteItems = new List<int>();
+                    List<int> validSoulItems = new List<int>();
                     List<int> validUnstackableItems = new List<int>();
                     List<int> validRings = new List<int>();
                     List<int> classStartingLevel = new List<int>();
@@ -5781,11 +5787,11 @@ namespace Paramdomizer
                         {
                             validItems.Add(380 + i);
                         }
-                        for (int i = 0; i < 7; i++)
+                        for (int i = 0; i < 7; i++) //fire keeper souls
                         {
-                            validItems.Add(390 + i);
+                            validSoulItems.Add(390 + i);
                         }
-                        for (int i = 0; i < 10; i++)
+                        for (int i = 0; i < 10; i++) //generic soul items
                         {
                             validItems.Add(400 + i);
                         }
@@ -5793,11 +5799,11 @@ namespace Paramdomizer
                         validItems.Add(501); //Twin Humanities
                         for (int i = 0; i < 12; i++) //boss souls
                         {
-                            validItems.Add(700 + i);
+                            validSoulItems.Add(700 + i);
                         }
                         for (int i = 0; i < 14; i++) //upgrade materia
                         {
-                            validItems.Add(1000 + (i*10));
+                            validTitaniteItems.Add(1000 + (i*10));
                         }
                         if(!checkBoxPreventSpellGifts.Checked) //spells, miracles, pyromancies start here
                         {
@@ -6007,6 +6013,78 @@ namespace Paramdomizer
                             Res = 1;
                         }
 
+                        if(i >= 6 && i <= 8 && Wil < 10) //6, 7, and 8 are magic based classes. make sure they have at least one attunement slot
+                        {
+                            int WilToAdd = 10 - Wil;
+                            while(WilToAdd > 0)
+                            {
+                                int statToTry = r.Next(7); //0-7 skipping Wil
+                                if(statToTry == 0) //Vit
+                                {
+                                    if(Vit > 1)
+                                    {
+                                        Vit--;
+                                        WilToAdd--;
+                                        Wil++;
+                                    }
+                                }
+                                else if(statToTry == 1) //End
+                                {
+                                    if (End > 1)
+                                    {
+                                        End--;
+                                        WilToAdd--;
+                                        Wil++;
+                                    }
+                                }
+                                else if(statToTry == 2) //Str
+                                {
+                                    if (Str > 1)
+                                    {
+                                        Str--;
+                                        WilToAdd--;
+                                        Wil++;
+                                    }
+                                }
+                                else if (statToTry == 3) //Dex
+                                {
+                                    if (Dex > 1)
+                                    {
+                                        Dex--;
+                                        WilToAdd--;
+                                        Wil++;
+                                    }
+                                }
+                                else if (statToTry == 4) //Mag
+                                {
+                                    if (Mag > 1)
+                                    {
+                                        Mag--;
+                                        WilToAdd--;
+                                        Wil++;
+                                    }
+                                }
+                                else if (statToTry == 5) //Fai
+                                {
+                                    if (Fai > 1)
+                                    {
+                                        Fai--;
+                                        WilToAdd--;
+                                        Wil++;
+                                    }
+                                }
+                                else if (statToTry == 6) //Res
+                                {
+                                    if (Res > 1)
+                                    {
+                                        Res--;
+                                        WilToAdd--;
+                                        Wil++;
+                                    }
+                                }
+                            }
+                        }
+
                         classLevels[i] = level;
                         classStats[i, 0] = Vit;
                         classStats[i, 1] = Wil;
@@ -6097,11 +6175,35 @@ namespace Paramdomizer
                                     PropertyInfo prop = type.GetProperty("Value");
                                     if(checkBoxStartingGifts.Checked)
                                     {
-                                        int randomIndex = r.Next(validItems.Count);
-                                        int itemId = validItems[randomIndex];
-                                        itemStartingGifts.Add(itemId);
-                                        prop.SetValue(cell, itemId, null);
-                                        validItems.RemoveAt(randomIndex);
+                                        // 1/3 chance for titanite or boss souls to be chosen
+                                        if(r.Next(3) == 0)
+                                        {
+                                            // 1/2 to be a soul item
+                                            if(r.Next(2) == 0)
+                                            {
+                                                int randomIndex = r.Next(validSoulItems.Count);
+                                                int itemId = validSoulItems[randomIndex];
+                                                itemStartingGifts.Add(itemId);
+                                                prop.SetValue(cell, itemId, null);
+                                                validSoulItems.RemoveAt(randomIndex);
+                                            }
+                                            else // else be a titanite item
+                                            {
+                                                int randomIndex = r.Next(validTitaniteItems.Count);
+                                                int itemId = validTitaniteItems[randomIndex];
+                                                itemStartingGifts.Add(itemId);
+                                                prop.SetValue(cell, itemId, null);
+                                                validTitaniteItems.RemoveAt(randomIndex);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            int randomIndex = r.Next(validItems.Count);
+                                            int itemId = validItems[randomIndex];
+                                            itemStartingGifts.Add(itemId);
+                                            prop.SetValue(cell, itemId, null);
+                                            validItems.RemoveAt(randomIndex);
+                                        }
                                     }
                                 }
                                 else if (cell.Def.Name == "itemNum_01")
@@ -6144,11 +6246,35 @@ namespace Paramdomizer
                                         if(r.Next(3) == 0)
                                         {
                                             isStackable = true;
-                                            int randomIndex = r.Next(validItems.Count);
-                                            int itemId = validItems[randomIndex];
-                                            itemStartingGifts.Add(itemId);
-                                            prop.SetValue(cell, itemId, null);
-                                            validItems.RemoveAt(randomIndex);
+                                            // 1/3 chance for titanite or boss souls to be chosen
+                                            if (r.Next(3) == 0)
+                                            {
+                                                // 1/2 to be a soul item
+                                                if (r.Next(2) == 0)
+                                                {
+                                                    int randomIndex = r.Next(validSoulItems.Count);
+                                                    int itemId = validSoulItems[randomIndex];
+                                                    itemStartingGifts.Add(itemId);
+                                                    prop.SetValue(cell, itemId, null);
+                                                    validSoulItems.RemoveAt(randomIndex);
+                                                }
+                                                else // else be a titanite item
+                                                {
+                                                    int randomIndex = r.Next(validTitaniteItems.Count);
+                                                    int itemId = validTitaniteItems[randomIndex];
+                                                    itemStartingGifts.Add(itemId);
+                                                    prop.SetValue(cell, itemId, null);
+                                                    validTitaniteItems.RemoveAt(randomIndex);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                int randomIndex = r.Next(validItems.Count);
+                                                int itemId = validItems[randomIndex];
+                                                itemStartingGifts.Add(itemId);
+                                                prop.SetValue(cell, itemId, null);
+                                                validItems.RemoveAt(randomIndex);
+                                            }
                                         }
                                         else
                                         {
@@ -6288,6 +6414,14 @@ namespace Paramdomizer
                                         if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[classIndex, 6])
                                         {
                                             prop.SetValue(cell, classStats[classIndex, 6], null);
+                                        }
+                                    }
+                                    else if (cell.Def.Name == "slotLength")
+                                    {
+                                        //if slot length is greater than 1, make it length 1
+                                        if (Convert.ToInt32(prop.GetValue(cell, null)) > 1)
+                                        {
+                                            prop.SetValue(cell, 1, null);
                                         }
                                     }
                                 }

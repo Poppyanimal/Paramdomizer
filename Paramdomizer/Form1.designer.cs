@@ -78,6 +78,7 @@
             this.checkBoxStartingClasses = new System.Windows.Forms.CheckBox();
             this.checkBoxForceUseableStartSpells = new System.Windows.Forms.CheckBox();
             this.checkBoxForceUseableStartWeapons = new System.Windows.Forms.CheckBox();
+            this.checkBoxForceUseableBullets = new System.Windows.Forms.CheckBox();
             this.tooltip = new System.Windows.Forms.ToolTip(this.components);
             this.btnSavePreset = new System.Windows.Forms.Button();
             this.btnLoadPreset = new System.Windows.Forms.Button();
@@ -195,7 +196,7 @@
             this.chkWeaponDamage.Size = new System.Drawing.Size(161, 17);
             this.chkWeaponDamage.TabIndex = 12;
             this.chkWeaponDamage.Text = "Randomize weapon damage";
-            this.tooltip.SetToolTip(this.chkWeaponDamage, "Randomizes weapon damage.\nEffected by Don\'t randomize by shuffle.");
+            this.tooltip.SetToolTip(this.chkWeaponDamage, "Randomizes weapon damage.");
             this.chkWeaponDamage.UseVisualStyleBackColor = true;
             // 
             // chkWeaponMoveset
@@ -215,15 +216,13 @@
             // 
             this.chkBullets.AutoSize = true;
             this.chkBullets.Checked = true;
-            this.chkBullets.CheckState = System.Windows.Forms.CheckState.Unchecked;
+            this.chkBullets.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkBullets.Location = new System.Drawing.Point(33, 348);
             this.chkBullets.Name = "chkBullets";
-            this.chkBullets.Size = new System.Drawing.Size(112, 17);
+            this.chkBullets.Size = new System.Drawing.Size(116, 17);
             this.chkBullets.TabIndex = 9;
-            this.chkBullets.Text = "Randomize bullets*";
-            this.tooltip.SetToolTip(this.chkBullets, "Randomizes bullets in several ways such as damage, damage type, movement, etc.\r\nA" +
-        "ppears to effect both player and enemy projectiles.\r\nWARNING: Can result in a lot of magi" +
-        "c classes having unusable spells.");
+            this.chkBullets.Text = "Randomize bullets";
+            this.tooltip.SetToolTip(this.chkBullets, resources.GetString("chkBullets.ToolTip"));
             this.chkBullets.UseVisualStyleBackColor = true;
             // 
             // chkKnockback
@@ -410,7 +409,7 @@
             this.checkBoxWeaponScaling.Size = new System.Drawing.Size(156, 17);
             this.checkBoxWeaponScaling.TabIndex = 24;
             this.checkBoxWeaponScaling.Text = "Randomize weapon scaling";
-            this.tooltip.SetToolTip(this.checkBoxWeaponScaling, "Randomizes the scaling of a weapon.\nEffected by Don\'t randomize by shuffle.");
+            this.tooltip.SetToolTip(this.checkBoxWeaponScaling, "Randomizes the scaling of a weapon.");
             this.checkBoxWeaponScaling.UseVisualStyleBackColor = true;
             // 
             // checkBoxWeaponStatMin
@@ -436,7 +435,7 @@
             this.checkBoxWeaponWeight.Size = new System.Drawing.Size(154, 17);
             this.checkBoxWeaponWeight.TabIndex = 27;
             this.checkBoxWeaponWeight.Text = "Randomize weapon weight";
-            this.tooltip.SetToolTip(this.checkBoxWeaponWeight, "Randomizes the weight of a weapon.\nEffected by Don\'t randomize by shuffle.");
+            this.tooltip.SetToolTip(this.checkBoxWeaponWeight, "Randomizes the weight of a weapon.");
             this.checkBoxWeaponWeight.UseVisualStyleBackColor = true;
             // 
             // checkBoxWeaponStamina
@@ -449,7 +448,7 @@
             this.checkBoxWeaponStamina.Size = new System.Drawing.Size(159, 17);
             this.checkBoxWeaponStamina.TabIndex = 25;
             this.checkBoxWeaponStamina.Text = "Randomize weapon stamina";
-            this.tooltip.SetToolTip(this.checkBoxWeaponStamina, "Randomizes the stamina usage of weapons.\nEffected by Don\'t randomize by shuffle.");
+            this.tooltip.SetToolTip(this.checkBoxWeaponStamina, "Randomizes the stamina usage of weapons.");
             this.checkBoxWeaponStamina.UseVisualStyleBackColor = true;
             // 
             // checkBoxWeaponDefense
@@ -708,6 +707,19 @@
         "universally useable.");
             this.checkBoxForceUseableStartWeapons.UseVisualStyleBackColor = true;
             // 
+            // checkBoxForceUseableBullets
+            // 
+            this.checkBoxForceUseableBullets.AutoSize = true;
+            this.checkBoxForceUseableBullets.Checked = true;
+            this.checkBoxForceUseableBullets.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxForceUseableBullets.Location = new System.Drawing.Point(268, 371);
+            this.checkBoxForceUseableBullets.Name = "checkBoxForceUseableBullets";
+            this.checkBoxForceUseableBullets.Size = new System.Drawing.Size(126, 17);
+            this.checkBoxForceUseableBullets.TabIndex = 45;
+            this.checkBoxForceUseableBullets.Text = "Force useable bullets";
+            this.tooltip.SetToolTip(this.checkBoxForceUseableBullets, "Forces bullets to be useable. (or at least tries to.)\nAffects both players and enemies.");
+            this.checkBoxForceUseableBullets.UseVisualStyleBackColor = true;
+            // 
             // tooltip
             // 
             this.tooltip.AutoPopDelay = 32767;
@@ -862,6 +874,7 @@
             this.Controls.Add(this.checkBoxStartingGiftsAmount);
             this.Controls.Add(this.checkBoxStartingClasses);
             this.Controls.Add(this.chkBullets);
+            this.Controls.Add(this.checkBoxForceUseableBullets);
             this.Controls.Add(this.chkKnockback);
             this.Controls.Add(this.chkSpeffects);
             this.Controls.Add(this.chkWeaponSpeffects);
@@ -946,6 +959,7 @@
         private System.Windows.Forms.CheckBox checkBoxStartingClasses;
         private System.Windows.Forms.CheckBox checkBoxForceUseableStartSpells;
         private System.Windows.Forms.CheckBox checkBoxForceUseableStartWeapons;
+        private System.Windows.Forms.CheckBox checkBoxForceUseableBullets;
         private System.Windows.Forms.ToolTip tooltip;
         private System.Windows.Forms.GroupBox gbWeaponCategory;
         private System.Windows.Forms.GroupBox gbSpellCategory;

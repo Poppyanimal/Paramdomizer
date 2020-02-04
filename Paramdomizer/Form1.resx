@@ -117,25 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="tooltip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="tooltip.TrayLocation" type="System.Drawing.Point, System.Drawing">
     <value>17, 17</value>
-  </metadata>
+  </data>
   <data name="checkBoxLoadFromBackup.ToolTip" xml:space="preserve">
     <value>If paramdomizer randomized your game in the past, it will load an unrandomized backup before randomizing again.
 useful to remove some of the effects of the randomizer before randomizing it again.
 paramdomizer now uses a different extension for backuping files to make it easier for it as well as you to accurately tell what the file was like before changes were made. (or to differentiate backups from different randomizers)
 WARNING: WILL NOT RETURN TO VANILLA IF THE ORIGINAL BACKUP WASNT VANILLA (happens if you run a different randomizer prior to paramdomizer)</value>
   </data>
+  <data name="chkBullets.ToolTip" xml:space="preserve">
+    <value>Randomizes bullets in several ways such as damage, damage type, movement, etc.
+Affects both player and enemy projectiles.</value>
+  </data>
   <data name="checkBoxWeaponStatMin.ToolTip" xml:space="preserve">
     <value>Randomizes the minimum stats for a weapon.
 Fists will be effected unless don't modify fists is enabled
-If enabled the straight sword hilt will have no stat requirements. (To prevent softlocking from starting with no useable weapons)
-Effected by Don't randomize by shuffle.</value>
+If enabled the straight sword hilt will have no stat requirements. (To prevent softlocking from starting with no useable weapons)</value>
   </data>
   <data name="checkBoxDoTrueRandom.ToolTip" xml:space="preserve">
     <value>Instead of the defualt behavior which is just to randomly shuffle the randomized element, this will attempt to randomize items by not shuffling them.
 Seeds may not be persistant across different settings if this is enabled.
-Supported settings will have tooltip text indicating that it works with this option.</value>
+Supported settings are listed in the more settings window for this option.</value>
   </data>
   <data name="checkBoxNerfHumanityBullets.ToolTip" xml:space="preserve">
     <value>Requires randomize bullets to be enabled.
@@ -151,10 +155,10 @@ Also shuffles starting level.</value>
     <value>Any spells / pyromancies / miracles that a class starts with will have their stat requirements lowered if that class can't cast it at their starting level.
 Also effects starting caster tools like the pyromancy flame and sorcerer's catalyst.</value>
   </data>
-  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="$this.TrayHeight" type="System.Int32, mscorlib">
     <value>48</value>
-  </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAUAEBAAAAEAIABoBAAAVgAAABgYAAABACAAiAkAAL4EAAAgIAAAAQAgAKgQAABGDgAAMDAAAAEA
