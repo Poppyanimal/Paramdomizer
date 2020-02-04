@@ -120,10 +120,11 @@
   <metadata name="tooltip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <data name="chkBullets.ToolTip" xml:space="preserve">
-    <value>Randomizes bullets in a lot of ways. ei: it's damage, damage type, movement, among other things.
-Appears to effect both player and enemy projectiles.
-Can result in a lot of magic classes having unusable spells.</value>
+  <data name="checkBoxLoadFromBackup.ToolTip" xml:space="preserve">
+    <value>If paramdomizer randomized your game in the past, it will load an unrandomized backup before randomizing again.
+useful to remove some of the effects of the randomizer before randomizing it again.
+paramdomizer now uses a different extension for backuping files to make it easier for it as well as you to accurately tell what the file was like before changes were made. (or to differentiate backups from different randomizers)
+WARNING: WILL NOT RETURN TO VANILLA IF THE ORIGINAL BACKUP WASNT VANILLA (happens if you run a different randomizer prior to paramdomizer)</value>
   </data>
   <data name="checkBoxWeaponStatMin.ToolTip" xml:space="preserve">
     <value>Randomizes the minimum stats for a weapon.

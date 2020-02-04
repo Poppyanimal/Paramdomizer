@@ -17,10 +17,12 @@ namespace Paramdomizer
     public partial class Form1 : Form
     {
         string gameDirectory = "";
+        Form2 TRForm;
 
         public Form1()
         {
             InitializeComponent();
+            TRForm = new Form2();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -1798,7 +1800,7 @@ namespace Paramdomizer
                                         PropertyInfo prop = type.GetProperty("Value");
                                         if (chkWeaponDamage.Checked)
                                         {
-                                            if (checkBoxDoTrueRandom.Checked)
+                                            if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponDamage.Checked)
                                             {
                                                 //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the damage it does
                                                 if (r.Next(3) == 0)
@@ -1829,7 +1831,7 @@ namespace Paramdomizer
                                         PropertyInfo prop = type.GetProperty("Value");
                                         if (chkWeaponDamage.Checked)
                                         {
-                                            if (checkBoxDoTrueRandom.Checked)
+                                            if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponDamage.Checked)
                                             {
                                                 //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the damage it does
                                                 if (r.Next(3) == 0)
@@ -1860,7 +1862,7 @@ namespace Paramdomizer
                                         PropertyInfo prop = type.GetProperty("Value");
                                         if (chkWeaponDamage.Checked)
                                         {
-                                            if (checkBoxDoTrueRandom.Checked)
+                                            if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponDamage.Checked)
                                             {
                                                 //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the damage it does
                                                 if (r.Next(3) == 0)
@@ -1891,7 +1893,7 @@ namespace Paramdomizer
                                         PropertyInfo prop = type.GetProperty("Value");
                                         if (chkWeaponDamage.Checked)
                                         {
-                                            if (checkBoxDoTrueRandom.Checked)
+                                            if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponDamage.Checked)
                                             {
                                                 //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the damage it does
                                                 if (r.Next(3) == 0)
@@ -1922,7 +1924,7 @@ namespace Paramdomizer
                                         PropertyInfo prop = type.GetProperty("Value");
                                         if (checkBoxWeaponScaling.Checked)
                                         {
-                                            if (checkBoxDoTrueRandom.Checked)
+                                            if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponScaling.Checked)
                                             {
                                                 //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the scaling it does
                                                 if (r.Next(3) == 0)
@@ -1958,7 +1960,7 @@ namespace Paramdomizer
                                         PropertyInfo prop = type.GetProperty("Value");
                                         if (checkBoxWeaponScaling.Checked)
                                         {
-                                            if (checkBoxDoTrueRandom.Checked)
+                                            if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponScaling.Checked)
                                             {
                                                 //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the scaling it does
                                                 if (r.Next(3) == 0)
@@ -1994,7 +1996,7 @@ namespace Paramdomizer
                                         PropertyInfo prop = type.GetProperty("Value");
                                         if (checkBoxWeaponScaling.Checked)
                                         {
-                                            if (checkBoxDoTrueRandom.Checked)
+                                            if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponScaling.Checked)
                                             {
                                                 //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the scaling it does
                                                 if (r.Next(3) == 0)
@@ -2030,7 +2032,7 @@ namespace Paramdomizer
                                         PropertyInfo prop = type.GetProperty("Value");
                                         if (checkBoxWeaponScaling.Checked)
                                         {
-                                            if (checkBoxDoTrueRandom.Checked)
+                                            if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponScaling.Checked)
                                             {
                                                 //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the scaling it does
                                                 if (r.Next(3) == 0)
@@ -2069,7 +2071,7 @@ namespace Paramdomizer
                                             PropertyInfo prop = type.GetProperty("Value");
                                             if (checkBoxWeaponStatMin.Checked)
                                             {
-                                                if (checkBoxDoTrueRandom.Checked)
+                                                if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponStatMin.Checked)
                                                 {
                                                     //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the stat requirements
                                                     if (r.Next(3) == 0)
@@ -2118,7 +2120,7 @@ namespace Paramdomizer
                                             PropertyInfo prop = type.GetProperty("Value");
                                             if (checkBoxWeaponStatMin.Checked)
                                             {
-                                                if (checkBoxDoTrueRandom.Checked)
+                                                if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponStatMin.Checked)
                                                 {
                                                     //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the stat requirements
                                                     if (r.Next(3) == 0)
@@ -2167,7 +2169,7 @@ namespace Paramdomizer
                                             PropertyInfo prop = type.GetProperty("Value");
                                             if (checkBoxWeaponStatMin.Checked)
                                             {
-                                                if (checkBoxDoTrueRandom.Checked)
+                                                if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponStatMin.Checked)
                                                 {
                                                     //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the stat requirements
                                                     if (r.Next(3) == 0)
@@ -2216,7 +2218,7 @@ namespace Paramdomizer
                                             PropertyInfo prop = type.GetProperty("Value");
                                             if (checkBoxWeaponStatMin.Checked)
                                             {
-                                                if (checkBoxDoTrueRandom.Checked)
+                                                if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponStatMin.Checked)
                                                 {
                                                     //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the stat requirements
                                                     if (r.Next(3) == 0)
@@ -2267,7 +2269,7 @@ namespace Paramdomizer
                                         //fists dont get weight
                                         if (checkBoxWeaponWeight.Checked && Convert.ToInt32(fistcheckprop.GetValue(fistCheckCell, null)) != 1750)
                                         {
-                                            if (checkBoxDoTrueRandom.Checked)
+                                            if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponWeight.Checked)
                                             {
                                                 //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
                                                 if (r.Next(20) == 0)
@@ -2296,7 +2298,7 @@ namespace Paramdomizer
                                         PropertyInfo prop = type.GetProperty("Value");
                                         if (checkBoxWeaponStamina.Checked)
                                         {
-                                            if (checkBoxDoTrueRandom.Checked)
+                                            if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponStamina.Checked)
                                             {
                                                 if (r.Next(3) == 0)
                                                 {
@@ -3008,7 +3010,7 @@ namespace Paramdomizer
                                             PropertyInfo prop = type.GetProperty("Value");
                                             if (chkWeaponDamage.Checked)
                                             {
-                                                if (checkBoxDoTrueRandom.Checked)
+                                                if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponDamage.Checked)
                                                 {
                                                     //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the damage it does
                                                     if (r.Next(3) == 0)
@@ -3039,7 +3041,7 @@ namespace Paramdomizer
                                             PropertyInfo prop = type.GetProperty("Value");
                                             if (chkWeaponDamage.Checked)
                                             {
-                                                if (checkBoxDoTrueRandom.Checked)
+                                                if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponDamage.Checked)
                                                 {
                                                     //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the damage it does
                                                     if (r.Next(3) == 0)
@@ -3070,7 +3072,7 @@ namespace Paramdomizer
                                             PropertyInfo prop = type.GetProperty("Value");
                                             if (chkWeaponDamage.Checked)
                                             {
-                                                if (checkBoxDoTrueRandom.Checked)
+                                                if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponDamage.Checked)
                                                 {
                                                     //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the damage it does
                                                     if (r.Next(3) == 0)
@@ -3101,7 +3103,7 @@ namespace Paramdomizer
                                             PropertyInfo prop = type.GetProperty("Value");
                                             if (chkWeaponDamage.Checked)
                                             {
-                                                if (checkBoxDoTrueRandom.Checked)
+                                                if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponDamage.Checked)
                                                 {
                                                     //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the damage it does
                                                     if (r.Next(3) == 0)
@@ -3132,7 +3134,7 @@ namespace Paramdomizer
                                             PropertyInfo prop = type.GetProperty("Value");
                                             if (checkBoxWeaponScaling.Checked)
                                             {
-                                                if (checkBoxDoTrueRandom.Checked)
+                                                if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponScaling.Checked)
                                                 {
                                                     //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the scaling it does
                                                     if (r.Next(3) == 0)
@@ -3168,7 +3170,7 @@ namespace Paramdomizer
                                             PropertyInfo prop = type.GetProperty("Value");
                                             if (checkBoxWeaponScaling.Checked)
                                             {
-                                                if (checkBoxDoTrueRandom.Checked)
+                                                if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponScaling.Checked)
                                                 {
                                                     //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the scaling it does
                                                     if (r.Next(3) == 0)
@@ -3204,7 +3206,7 @@ namespace Paramdomizer
                                             PropertyInfo prop = type.GetProperty("Value");
                                             if (checkBoxWeaponScaling.Checked)
                                             {
-                                                if (checkBoxDoTrueRandom.Checked)
+                                                if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponScaling.Checked)
                                                 {
                                                     //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the scaling it does
                                                     if (r.Next(3) == 0)
@@ -3240,7 +3242,7 @@ namespace Paramdomizer
                                             PropertyInfo prop = type.GetProperty("Value");
                                             if (checkBoxWeaponScaling.Checked)
                                             {
-                                                if (checkBoxDoTrueRandom.Checked)
+                                                if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponScaling.Checked)
                                                 {
                                                     //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the scaling it does
                                                     if (r.Next(3) == 0)
@@ -3276,7 +3278,7 @@ namespace Paramdomizer
                                             PropertyInfo prop = type.GetProperty("Value");
                                             if (checkBoxWeaponStatMin.Checked)
                                             {
-                                                if (checkBoxDoTrueRandom.Checked)
+                                                if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponStatMin.Checked)
                                                 {
                                                     //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the stat requirements
                                                     if (r.Next(3) == 0)
@@ -3312,7 +3314,7 @@ namespace Paramdomizer
                                             PropertyInfo prop = type.GetProperty("Value");
                                             if (checkBoxWeaponStatMin.Checked)
                                             {
-                                                if (checkBoxDoTrueRandom.Checked)
+                                                if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponStatMin.Checked)
                                                 {
                                                     //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the stat requirements
                                                     if (r.Next(3) == 0)
@@ -3348,7 +3350,7 @@ namespace Paramdomizer
                                             PropertyInfo prop = type.GetProperty("Value");
                                             if (checkBoxWeaponStatMin.Checked)
                                             {
-                                                if (checkBoxDoTrueRandom.Checked)
+                                                if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponStatMin.Checked)
                                                 {
                                                     //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the stat requirements
                                                     if (r.Next(3) == 0)
@@ -3384,7 +3386,7 @@ namespace Paramdomizer
                                             PropertyInfo prop = type.GetProperty("Value");
                                             if (checkBoxWeaponStatMin.Checked)
                                             {
-                                                if (checkBoxDoTrueRandom.Checked)
+                                                if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponStatMin.Checked)
                                                 {
                                                     //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the stat requirements
                                                     if (r.Next(3) == 0)
@@ -3425,7 +3427,7 @@ namespace Paramdomizer
                                             //fists dont get weight
                                             if (checkBoxWeaponWeight.Checked && Convert.ToInt32(fistcheckprop.GetValue(fistCheckCell, null)) != 1750)
                                             {
-                                                if (checkBoxDoTrueRandom.Checked)
+                                                if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponWeight.Checked)
                                                 {
                                                     //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
                                                     if (r.Next(20) == 0)
@@ -3454,7 +3456,7 @@ namespace Paramdomizer
                                             PropertyInfo prop = type.GetProperty("Value");
                                             if (checkBoxWeaponStamina.Checked)
                                             {
-                                                if (checkBoxDoTrueRandom.Checked)
+                                                if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponStamina.Checked)
                                                 {
                                                     if (r.Next(3) == 0)
                                                     {
@@ -7100,6 +7102,11 @@ namespace Paramdomizer
 
                 //alternative randomization (don't randomize by shuffle)
                 checkBoxDoTrueRandom.Checked = getState(altRand1, 0);
+                TRForm.chkTRWeaponDamage.Checked = getState(altRand1, 1);
+                TRForm.chkTRWeaponWeight.Checked = getState(altRand1, 2);
+                TRForm.chkTRWeaponScaling.Checked = getState(altRand1, 3);
+                TRForm.chkTRWeaponStamina.Checked = getState(altRand1, 4);
+                TRForm.chkTRWeaponStatMin.Checked = getState(altRand1, 5);
 
 
 
@@ -7171,7 +7178,8 @@ namespace Paramdomizer
                     checkBoxStartingGifts.Checked, checkBoxPreventSpellGifts.Checked, checkBoxStartingGiftsAmount.Checked, checkBoxStartingClasses.Checked);
 
                 //alternative randomization (don't randomize by shuffle)
-                writeByte(s, checkBoxDoTrueRandom.Checked);
+                writeByte(s, checkBoxDoTrueRandom.Checked, TRForm.chkTRWeaponDamage.Checked, TRForm.chkTRWeaponWeight.Checked, TRForm.chkTRWeaponScaling.Checked,
+                    TRForm.chkTRWeaponStamina.Checked, TRForm.chkTRWeaponStatMin.Checked);
 
 
 
@@ -7226,5 +7234,10 @@ namespace Paramdomizer
             return state;
         }
 
+        private void btnDoTrueRandomPopup_Click(object sender, EventArgs e)
+        {
+            TRForm.ShowDialog();
+        }
     }
+    
 }

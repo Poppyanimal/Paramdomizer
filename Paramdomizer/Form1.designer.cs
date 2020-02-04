@@ -79,6 +79,9 @@
             this.checkBoxForceUseableStartSpells = new System.Windows.Forms.CheckBox();
             this.checkBoxForceUseableStartWeapons = new System.Windows.Forms.CheckBox();
             this.tooltip = new System.Windows.Forms.ToolTip(this.components);
+            this.btnSavePreset = new System.Windows.Forms.Button();
+            this.btnLoadPreset = new System.Windows.Forms.Button();
+            this.btnDoTrueRandomPopup = new System.Windows.Forms.Button();
             this.gbWeaponCategory = new System.Windows.Forms.GroupBox();
             this.gbSpellCategory = new System.Windows.Forms.GroupBox();
             this.gbEnemiesCategory = new System.Windows.Forms.GroupBox();
@@ -86,8 +89,6 @@
             this.gbSharedCategory = new System.Windows.Forms.GroupBox();
             this.gbArmorCategory = new System.Windows.Forms.GroupBox();
             this.lblVersion = new System.Windows.Forms.Label();
-            this.btnSavePreset = new System.Windows.Forms.Button();
-            this.btnLoadPreset = new System.Windows.Forms.Button();
             this.gbWeaponCategory.SuspendLayout();
             this.gbSpellCategory.SuspendLayout();
             this.SuspendLayout();
@@ -145,10 +146,7 @@
             this.checkBoxLoadFromBackup.Size = new System.Drawing.Size(204, 17);
             this.checkBoxLoadFromBackup.TabIndex = 45;
             this.checkBoxLoadFromBackup.Text = "Load from backup before randomizing";
-            this.tooltip.SetToolTip(this.checkBoxLoadFromBackup, "If paramdomizer randomized your game in the past, it will load an unrandomized ba" +
-        "ckup before randomizing again.\nuseful to remove some of the effects of the rando" +
-        "mizer before randomizing it again.\nparamdomizer now uses a different extension for backuping files to make it easier for it as well as you to accurately tell what the file was like before changes were made. (or to differentiate backups from different randomizers)\n" +
-        "WARNING: WILL NOT RETURN TO VANILLA IF THE ORIGINAL BACKUP WASNT VANILLA (happens if you run a different randomizer prior to paramdomizer)");
+            this.tooltip.SetToolTip(this.checkBoxLoadFromBackup, resources.GetString("checkBoxLoadFromBackup.ToolTip"));
             this.checkBoxLoadFromBackup.UseVisualStyleBackColor = true;
             // 
             // chkRingSpeffects
@@ -217,13 +215,15 @@
             // 
             this.chkBullets.AutoSize = true;
             this.chkBullets.Checked = true;
-            this.chkBullets.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkBullets.CheckState = System.Windows.Forms.CheckState.Unchecked;
             this.chkBullets.Location = new System.Drawing.Point(33, 348);
             this.chkBullets.Name = "chkBullets";
             this.chkBullets.Size = new System.Drawing.Size(112, 17);
             this.chkBullets.TabIndex = 9;
-            this.chkBullets.Text = "Randomize bullets";
-            this.tooltip.SetToolTip(this.chkBullets, resources.GetString("chkBullets.ToolTip"));
+            this.chkBullets.Text = "Randomize bullets*";
+            this.tooltip.SetToolTip(this.chkBullets, "Randomizes bullets in several ways such as damage, damage type, movement, etc.\r\nA" +
+        "ppears to effect both player and enemy projectiles.\r\nWARNING: Can result in a lot of magi" +
+        "c classes having unusable spells.");
             this.chkBullets.UseVisualStyleBackColor = true;
             // 
             // chkKnockback
@@ -714,6 +714,39 @@
             this.tooltip.InitialDelay = 500;
             this.tooltip.ReshowDelay = 100;
             // 
+            // btnSavePreset
+            // 
+            this.btnSavePreset.Location = new System.Drawing.Point(844, 27);
+            this.btnSavePreset.Name = "btnSavePreset";
+            this.btnSavePreset.Size = new System.Drawing.Size(100, 25);
+            this.btnSavePreset.TabIndex = 46;
+            this.btnSavePreset.Text = "Save Preset";
+            this.tooltip.SetToolTip(this.btnSavePreset, "Save a preset of your settings and seed to file.");
+            this.btnSavePreset.UseVisualStyleBackColor = true;
+            this.btnSavePreset.Click += new System.EventHandler(this.btnSavePreset_Click);
+            // 
+            // btnLoadPreset
+            // 
+            this.btnLoadPreset.Location = new System.Drawing.Point(738, 27);
+            this.btnLoadPreset.Name = "btnLoadPreset";
+            this.btnLoadPreset.Size = new System.Drawing.Size(100, 25);
+            this.btnLoadPreset.TabIndex = 47;
+            this.btnLoadPreset.Text = "Load Preset";
+            this.tooltip.SetToolTip(this.btnLoadPreset, "Load a preset containing settings and a seed from file.");
+            this.btnLoadPreset.UseVisualStyleBackColor = true;
+            this.btnLoadPreset.Click += new System.EventHandler(this.btnLoadPreset_Click);
+            // 
+            // btnDoTrueRandomPopup
+            // 
+            this.btnDoTrueRandomPopup.Location = new System.Drawing.Point(192, 408);
+            this.btnDoTrueRandomPopup.Name = "btnDoTrueRandomPopup";
+            this.btnDoTrueRandomPopup.Size = new System.Drawing.Size(104, 28);
+            this.btnDoTrueRandomPopup.TabIndex = 48;
+            this.btnDoTrueRandomPopup.Text = "More Settings...";
+            this.tooltip.SetToolTip(this.btnDoTrueRandomPopup, "Configure detailed settings for Don\'t Randomize by Shuffle.");
+            this.btnDoTrueRandomPopup.UseVisualStyleBackColor = true;
+            this.btnDoTrueRandomPopup.Click += new System.EventHandler(this.btnDoTrueRandomPopup_Click);
+            // 
             // gbWeaponCategory
             // 
             this.gbWeaponCategory.AutoSize = true;
@@ -749,7 +782,7 @@
             // gbOtherCategory
             // 
             this.gbOtherCategory.AutoSize = true;
-            this.gbOtherCategory.Location = new System.Drawing.Point(482, 214);
+            this.gbOtherCategory.Location = new System.Drawing.Point(479, 214);
             this.gbOtherCategory.Name = "gbOtherCategory";
             this.gbOtherCategory.Size = new System.Drawing.Size(466, 116);
             this.gbOtherCategory.TabIndex = 35;
@@ -785,26 +818,6 @@
             this.lblVersion.TabIndex = 41;
             this.lblVersion.Text = "DEV version 0.3d";
             // 
-            // btnSavePreset
-            // 
-            this.btnSavePreset.Location = new System.Drawing.Point(844, 27);
-            this.btnSavePreset.Name = "btnSavePreset";
-            this.btnSavePreset.Size = new System.Drawing.Size(100, 25);
-            this.btnSavePreset.TabIndex = 46;
-            this.btnSavePreset.Text = "Save Preset";
-            this.btnSavePreset.UseVisualStyleBackColor = true;
-            this.btnSavePreset.Click += new System.EventHandler(this.btnSavePreset_Click);
-            // 
-            // btnLoadPreset
-            // 
-            this.btnLoadPreset.Location = new System.Drawing.Point(738, 27);
-            this.btnLoadPreset.Name = "btnLoadPreset";
-            this.btnLoadPreset.Size = new System.Drawing.Size(100, 25);
-            this.btnLoadPreset.TabIndex = 47;
-            this.btnLoadPreset.Text = "Load Preset";
-            this.btnLoadPreset.UseVisualStyleBackColor = true;
-            this.btnLoadPreset.Click += new System.EventHandler(this.btnLoadPreset_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -812,6 +825,7 @@
             this.ClientSize = new System.Drawing.Size(960, 470);
             this.Controls.Add(this.btnLoadPreset);
             this.Controls.Add(this.btnSavePreset);
+            this.Controls.Add(this.btnDoTrueRandomPopup);
             this.Controls.Add(this.checkBoxLoadFromBackup);
             this.Controls.Add(this.checkBoxNerfHumanityBullets);
             this.Controls.Add(this.checkBoxRemaster);
@@ -942,6 +956,7 @@
         private System.Windows.Forms.Label lblVersion;
         private System.Windows.Forms.Button btnSavePreset;
         private System.Windows.Forms.Button btnLoadPreset;
+        private System.Windows.Forms.Button btnDoTrueRandomPopup;
     }
 }
 
