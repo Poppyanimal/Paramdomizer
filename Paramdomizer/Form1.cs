@@ -1109,7 +1109,15 @@ namespace Paramdomizer
                                     PropertyInfo prop = type.GetProperty("Value");
                                     if (checkBoxArmorWeight.Checked)
                                     {
-                                        prop.SetValue(cell, allArmorWeights[randomIndex], null);
+                                        if(checkBoxDoTrueRandom.Checked && TRForm.chkTRArmorWeight.Checked)
+                                        {
+                                            //randomized by 0.1 steps
+                                            prop.SetValue(cell, r.Next(196) / 10.0, null);
+                                        }
+                                        else
+                                        {
+                                            prop.SetValue(cell, allArmorWeights[randomIndex], null);
+                                        }
                                     }
 
                                     allArmorWeights.RemoveAt(randomIndex);
@@ -1121,7 +1129,22 @@ namespace Paramdomizer
                                     PropertyInfo prop = type.GetProperty("Value");
                                     if (checkBoxArmorPoise.Checked)
                                     {
-                                        prop.SetValue(cell, allArmorPoise[randomIndex], null);
+                                        if(checkBoxDoTrueRandom.Checked && TRForm.chkTRArmorPoise.Checked)
+                                        {
+                                            // 1/2 chance to get poise
+                                            if(r.Next(2) == 0)
+                                            {
+                                                prop.SetValue(cell, r.Next(46) + 2, null);
+                                            }
+                                            else
+                                            {
+                                                prop.SetValue(cell, 0, null);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            prop.SetValue(cell, allArmorPoise[randomIndex], null);
+                                        }
                                     }
 
                                     allArmorPoise.RemoveAt(randomIndex);
@@ -1145,7 +1168,14 @@ namespace Paramdomizer
                                     PropertyInfo prop = type.GetProperty("Value");
                                     if (checkBoxArmorResistance.Checked)
                                     {
-                                        prop.SetValue(cell, allArmorDefensePhys[randomIndex], null);
+                                        if(checkBoxDoTrueRandom.Checked && TRForm.chkTRArmorResistance.Checked)
+                                        {
+                                            prop.SetValue(cell, r.Next(104) + 3, null);
+                                        }
+                                        else
+                                        {
+                                            prop.SetValue(cell, allArmorDefensePhys[randomIndex], null);
+                                        }
                                     }
 
                                     allArmorDefensePhys.RemoveAt(randomIndex);
@@ -1157,7 +1187,14 @@ namespace Paramdomizer
                                     PropertyInfo prop = type.GetProperty("Value");
                                     if (checkBoxArmorResistance.Checked)
                                     {
-                                        prop.SetValue(cell, allArmorDefenseMagic[randomIndex], null);
+                                        if (checkBoxDoTrueRandom.Checked && TRForm.chkTRArmorResistance.Checked)
+                                        {
+                                            prop.SetValue(cell, r.Next(56) + 1, null);
+                                        }
+                                        else
+                                        {
+                                            prop.SetValue(cell, allArmorDefenseMagic[randomIndex], null);
+                                        }
                                     }
 
                                     allArmorDefenseMagic.RemoveAt(randomIndex);
@@ -1169,7 +1206,14 @@ namespace Paramdomizer
                                     PropertyInfo prop = type.GetProperty("Value");
                                     if (checkBoxArmorResistance.Checked)
                                     {
-                                        prop.SetValue(cell, allArmorDefenseFire[randomIndex], null);
+                                        if (checkBoxDoTrueRandom.Checked && TRForm.chkTRArmorResistance.Checked)
+                                        {
+                                            prop.SetValue(cell, r.Next(65) + 2, null);
+                                        }
+                                        else
+                                        {
+                                            prop.SetValue(cell, allArmorDefenseFire[randomIndex], null);
+                                        }
                                     }
 
                                     allArmorDefenseFire.RemoveAt(randomIndex);
@@ -1181,7 +1225,14 @@ namespace Paramdomizer
                                     PropertyInfo prop = type.GetProperty("Value");
                                     if (checkBoxArmorResistance.Checked)
                                     {
-                                        prop.SetValue(cell, allArmorDefenseThunder[randomIndex], null);
+                                        if (checkBoxDoTrueRandom.Checked && TRForm.chkTRArmorResistance.Checked)
+                                        {
+                                            prop.SetValue(cell, r.Next(58) + 2, null);
+                                        }
+                                        else
+                                        {
+                                            prop.SetValue(cell, allArmorDefenseThunder[randomIndex], null);
+                                        }
                                     }
 
                                     allArmorDefenseThunder.RemoveAt(randomIndex);
@@ -1193,7 +1244,14 @@ namespace Paramdomizer
                                     PropertyInfo prop = type.GetProperty("Value");
                                     if (checkBoxArmorResistance.Checked)
                                     {
-                                        prop.SetValue(cell, allArmorDefenseSlash[randomIndex], null);
+                                        if (checkBoxDoTrueRandom.Checked && TRForm.chkTRArmorResistance.Checked)
+                                        {
+                                            prop.SetValue(cell, r.Next(25) + 3, null);
+                                        }
+                                        else
+                                        {
+                                            prop.SetValue(cell, allArmorDefenseSlash[randomIndex], null);
+                                        }
                                     }
 
                                     allArmorDefenseSlash.RemoveAt(randomIndex);
@@ -1205,7 +1263,14 @@ namespace Paramdomizer
                                     PropertyInfo prop = type.GetProperty("Value");
                                     if (checkBoxArmorResistance.Checked)
                                     {
-                                        prop.SetValue(cell, allArmorDefenseBlow[randomIndex], null);
+                                        if (checkBoxDoTrueRandom.Checked && TRForm.chkTRArmorResistance.Checked)
+                                        {
+                                            prop.SetValue(cell, r.Next(116) - 48, null);
+                                        }
+                                        else
+                                        {
+                                            prop.SetValue(cell, allArmorDefenseBlow[randomIndex], null);
+                                        }
                                     }
 
                                     allArmorDefenseBlow.RemoveAt(randomIndex);
@@ -1217,7 +1282,14 @@ namespace Paramdomizer
                                     PropertyInfo prop = type.GetProperty("Value");
                                     if (checkBoxArmorResistance.Checked)
                                     {
-                                        prop.SetValue(cell, allArmorDefenseThrust[randomIndex], null);
+                                        if (checkBoxDoTrueRandom.Checked && TRForm.chkTRArmorResistance.Checked)
+                                        {
+                                            prop.SetValue(cell, r.Next(35) - 17, null);
+                                        }
+                                        else
+                                        {
+                                            prop.SetValue(cell, allArmorDefenseThrust[randomIndex], null);
+                                        }
                                     }
 
                                     allArmorDefenseThrust.RemoveAt(randomIndex);
@@ -1229,7 +1301,14 @@ namespace Paramdomizer
                                     PropertyInfo prop = type.GetProperty("Value");
                                     if (checkBoxArmorResistance.Checked)
                                     {
-                                        prop.SetValue(cell, allArmorResistPoison[randomIndex], null);
+                                        if (checkBoxDoTrueRandom.Checked && TRForm.chkTRArmorResistance.Checked)
+                                        {
+                                            prop.SetValue(cell, r.Next(91) + 4, null);
+                                        }
+                                        else
+                                        {
+                                            prop.SetValue(cell, allArmorResistPoison[randomIndex], null);
+                                        }
                                     }
 
                                     allArmorResistPoison.RemoveAt(randomIndex);
@@ -1241,7 +1320,14 @@ namespace Paramdomizer
                                     PropertyInfo prop = type.GetProperty("Value");
                                     if (checkBoxArmorResistance.Checked)
                                     {
-                                        prop.SetValue(cell, allArmorResistDisease[randomIndex], null);
+                                        if (checkBoxDoTrueRandom.Checked && TRForm.chkTRArmorResistance.Checked)
+                                        {
+                                            prop.SetValue(cell, r.Next(91) + 4, null);
+                                        }
+                                        else
+                                        {
+                                            prop.SetValue(cell, allArmorResistDisease[randomIndex], null);
+                                        }
                                     }
 
                                     allArmorResistDisease.RemoveAt(randomIndex);
@@ -1253,7 +1339,14 @@ namespace Paramdomizer
                                     PropertyInfo prop = type.GetProperty("Value");
                                     if (checkBoxArmorResistance.Checked)
                                     {
-                                        prop.SetValue(cell, allArmorResistBlood[randomIndex], null);
+                                        if (checkBoxDoTrueRandom.Checked && TRForm.chkTRArmorResistance.Checked)
+                                        {
+                                            prop.SetValue(cell, r.Next(51) + 4, null);
+                                        }
+                                        else
+                                        {
+                                            prop.SetValue(cell, allArmorResistBlood[randomIndex], null);
+                                        }
                                     }
 
                                     allArmorResistBlood.RemoveAt(randomIndex);
@@ -1265,7 +1358,22 @@ namespace Paramdomizer
                                     PropertyInfo prop = type.GetProperty("Value");
                                     if (checkBoxArmorResistance.Checked)
                                     {
-                                        prop.SetValue(cell, allArmorResistCurse[randomIndex], null);
+                                        if (checkBoxDoTrueRandom.Checked && TRForm.chkTRArmorResistance.Checked)
+                                        {
+                                            // 1/2 chance to get a value
+                                            if(r.Next(1) == 0)
+                                            {
+                                                prop.SetValue(cell, r.Next(58), null);
+                                            }
+                                            else
+                                            {
+                                                prop.SetValue(cell, 0, null);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            prop.SetValue(cell, allArmorResistCurse[randomIndex], null);
+                                        }
                                     }
 
                                     allArmorResistCurse.RemoveAt(randomIndex);
@@ -2395,7 +2503,21 @@ namespace Paramdomizer
                                             PropertyInfo prop = type.GetProperty("Value");
                                             if (checkBoxWeaponDefense.Checked)
                                             {
-                                                prop.SetValue(cell, allPhysicalGuard[randomIndex], null);
+                                                if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponDefense.Checked)
+                                                {
+                                                    if(checkBoxWeaponShieldSplit.Checked) //this is offensive weapons only
+                                                    {
+                                                        prop.SetValue(cell, r.Next(51) + 20, null);
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, r.Next(81) + 20, null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, allPhysicalGuard[randomIndex], null);
+                                                }
                                             }
 
                                             allPhysicalGuard.RemoveAt(randomIndex);
@@ -2411,7 +2533,21 @@ namespace Paramdomizer
                                             PropertyInfo prop = type.GetProperty("Value");
                                             if (checkBoxWeaponDefense.Checked)
                                             {
-                                                prop.SetValue(cell, allMagicGuard[randomIndex], null);
+                                                if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponDefense.Checked)
+                                                {
+                                                    if (checkBoxWeaponShieldSplit.Checked) //this is offensive weapons only
+                                                    {
+                                                        prop.SetValue(cell, r.Next(46) + 5, null);
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, r.Next(96) + 5, null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, allMagicGuard[randomIndex], null);
+                                                }
                                             }
 
                                             allMagicGuard.RemoveAt(randomIndex);
@@ -2427,7 +2563,21 @@ namespace Paramdomizer
                                             PropertyInfo prop = type.GetProperty("Value");
                                             if (checkBoxWeaponDefense.Checked)
                                             {
-                                                prop.SetValue(cell, allFireGuard[randomIndex], null);
+                                                if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponDefense.Checked)
+                                                {
+                                                    if (checkBoxWeaponShieldSplit.Checked) //this is offensive weapons only
+                                                    {
+                                                        prop.SetValue(cell, r.Next(36) + 15, null);
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, r.Next(86) + 15, null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, allFireGuard[randomIndex], null);
+                                                }
                                             }
 
                                             allFireGuard.RemoveAt(randomIndex);
@@ -2443,7 +2593,21 @@ namespace Paramdomizer
                                             PropertyInfo prop = type.GetProperty("Value");
                                             if (checkBoxWeaponDefense.Checked)
                                             {
-                                                prop.SetValue(cell, allThunderGuard[randomIndex], null);
+                                                if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponDefense.Checked)
+                                                {
+                                                    if (checkBoxWeaponShieldSplit.Checked) //this is offensive weapons only
+                                                    {
+                                                        prop.SetValue(cell, r.Next(36) + 15, null);
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, r.Next(86) + 15, null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, allThunderGuard[randomIndex], null);
+                                                }
                                             }
 
                                             allThunderGuard.RemoveAt(randomIndex);
@@ -2459,7 +2623,21 @@ namespace Paramdomizer
                                             PropertyInfo prop = type.GetProperty("Value");
                                             if (checkBoxWeaponDefense.Checked)
                                             {
-                                                prop.SetValue(cell, allGuardStability[randomIndex], null);
+                                                if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponDefense.Checked)
+                                                {
+                                                    if (checkBoxWeaponShieldSplit.Checked) //this is offensive weapons only
+                                                    {
+                                                        prop.SetValue(cell, r.Next(41) + 10, null);
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, r.Next(81) + 10, null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, allGuardStability[randomIndex], null);
+                                                }
                                             }
 
                                             allGuardStability.RemoveAt(randomIndex);
@@ -2475,7 +2653,21 @@ namespace Paramdomizer
                                             PropertyInfo prop = type.GetProperty("Value");
                                             if (checkBoxWeaponDefense.Checked)
                                             {
-                                                prop.SetValue(cell, allPoisonResist[randomIndex], null);
+                                                if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponDefense.Checked)
+                                                {
+                                                    if (checkBoxWeaponShieldSplit.Checked) //this is offensive weapons only
+                                                    {
+                                                        prop.SetValue(cell, r.Next(61), null);
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, r.Next(101), null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, allPoisonResist[randomIndex], null);
+                                                }
                                             }
 
                                             allPoisonResist.RemoveAt(randomIndex);
@@ -2491,7 +2683,21 @@ namespace Paramdomizer
                                             PropertyInfo prop = type.GetProperty("Value");
                                             if (checkBoxWeaponDefense.Checked)
                                             {
-                                                prop.SetValue(cell, allDiseaseResist[randomIndex], null);
+                                                if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponDefense.Checked)
+                                                {
+                                                    if (checkBoxWeaponShieldSplit.Checked) //this is offensive weapons only
+                                                    {
+                                                        prop.SetValue(cell, r.Next(61), null);
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, r.Next(101), null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, allDiseaseResist[randomIndex], null);
+                                                }
                                             }
 
                                             allDiseaseResist.RemoveAt(randomIndex);
@@ -2507,7 +2713,21 @@ namespace Paramdomizer
                                             PropertyInfo prop = type.GetProperty("Value");
                                             if (checkBoxWeaponDefense.Checked)
                                             {
-                                                prop.SetValue(cell, allBloodResist[randomIndex], null);
+                                                if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponDefense.Checked)
+                                                {
+                                                    if (checkBoxWeaponShieldSplit.Checked) //this is offensive weapons only
+                                                    {
+                                                        prop.SetValue(cell, r.Next(61), null);
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, r.Next(101), null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, allBloodResist[randomIndex], null);
+                                                }
                                             }
 
                                             allBloodResist.RemoveAt(randomIndex);
@@ -2523,7 +2743,21 @@ namespace Paramdomizer
                                             PropertyInfo prop = type.GetProperty("Value");
                                             if (checkBoxWeaponDefense.Checked)
                                             {
-                                                prop.SetValue(cell, allCurseResist[randomIndex], null);
+                                                if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponDefense.Checked)
+                                                {
+                                                    if (checkBoxWeaponShieldSplit.Checked) //this is offensive weapons only
+                                                    {
+                                                        prop.SetValue(cell, r.Next(61), null);
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, r.Next(101), null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, allCurseResist[randomIndex], null);
+                                                }
                                             }
 
                                             allCurseResist.RemoveAt(randomIndex);
@@ -2539,7 +2773,21 @@ namespace Paramdomizer
                                             PropertyInfo prop = type.GetProperty("Value");
                                             if (checkBoxWeaponDefense.Checked)
                                             {
-                                                prop.SetValue(cell, allGuardBaseRepel[randomIndex], null);
+                                                if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponDefense.Checked)
+                                                {
+                                                    if (checkBoxWeaponShieldSplit.Checked) //this is offensive weapons only
+                                                    {
+                                                        prop.SetValue(cell, 10, null);
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, r.Next(71) + 10, null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, allGuardBaseRepel[randomIndex], null);
+                                                }
                                             }
 
                                             allGuardBaseRepel.RemoveAt(randomIndex);
@@ -2555,7 +2803,14 @@ namespace Paramdomizer
                                             PropertyInfo prop = type.GetProperty("Value");
                                             if (checkBoxWeaponDefense.Checked)
                                             {
-                                                prop.SetValue(cell, allAttackBaseRepel[randomIndex], null);
+                                                if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponDefense.Checked)
+                                                {
+                                                    prop.SetValue(cell, r.Next(56) + 15, null);
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, allAttackBaseRepel[randomIndex], null);
+                                                }
                                             }
 
                                             allAttackBaseRepel.RemoveAt(randomIndex);
@@ -3553,7 +3808,22 @@ namespace Paramdomizer
                                                 PropertyInfo prop = type.GetProperty("Value");
                                                 if (checkBoxWeaponDefense.Checked)
                                                 {
-                                                    prop.SetValue(cell, allPhysicalGuard[randomIndex], null);
+                                                    if(checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponDefense.Checked)
+                                                    {
+                                                        // 1/3 chance to have 100 defense
+                                                        if(r.Next(3) == 0)
+                                                        {
+                                                            prop.SetValue(cell, 100, null);
+                                                        }
+                                                        else // 65 to 100
+                                                        {
+                                                            prop.SetValue(cell, r.Next(36) + 65, null);
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, allPhysicalGuard[randomIndex], null);
+                                                    }
                                                 }
 
                                                 allPhysicalGuard.RemoveAt(randomIndex);
@@ -3569,7 +3839,22 @@ namespace Paramdomizer
                                                 PropertyInfo prop = type.GetProperty("Value");
                                                 if (checkBoxWeaponDefense.Checked)
                                                 {
-                                                    prop.SetValue(cell, allMagicGuard[randomIndex], null);
+                                                    if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponDefense.Checked)
+                                                    {
+                                                        // 1/10 chance to have 80-100 defense
+                                                        if (r.Next(10) == 0)
+                                                        {
+                                                            prop.SetValue(cell, r.Next(21) + 80, null);
+                                                        }
+                                                        else // 25 to 70
+                                                        {
+                                                            prop.SetValue(cell, r.Next(46) + 25, null);
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, allMagicGuard[randomIndex], null);
+                                                    }
                                                 }
 
                                                 allMagicGuard.RemoveAt(randomIndex);
@@ -3585,7 +3870,22 @@ namespace Paramdomizer
                                                 PropertyInfo prop = type.GetProperty("Value");
                                                 if (checkBoxWeaponDefense.Checked)
                                                 {
-                                                    prop.SetValue(cell, allFireGuard[randomIndex], null);
+                                                    if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponDefense.Checked)
+                                                    {
+                                                        // 1/2 chance to have 51-100 defense
+                                                        if (r.Next(2) == 0)
+                                                        {
+                                                            prop.SetValue(cell, r.Next(50) + 51, null);
+                                                        }
+                                                        else // 10 to 50
+                                                        {
+                                                            prop.SetValue(cell, r.Next(41) + 10, null);
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, allFireGuard[randomIndex], null);
+                                                    }
                                                 }
 
                                                 allFireGuard.RemoveAt(randomIndex);
@@ -3601,7 +3901,22 @@ namespace Paramdomizer
                                                 PropertyInfo prop = type.GetProperty("Value");
                                                 if (checkBoxWeaponDefense.Checked)
                                                 {
-                                                    prop.SetValue(cell, allThunderGuard[randomIndex], null);
+                                                    if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponDefense.Checked)
+                                                    {
+                                                        // 1/4 chance to have 61-100 defense
+                                                        if (r.Next(4) == 0)
+                                                        {
+                                                            prop.SetValue(cell, r.Next(40) + 61, null);
+                                                        }
+                                                        else // 30 to 60
+                                                        {
+                                                            prop.SetValue(cell, r.Next(31) + 30, null);
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, allThunderGuard[randomIndex], null);
+                                                    }
                                                 }
 
                                                 allThunderGuard.RemoveAt(randomIndex);
@@ -3617,7 +3932,15 @@ namespace Paramdomizer
                                                 PropertyInfo prop = type.GetProperty("Value");
                                                 if (checkBoxWeaponDefense.Checked)
                                                 {
-                                                    prop.SetValue(cell, allGuardStability[randomIndex], null);
+                                                    if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponDefense.Checked)
+                                                    {
+                                                        //30 to 90
+                                                        prop.SetValue(cell, r.Next(61) + 30, null);
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, allGuardStability[randomIndex], null);
+                                                    }
                                                 }
 
                                                 allGuardStability.RemoveAt(randomIndex);
@@ -3633,7 +3956,14 @@ namespace Paramdomizer
                                                 PropertyInfo prop = type.GetProperty("Value");
                                                 if (checkBoxWeaponDefense.Checked)
                                                 {
-                                                    prop.SetValue(cell, allPoisonResist[randomIndex], null);
+                                                    if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponDefense.Checked)
+                                                    {
+                                                        prop.SetValue(cell, r.Next(101), null);
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, allPoisonResist[randomIndex], null);
+                                                    }
                                                 }
 
                                                 allPoisonResist.RemoveAt(randomIndex);
@@ -3649,7 +3979,14 @@ namespace Paramdomizer
                                                 PropertyInfo prop = type.GetProperty("Value");
                                                 if (checkBoxWeaponDefense.Checked)
                                                 {
-                                                    prop.SetValue(cell, allDiseaseResist[randomIndex], null);
+                                                    if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponDefense.Checked)
+                                                    {
+                                                        prop.SetValue(cell, r.Next(101), null);
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, allDiseaseResist[randomIndex], null);
+                                                    }
                                                 }
 
                                                 allDiseaseResist.RemoveAt(randomIndex);
@@ -3665,7 +4002,14 @@ namespace Paramdomizer
                                                 PropertyInfo prop = type.GetProperty("Value");
                                                 if (checkBoxWeaponDefense.Checked)
                                                 {
-                                                    prop.SetValue(cell, allBloodResist[randomIndex], null);
+                                                    if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponDefense.Checked)
+                                                    {
+                                                        prop.SetValue(cell, r.Next(101), null);
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, allBloodResist[randomIndex], null);
+                                                    }
                                                 }
 
                                                 allBloodResist.RemoveAt(randomIndex);
@@ -3681,7 +4025,14 @@ namespace Paramdomizer
                                                 PropertyInfo prop = type.GetProperty("Value");
                                                 if (checkBoxWeaponDefense.Checked)
                                                 {
-                                                    prop.SetValue(cell, allCurseResist[randomIndex], null);
+                                                    if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponDefense.Checked)
+                                                    {
+                                                        prop.SetValue(cell, r.Next(101), null);
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, allCurseResist[randomIndex], null);
+                                                    }
                                                 }
 
                                                 allCurseResist.RemoveAt(randomIndex);
@@ -3697,7 +4048,14 @@ namespace Paramdomizer
                                                 PropertyInfo prop = type.GetProperty("Value");
                                                 if (checkBoxWeaponDefense.Checked)
                                                 {
-                                                    prop.SetValue(cell, allGuardBaseRepel[randomIndex], null);
+                                                    if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponDefense.Checked)
+                                                    {
+                                                        prop.SetValue(cell, r.Next(71) + 10, null);
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, allGuardBaseRepel[randomIndex], null);
+                                                    }
                                                 }
 
                                                 allGuardBaseRepel.RemoveAt(randomIndex);
@@ -3713,7 +4071,14 @@ namespace Paramdomizer
                                                 PropertyInfo prop = type.GetProperty("Value");
                                                 if (checkBoxWeaponDefense.Checked)
                                                 {
-                                                    prop.SetValue(cell, allAttackBaseRepel[randomIndex], null);
+                                                    if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponDefense.Checked)
+                                                    {
+                                                        prop.SetValue(cell, r.Next(56) + 15, null);
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, allAttackBaseRepel[randomIndex], null);
+                                                    }
                                                 }
 
                                                 allAttackBaseRepel.RemoveAt(randomIndex);
@@ -3915,7 +4280,37 @@ namespace Paramdomizer
                                     PropertyInfo prop = type.GetProperty("Value");
                                     if (checkBoxRandomizeSpellSlotSize.Checked)
                                     {
-                                        prop.SetValue(cell, allSlotLengths[randomIndex], null);
+                                        if(checkBoxDoTrueRandom.Checked && TRForm.chkTRSpellSlotSize.Checked)
+                                        {
+                                            // 1/10 chance to get a non one slot size
+                                            if(r.Next(10) == 0)
+                                            {
+                                                // 2/4 chance for 2; 1/4 for 3; 1/4 for 0
+                                                if(r.Next(2) == 0)
+                                                {
+                                                    if(r.Next(2) == 0)
+                                                    {
+                                                        prop.SetValue(cell, 3, null);
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, 0, null);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, 2, null);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                prop.SetValue(cell, 1, null);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            prop.SetValue(cell, allSlotLengths[randomIndex], null);
+                                        }
                                     }
 
                                     allSlotLengths.RemoveAt(randomIndex);
@@ -3927,7 +4322,22 @@ namespace Paramdomizer
                                     PropertyInfo prop = type.GetProperty("Value");
                                     if (checkBoxRandomizeSpellRequirements.Checked)
                                     {
-                                        prop.SetValue(cell, allRequirementIntellect[randomIndex], null);
+                                        if(checkBoxDoTrueRandom.Checked && TRForm.chkTRSpellRequirements.Checked)
+                                        {
+                                            // 1/3 chance to have no req
+                                            if(r.Next(3) == 0)
+                                            {
+                                                prop.SetValue(cell, r.Next(41) + 10, null);
+                                            }
+                                            else
+                                            {
+                                                prop.SetValue(cell, 0, null);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            prop.SetValue(cell, allRequirementIntellect[randomIndex], null);
+                                        }
                                     }
 
                                     allRequirementIntellect.RemoveAt(randomIndex);
@@ -3939,7 +4349,22 @@ namespace Paramdomizer
                                     PropertyInfo prop = type.GetProperty("Value");
                                     if (checkBoxRandomizeSpellRequirements.Checked)
                                     {
-                                        prop.SetValue(cell, allRequirementFaith[randomIndex], null);
+                                        if (checkBoxDoTrueRandom.Checked && TRForm.chkTRSpellRequirements.Checked)
+                                        {
+                                            // 1/3 chance to have no req
+                                            if (r.Next(3) == 0)
+                                            {
+                                                prop.SetValue(cell, r.Next(41) + 10, null);
+                                            }
+                                            else
+                                            {
+                                                prop.SetValue(cell, 0, null);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            prop.SetValue(cell, allRequirementFaith[randomIndex], null);
+                                        }
                                     }
 
                                     allRequirementFaith.RemoveAt(randomIndex);
@@ -3951,7 +4376,22 @@ namespace Paramdomizer
                                     PropertyInfo prop = type.GetProperty("Value");
                                     if (checkBoxRandomizeSpellQuantity.Checked)
                                     {
-                                        prop.SetValue(cell, allMaxQuantity[randomIndex], null);
+                                        if(checkBoxDoTrueRandom.Checked && TRForm.chkTRSpellQuantity.Checked)
+                                        {
+                                            // 1/5 chance to roll higher
+                                            if(r.Next(5) == 0)
+                                            {
+                                                prop.SetValue(cell, r.Next(101) + 11, null);
+                                            }
+                                            else
+                                            {
+                                                prop.SetValue(cell, r.Next(10) + 1, null);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            prop.SetValue(cell, allMaxQuantity[randomIndex], null);
+                                        }
                                     }
 
                                     allMaxQuantity.RemoveAt(randomIndex);
@@ -7179,7 +7619,8 @@ namespace Paramdomizer
                 int a1 = s.ReadByte(); //armor byte
                 int s1 = s.ReadByte(); //spells byte
                 int o1 = s.ReadByte(); //other settings byte (options in the other settings tab)
-                int altRand1 = s.ReadByte(); //alternative randomization (don't randomize by shuffle)
+                int altRand1 = s.ReadByte(); //alternative randomization's 1st byte (don't randomize by shuffle)
+                int altRand2 = s.ReadByte(); //alternative randomization's 2nd byte (don't randomize by shuffle)
 
 
                 //weapons 1st byte
@@ -7234,13 +7675,22 @@ namespace Paramdomizer
                 checkBoxStartingGiftsAmount.Checked = getState(o1, 6);
                 checkBoxStartingClasses.Checked = getState(o1, 7);
 
-                //alternative randomization (don't randomize by shuffle)
+                //alternative randomization's 1st byte (don't randomize by shuffle)
                 checkBoxDoTrueRandom.Checked = getState(altRand1, 0);
                 TRForm.chkTRWeaponDamage.Checked = getState(altRand1, 1);
                 TRForm.chkTRWeaponWeight.Checked = getState(altRand1, 2);
                 TRForm.chkTRWeaponScaling.Checked = getState(altRand1, 3);
                 TRForm.chkTRWeaponStamina.Checked = getState(altRand1, 4);
                 TRForm.chkTRWeaponStatMin.Checked = getState(altRand1, 5);
+                TRForm.chkTRWeaponDefense.Checked = getState(altRand1, 6);
+                TRForm.chkTRArmorResistance.Checked = getState(altRand1, 7);
+
+                //alternative randomization's 2nd byte (don't randomize by shuffle)
+                TRForm.chkTRArmorPoise.Checked = getState(altRand2, 0);
+                TRForm.chkTRArmorWeight.Checked = getState(altRand2, 1);
+                TRForm.chkTRSpellRequirements.Checked = getState(altRand2, 2);
+                TRForm.chkTRSpellSlotSize.Checked = getState(altRand2, 3);
+                TRForm.chkTRSpellQuantity.Checked = getState(altRand2, 4);
 
 
 
@@ -7267,6 +7717,7 @@ namespace Paramdomizer
                 //Write a 10 byte header to identify the config file; uses first 10 digits of pi multiplied by 10
                 byte[] header = new byte[] { 30, 10, 40, 10, 50, 90, 20, 60, 50, 30 };
                 s.Write(header, 0, 10);
+
 
 
                 byte[] stringBytes = System.Text.Encoding.ASCII.GetBytes(txtSeed.Text);
@@ -7311,9 +7762,13 @@ namespace Paramdomizer
                 writeByte(s, chkItemAnimations.Checked, chkRandomFaceData.Checked, chkRingSpeffects.Checked, chkVoices.Checked,
                     checkBoxStartingGifts.Checked, checkBoxPreventSpellGifts.Checked, checkBoxStartingGiftsAmount.Checked, checkBoxStartingClasses.Checked);
 
-                //alternative randomization (don't randomize by shuffle)
+                //alternative randomization's 1st byte (don't randomize by shuffle)
                 writeByte(s, checkBoxDoTrueRandom.Checked, TRForm.chkTRWeaponDamage.Checked, TRForm.chkTRWeaponWeight.Checked, TRForm.chkTRWeaponScaling.Checked,
-                    TRForm.chkTRWeaponStamina.Checked, TRForm.chkTRWeaponStatMin.Checked);
+                    TRForm.chkTRWeaponStamina.Checked, TRForm.chkTRWeaponStatMin.Checked, TRForm.chkTRWeaponDefense.Checked, TRForm.chkTRArmorResistance.Checked);
+
+                //alternative randomization's 2nd byte (don't randomize by shuffle)
+                writeByte(s, TRForm.chkTRArmorPoise.Checked, TRForm.chkTRArmorWeight.Checked, TRForm.chkTRSpellRequirements.Checked, TRForm.chkTRSpellSlotSize.Checked,
+                    TRForm.chkTRSpellQuantity.Checked);
 
 
 
