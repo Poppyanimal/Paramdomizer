@@ -1397,6 +1397,8 @@ namespace Paramdomizer
                     List<int> allAttackCorrectAgility = new List<int>();
                     List<int> allAttackCorrectMagic = new List<int>();
                     List<int> allAttackCorrectFaith = new List<int>();
+                    List<int> allCastingCorrectMagic = new List<int>();
+                    List<int> allCastingCorrectFaith = new List<int>();
                     List<int> allAttackProperStrength = new List<int>(); //minimum stats
                     List<int> allAttackProperAgility = new List<int>();
                     List<int> allAttackProperMagic = new List<int>();
@@ -1620,12 +1622,28 @@ namespace Paramdomizer
                                     else if (cell.Def.Name == "correctMagic")
                                     {
                                         PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                        allAttackCorrectMagic.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        //if id is between sorcerer catalyst and velka's talisman (is a casting device); treat it's magic and faith correct differently
+                                        if(paramRow.ID >= 1300000 && paramRow.ID <= 1367000)
+                                        {
+                                            allCastingCorrectMagic.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                        else
+                                        {
+                                            allAttackCorrectMagic.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
                                     }
                                     else if (cell.Def.Name == "correctFaith")
                                     {
                                         PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                        allAttackCorrectFaith.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        //if id is between sorcerer catalyst and velka's talisman (is a casting device); treat it's magic and faith correct differently
+                                        if (paramRow.ID >= 1300000 && paramRow.ID <= 1367000)
+                                        {
+                                            allCastingCorrectFaith.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                        else
+                                        {
+                                            allAttackCorrectFaith.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
                                     }
                                     else if (cell.Def.Name == "properStrength")
                                     {
@@ -2099,75 +2117,134 @@ namespace Paramdomizer
                                     }
                                     else if (cell.Def.Name == "correctMagic")
                                     {
-                                        int randomIndex = r.Next(allAttackCorrectMagic.Count);
+                                        bool isCaster = paramRow.ID >= 1300000 && paramRow.ID <= 1367000;
+                                        int randomIndex;
+                                        if (isCaster)
+                                        {
+                                            randomIndex = r.Next(allCastingCorrectMagic.Count);
+                                        }
+                                        else
+                                        {
+                                            randomIndex = r.Next(allAttackCorrectMagic.Count);
+                                        }
                                         Type type = cell.GetType();
                                         PropertyInfo prop = type.GetProperty("Value");
                                         if (checkBoxWeaponScaling.Checked)
                                         {
                                             if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponScaling.Checked)
                                             {
-                                                //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the scaling it does
-                                                if (r.Next(3) == 0)
+                                                if(isCaster)
                                                 {
-                                                    //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
-                                                    if (r.Next(20) == 0)
-                                                    {
-                                                        //215 is the cap for a stat (tin crystallization catalyst)
-                                                        prop.SetValue(cell, r.Next(116) + 100, null);
-                                                    }
-                                                    else
-                                                    {
-                                                        prop.SetValue(cell, r.Next(101), null);
-                                                    }
+                                                    prop.SetValue(cell, r.Next(251) + 0, null);
                                                 }
                                                 else
                                                 {
-                                                    prop.SetValue(cell, r.Next(0), null);
+                                                    //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the scaling it does
+                                                    if (r.Next(3) == 0)
+                                                    {
+                                                        //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                                        if (r.Next(20) == 0)
+                                                        {
+                                                            //215 is the cap for a stat (tin crystallization catalyst)
+                                                            prop.SetValue(cell, r.Next(116) + 100, null);
+                                                        }
+                                                        else
+                                                        {
+                                                            prop.SetValue(cell, r.Next(101), null);
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, r.Next(0), null);
+                                                    }
                                                 }
                                             }
                                             else
                                             {
-                                                prop.SetValue(cell, allAttackCorrectMagic[randomIndex], null);
+                                                if(isCaster)
+                                                {
+                                                    prop.SetValue(cell, allCastingCorrectMagic[randomIndex], null);
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, allAttackCorrectMagic[randomIndex], null);
+                                                }
                                             }
                                         }
-
-                                        allAttackCorrectMagic.RemoveAt(randomIndex);
+                                        if(isCaster)
+                                        {
+                                            allCastingCorrectMagic.RemoveAt(randomIndex);
+                                        }
+                                        else
+                                        {
+                                            allAttackCorrectMagic.RemoveAt(randomIndex);
+                                        }
                                     }
                                     else if (cell.Def.Name == "correctFaith")
                                     {
-                                        int randomIndex = r.Next(allAttackCorrectFaith.Count);
+                                        bool isCaster = paramRow.ID >= 1300000 && paramRow.ID <= 1367000;
+                                        int randomIndex;
+                                        if(isCaster)
+                                        {
+                                            randomIndex = r.Next(allCastingCorrectFaith.Count);
+                                        }
+                                        else
+                                        {
+                                            randomIndex = r.Next(allAttackCorrectFaith.Count);
+                                        }
                                         Type type = cell.GetType();
                                         PropertyInfo prop = type.GetProperty("Value");
                                         if (checkBoxWeaponScaling.Checked)
                                         {
                                             if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponScaling.Checked)
                                             {
-                                                //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the scaling it does
-                                                if (r.Next(3) == 0)
+                                                if(isCaster)
                                                 {
-                                                    //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
-                                                    if (r.Next(20) == 0)
-                                                    {
-                                                        //215 is the cap for a stat (tin crystallization catalyst)
-                                                        prop.SetValue(cell, r.Next(116) + 100, null);
-                                                    }
-                                                    else
-                                                    {
-                                                        prop.SetValue(cell, r.Next(101), null);
-                                                    }
+                                                    prop.SetValue(cell, r.Next(251), null);
                                                 }
                                                 else
                                                 {
-                                                    prop.SetValue(cell, r.Next(0), null);
+                                                    //if DoTrueRandom, 1/3 chance of an attack type being selected and then randomly role the scaling it does
+                                                    if (r.Next(3) == 0)
+                                                    {
+                                                        //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                                        if (r.Next(20) == 0)
+                                                        {
+                                                            //215 is the cap for a stat (tin crystallization catalyst)
+                                                            prop.SetValue(cell, r.Next(116) + 100, null);
+                                                        }
+                                                        else
+                                                        {
+                                                            prop.SetValue(cell, r.Next(101), null);
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        prop.SetValue(cell, r.Next(0), null);
+                                                    }
                                                 }
                                             }
                                             else
                                             {
-                                                prop.SetValue(cell, allAttackCorrectFaith[randomIndex], null);
+                                                if(isCaster)
+                                                {
+                                                    prop.SetValue(cell, allCastingCorrectFaith[randomIndex], null);
+                                                }
+                                                else
+                                                {
+                                                    prop.SetValue(cell, allAttackCorrectFaith[randomIndex], null);
+                                                }
                                             }
                                         }
 
-                                        allAttackCorrectFaith.RemoveAt(randomIndex);
+                                        if(isCaster)
+                                        {
+                                            allCastingCorrectFaith.RemoveAt(randomIndex);
+                                        }
+                                        else
+                                        {
+                                            allAttackCorrectFaith.RemoveAt(randomIndex);
+                                        }
                                     }
                                     else if (cell.Def.Name == "properStrength")
                                     {
