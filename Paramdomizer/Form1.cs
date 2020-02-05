@@ -1421,6 +1421,72 @@ namespace Paramdomizer
                     List<int> allGuardBaseRepel = new List<int>();
                     List<int> allAttackBaseRepel = new List<int>();
 
+                    //a list of weapon models to blacklist the randomization of because they don't have inherit hitboxes for melee use.
+                    List<int> allNoHitboxIDs = new List<int>();
+                    if(chkWeaponModels.Checked)
+                    {
+                        allNoHitboxIDs.Add(199000); //blank
+                        allNoHitboxIDs.Add(299000); //blank
+                        allNoHitboxIDs.Add(398000); //blank
+                        allNoHitboxIDs.Add(399000); //blank
+                        allNoHitboxIDs.Add(498000); //blank
+                        allNoHitboxIDs.Add(499000); //blank
+                        allNoHitboxIDs.Add(599000); //blank
+                        allNoHitboxIDs.Add(699000); //blank
+                        allNoHitboxIDs.Add(798000); //blank
+                        allNoHitboxIDs.Add(799000); //blank
+                        allNoHitboxIDs.Add(898000); //blank
+                        allNoHitboxIDs.Add(899000); //blank
+                        allNoHitboxIDs.Add(999000); //blank
+                        allNoHitboxIDs.Add(1099000); //blank?
+                        allNoHitboxIDs.Add(1199000); //blank
+                        allNoHitboxIDs.Add(1298000); //blank
+                        allNoHitboxIDs.Add(1299000); //blank
+                        allNoHitboxIDs.Add(1397000); //blank
+                        allNoHitboxIDs.Add(1398000); //blank
+                        allNoHitboxIDs.Add(1399000); //blank
+                        allNoHitboxIDs.Add(1498000); //blank
+                        allNoHitboxIDs.Add(1499000); //blank
+                        allNoHitboxIDs.Add(1599000); //blank
+                        allNoHitboxIDs.Add(1699000); //blank
+                        for(int i = 0; i <= 8; i++) //arrows
+                        {
+                            allNoHitboxIDs.Add(2000000 + (i * 1000));
+                        }
+                        allNoHitboxIDs.Add(2099000); //arrow
+                        for(int i = 0; i <= 4; i++) //bolts
+                        {
+                            allNoHitboxIDs.Add(2100000 + (i * 1000));
+                        }
+                        allNoHitboxIDs.Add(2199000); //bolt
+                        for(int i = 4; i <= 7; i++) //unused weapons???
+                        {
+                            int baseId = 9000000 + (i * 1000);
+                            allNoHitboxIDs.Add(baseId);
+                            allNoHitboxIDs.Add(baseId + 100);
+                            allNoHitboxIDs.Add(baseId + 200);
+                            allNoHitboxIDs.Add(baseId + 400);
+                            allNoHitboxIDs.Add(baseId + 600);
+                            allNoHitboxIDs.Add(baseId + 800);
+                        }
+                        for(int i = 1; i <= 17; i++) //unused weapons???
+                        {
+                            allNoHitboxIDs.Add(9012000 + (i * 100));
+                        }
+                        for (int i = 1; i <= 9; i++) //unused weapons???
+                        {
+                            allNoHitboxIDs.Add(9016000 + (i * 100));
+                        }
+                        for (int i = 1; i <= 5; i++) //unused weapons???
+                        {
+                            allNoHitboxIDs.Add(9017000 + (i * 100));
+                        }
+                        for (int i = 2; i <= 9; i++) //unused weapons???
+                        {
+                            allNoHitboxIDs.Add(9019000 + (i * 100));
+                        }
+                    }
+
                     //only assign shield ids if shield split is activated
                     List<int> allShieldIDs = new List<int>();
                     if(checkBoxWeaponShieldSplit.Checked)
@@ -1586,8 +1652,11 @@ namespace Paramdomizer
                                 {
                                     if (cell.Def.Name == "equipModelId")
                                     {
-                                        PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                        allEquipModelIds.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        if(!allNoHitboxIDs.Contains(paramRow.ID))
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allEquipModelIds.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
                                     }
                                     else if (cell.Def.Name == "attackBasePhysics")
                                     {
@@ -1909,15 +1978,18 @@ namespace Paramdomizer
                                 {
                                     if (cell.Def.Name == "equipModelId")
                                     {
-                                        int randomIndex = r.Next(allEquipModelIds.Count);
-                                        Type type = cell.GetType();
-                                        PropertyInfo prop = type.GetProperty("Value");
-                                        if (chkWeaponModels.Checked)
+                                        if(!allNoHitboxIDs.Contains(paramRow.ID))
                                         {
-                                            prop.SetValue(cell, allEquipModelIds[randomIndex], null);
-                                        }
+                                            int randomIndex = r.Next(allEquipModelIds.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (chkWeaponModels.Checked)
+                                            {
+                                                prop.SetValue(cell, allEquipModelIds[randomIndex], null);
+                                            }
 
-                                        allEquipModelIds.RemoveAt(randomIndex);
+                                            allEquipModelIds.RemoveAt(randomIndex);
+                                        }
                                     }
                                     else if (cell.Def.Name == "attackBasePhysics")
                                     {
