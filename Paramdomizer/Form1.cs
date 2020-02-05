@@ -1487,6 +1487,31 @@ namespace Paramdomizer
                         }
                     }
 
+                    //a list of bow/crossbow weapon models; bows and crossbows can cause no hitboxes when swapped with regular weapons; this is so their models still get randomized
+                    List<int> allBowIDs = new List<int>();
+                    List<int> allBowEquipModelIds = new List<int>(); //use this for the model shuffling
+                    if (chkWeaponModels.Checked)
+                    {
+                        for(int i = 0; i <= 30; i++) //bows up to dragonslayer
+                        {
+                            allBowIDs.Add(1200000 + (i * 100));
+                        }
+                        for (int i = 0; i <= 13; i++) //bows up to darkmoon
+                        {
+                            allBowIDs.Add(1204000 + (i * 100));
+                        }
+                        for (int i = 0; i <= 3; i++) //crossbows + avelyn
+                        {
+                            int baseId = 1250000 + (i * 1000);
+                            allBowIDs.Add(baseId);
+                            allBowIDs.Add(baseId + 100);
+                            allBowIDs.Add(baseId + 200);
+                            allBowIDs.Add(baseId + 400);
+                            allBowIDs.Add(baseId + 600);
+                            allBowIDs.Add(baseId + 800);
+                        }
+                    }
+
                     //only assign shield ids if shield split is activated
                     List<int> allShieldIDs = new List<int>();
                     if(checkBoxWeaponShieldSplit.Checked)
@@ -1655,7 +1680,14 @@ namespace Paramdomizer
                                         if(!allNoHitboxIDs.Contains(paramRow.ID))
                                         {
                                             PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                            allEquipModelIds.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                            if(!allBowEquipModelIds.Contains(paramRow.ID))
+                                            {
+                                                allEquipModelIds.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                            }
+                                            else
+                                            {
+                                                allBowEquipModelIds.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                            }
                                         }
                                     }
                                     else if (cell.Def.Name == "attackBasePhysics")
@@ -1980,15 +2012,30 @@ namespace Paramdomizer
                                     {
                                         if(!allNoHitboxIDs.Contains(paramRow.ID))
                                         {
-                                            int randomIndex = r.Next(allEquipModelIds.Count);
-                                            Type type = cell.GetType();
-                                            PropertyInfo prop = type.GetProperty("Value");
-                                            if (chkWeaponModels.Checked)
+                                            if(!allBowEquipModelIds.Contains(paramRow.ID))
                                             {
-                                                prop.SetValue(cell, allEquipModelIds[randomIndex], null);
-                                            }
+                                                int randomIndex = r.Next(allEquipModelIds.Count);
+                                                Type type = cell.GetType();
+                                                PropertyInfo prop = type.GetProperty("Value");
+                                                if (chkWeaponModels.Checked)
+                                                {
+                                                    prop.SetValue(cell, allEquipModelIds[randomIndex], null);
+                                                }
 
-                                            allEquipModelIds.RemoveAt(randomIndex);
+                                                allEquipModelIds.RemoveAt(randomIndex);
+                                            }
+                                            else
+                                            {
+                                                int randomIndex = r.Next(allBowEquipModelIds.Count);
+                                                Type type = cell.GetType();
+                                                PropertyInfo prop = type.GetProperty("Value");
+                                                if (chkWeaponModels.Checked)
+                                                {
+                                                    prop.SetValue(cell, allBowEquipModelIds[randomIndex], null);
+                                                }
+
+                                                allBowEquipModelIds.RemoveAt(randomIndex);
+                                            }
                                         }
                                     }
                                     else if (cell.Def.Name == "attackBasePhysics")
