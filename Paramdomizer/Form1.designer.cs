@@ -82,6 +82,7 @@
             this.tooltip = new System.Windows.Forms.ToolTip(this.components);
             this.btnSavePreset = new System.Windows.Forms.Button();
             this.btnLoadPreset = new System.Windows.Forms.Button();
+            this.btnRandomizeSettings = new System.Windows.Forms.Button();
             this.btnDoTrueRandomPopup = new System.Windows.Forms.Button();
             this.gbWeaponCategory = new System.Windows.Forms.GroupBox();
             this.gbSpellCategory = new System.Windows.Forms.GroupBox();
@@ -219,10 +220,11 @@
             this.chkBullets.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkBullets.Location = new System.Drawing.Point(33, 348);
             this.chkBullets.Name = "chkBullets";
-            this.chkBullets.Size = new System.Drawing.Size(116, 17);
+            this.chkBullets.Size = new System.Drawing.Size(112, 17);
             this.chkBullets.TabIndex = 9;
             this.chkBullets.Text = "Randomize bullets";
-            this.tooltip.SetToolTip(this.chkBullets, resources.GetString("chkBullets.ToolTip"));
+            this.tooltip.SetToolTip(this.chkBullets, "Randomizes bullets in several ways such as damage, damage type, movement, etc.\r\nA" +
+        "ffects both player and enemy projectiles.");
             this.chkBullets.UseVisualStyleBackColor = true;
             // 
             // chkKnockback
@@ -717,7 +719,8 @@
             this.checkBoxForceUseableBullets.Size = new System.Drawing.Size(126, 17);
             this.checkBoxForceUseableBullets.TabIndex = 45;
             this.checkBoxForceUseableBullets.Text = "Force useable bullets";
-            this.tooltip.SetToolTip(this.checkBoxForceUseableBullets, "Forces bullets to be useable. (or at least tries to.)\nAffects both players and enemies.");
+            this.tooltip.SetToolTip(this.checkBoxForceUseableBullets, "Forces bullets to be useable. (or at least tries to.)\nAffects both players and en" +
+        "emies.");
             this.checkBoxForceUseableBullets.UseVisualStyleBackColor = true;
             // 
             // tooltip
@@ -747,6 +750,16 @@
             this.tooltip.SetToolTip(this.btnLoadPreset, "Load a preset containing settings and a seed from file.");
             this.btnLoadPreset.UseVisualStyleBackColor = true;
             this.btnLoadPreset.Click += new System.EventHandler(this.btnLoadPreset_Click);
+            // 
+            // btnRandomizeSettings
+            // 
+            this.btnRandomizeSettings.Location = new System.Drawing.Point(663, 27);
+            this.btnRandomizeSettings.Name = "btnRandomizeSettings";
+            this.btnRandomizeSettings.Size = new System.Drawing.Size(69, 25);
+            this.btnRandomizeSettings.TabIndex = 47;
+            this.btnRandomizeSettings.Text = "Roll a Die";
+            this.tooltip.SetToolTip(this.btnRandomizeSettings, "Randomizes the state of every setting.");
+            this.btnRandomizeSettings.Click += new System.EventHandler(this.btnRandomizeSettings_Click);
             // 
             // btnDoTrueRandomPopup
             // 
@@ -837,6 +850,7 @@
             this.ClientSize = new System.Drawing.Size(960, 470);
             this.Controls.Add(this.btnLoadPreset);
             this.Controls.Add(this.btnSavePreset);
+            this.Controls.Add(this.btnRandomizeSettings);
             this.Controls.Add(this.btnDoTrueRandomPopup);
             this.Controls.Add(this.checkBoxLoadFromBackup);
             this.Controls.Add(this.checkBoxNerfHumanityBullets);
@@ -970,6 +984,7 @@
         private System.Windows.Forms.Label lblVersion;
         private System.Windows.Forms.Button btnSavePreset;
         private System.Windows.Forms.Button btnLoadPreset;
+        private System.Windows.Forms.Button btnRandomizeSettings;
         private System.Windows.Forms.Button btnDoTrueRandomPopup;
     }
 }

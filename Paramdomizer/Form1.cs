@@ -8019,9 +8019,92 @@ namespace Paramdomizer
             return state;
         }
 
+        private bool nextBool(Random x)
+        {
+            return x.Next(2) == 0;
+        }
+
         private void btnDoTrueRandomPopup_Click(object sender, EventArgs e)
         {
             TRForm.ShowDialog();
+        }
+
+        private void btnRandomizeSettings_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("WARNING: You are about to randomize which settings are enabled and which settings are disabled.\nDo you want to continue?", "Randomize Enabled Settings", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                Random msr = new Random();
+
+                //weapons 1st
+                chkWeaponDamage.Checked = nextBool(msr);
+                chkWeaponMoveset.Checked = nextBool(msr);
+                chkWeaponModels.Checked = nextBool(msr);
+                checkBoxWeaponWeight.Checked = nextBool(msr);
+                checkBoxWeaponScaling.Checked = nextBool(msr);
+                checkBoxWeaponStamina.Checked = nextBool(msr);
+                checkBoxWeaponStatMin.Checked = nextBool(msr);
+                chkWeaponSpeffects.Checked = nextBool(msr);
+
+                //weapons 2nd
+                checkBoxWeaponDefense.Checked = nextBool(msr);
+                checkBoxWeaponShieldSplit.Checked = nextBool(msr);
+                checkBoxWeaponFistNo.Checked = nextBool(msr);
+                checkBoxForceUseableStartWeapons.Checked = nextBool(msr);
+
+                //enemies
+                chkAggroRadius.Checked = nextBool(msr);
+                chkTurnSpeeds.Checked = nextBool(msr);
+                chkSpeffects.Checked = nextBool(msr);
+
+                //enemy and player
+                chkStaggerLevels.Checked = nextBool(msr);
+                chkKnockback.Checked = nextBool(msr);
+                chkBullets.Checked = nextBool(msr);
+                chkHitboxSizes.Checked = nextBool(msr);
+                checkBoxNerfHumanityBullets.Checked = nextBool(msr);
+
+                //armor
+                checkBoxArmorResistance.Checked = nextBool(msr);
+                checkBoxArmorWeight.Checked = nextBool(msr);
+                checkBoxArmorPoise.Checked = nextBool(msr);
+                checkBoxArmorspEffect.Checked = nextBool(msr);
+
+                //spells
+                checkBoxUniversalizeCasters.Checked = nextBool(msr);
+                checkBoxRandomizeSpellRequirements.Checked = nextBool(msr);
+                checkBoxRandomizeSpellSlotSize.Checked = nextBool(msr);
+                checkBoxRandomizeSpellQuantity.Checked = nextBool(msr);
+                chkMagicAnimations.Checked = nextBool(msr);
+                checkBoxForceUseableStartSpells.Checked = nextBool(msr);
+
+                //other settings
+                chkItemAnimations.Checked = nextBool(msr);
+                chkRandomFaceData.Checked = nextBool(msr);
+                chkRingSpeffects.Checked = nextBool(msr);
+                chkVoices.Checked = nextBool(msr);
+                checkBoxStartingGifts.Checked = nextBool(msr);
+                checkBoxPreventSpellGifts.Checked = nextBool(msr);
+                checkBoxStartingGiftsAmount.Checked = nextBool(msr);
+                checkBoxStartingClasses.Checked = nextBool(msr);
+
+                //alternative randomization's 1st
+                checkBoxDoTrueRandom.Checked = nextBool(msr);
+                TRForm.chkTRWeaponDamage.Checked = nextBool(msr);
+                TRForm.chkTRWeaponWeight.Checked = nextBool(msr);
+                TRForm.chkTRWeaponScaling.Checked = nextBool(msr);
+                TRForm.chkTRWeaponStamina.Checked = nextBool(msr);
+                TRForm.chkTRWeaponStatMin.Checked = nextBool(msr);
+                TRForm.chkTRWeaponDefense.Checked = nextBool(msr);
+                TRForm.chkTRArmorResistance.Checked = nextBool(msr);
+
+                //alternative randomization's 2nd
+                TRForm.chkTRArmorPoise.Checked = nextBool(msr);
+                TRForm.chkTRArmorWeight.Checked = nextBool(msr);
+                TRForm.chkTRSpellRequirements.Checked = nextBool(msr);
+                TRForm.chkTRSpellSlotSize.Checked = nextBool(msr);
+                TRForm.chkTRSpellQuantity.Checked = nextBool(msr);
+            }
         }
     }
     
