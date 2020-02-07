@@ -1400,6 +1400,10 @@ namespace Paramdomizer
                     List<int> allAttackBaseMagic = new List<int>();
                     List<int> allAttackBaseFire = new List<int>();
                     List<int> allAttackBaseThunder = new List<int>();
+                    List<int> allCastingBasePhysic = new List<int>();
+                    List<int> allCastingBaseMagic = new List<int>();
+                    List<int> allCastingBaseFire = new List<int>();
+                    List<int> allCastingBaseThunder = new List<int>();
                     List<int> allAttackCorrectStrength = new List<int>(); //scaling
                     List<int> allAttackCorrectAgility = new List<int>();
                     List<int> allAttackCorrectMagic = new List<int>();
@@ -1633,6 +1637,7 @@ namespace Paramdomizer
                         }
                         allShieldIDs.Add(9014000); //Cleansing Greatshield
                     }
+                    
 
                     //heads up to those who maintain this in the future:
                     //when treat shields seperately is enabled it runs a different set of
@@ -1680,6 +1685,19 @@ namespace Paramdomizer
                                     }
                                 }
 
+                                bool castsMagic = false;
+                                //check if casts magic first
+                                foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                {
+                                    if (cell.Def.Name == "enableMagic:1" || cell.Def.Name == "enableVowMagic:1" || cell.Def.Name == "enableSorcery:1")
+                                    {
+                                        if (Convert.ToBoolean(cell.GetType().GetProperty("Value").GetValue(cell, null)) == true)
+                                        {
+                                            castsMagic = true;
+                                        }
+                                    }
+                                }
+
                                 foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
                                 {
                                     if (cell.Def.Name == "equipModelId")
@@ -1700,22 +1718,54 @@ namespace Paramdomizer
                                     else if (cell.Def.Name == "attackBasePhysics")
                                     {
                                         PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                        allAttackBasePhysic.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        //if id is between sorcerer catalyst and velka's talisman (is a casting device); treat it's magic and faith correct differently; both dlc catalysts added
+                                        if (castsMagic)
+                                        {
+                                            allCastingBasePhysic.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                        else
+                                        {
+                                            allAttackBasePhysic.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
                                     }
                                     else if (cell.Def.Name == "attackBaseMagic")
                                     {
                                         PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                        allAttackBaseMagic.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        //if id is between sorcerer catalyst and velka's talisman (is a casting device); treat it's magic and faith correct differently; both dlc catalysts added
+                                        if (castsMagic)
+                                        {
+                                            allCastingBaseMagic.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                        else
+                                        {
+                                            allAttackBaseMagic.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
                                     }
                                     else if (cell.Def.Name == "attackBaseFire")
                                     {
                                         PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                        allAttackBaseFire.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        //if id is between sorcerer catalyst and velka's talisman (is a casting device); treat it's magic and faith correct differently; both dlc catalysts added
+                                        if (castsMagic)
+                                        {
+                                            allCastingBaseFire.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                        else
+                                        {
+                                            allAttackBaseFire.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
                                     }
                                     else if (cell.Def.Name == "attackBaseThunder")
                                     {
                                         PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                        allAttackBaseThunder.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        //if id is between sorcerer catalyst and velka's talisman (is a casting device); treat it's magic and faith correct differently; both dlc catalysts added
+                                        if (castsMagic)
+                                        {
+                                            allCastingBaseThunder.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
+                                        else
+                                        {
+                                            allAttackBaseThunder.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                        }
                                     }
                                     else if (cell.Def.Name == "correctStrength")
                                     {
@@ -1730,8 +1780,8 @@ namespace Paramdomizer
                                     else if (cell.Def.Name == "correctMagic")
                                     {
                                         PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                        //if id is between sorcerer catalyst and velka's talisman (is a casting device); treat it's magic and faith correct differently
-                                        if(paramRow.ID >= 1300000 && paramRow.ID <= 1367000)
+                                        //if id is between sorcerer catalyst and velka's talisman (is a casting device); treat it's magic and faith correct differently; both dlc catalysts added
+                                        if (castsMagic)
                                         {
                                             allCastingCorrectMagic.Add(Convert.ToInt32(prop.GetValue(cell, null)));
                                         }
@@ -1743,8 +1793,8 @@ namespace Paramdomizer
                                     else if (cell.Def.Name == "correctFaith")
                                     {
                                         PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                        //if id is between sorcerer catalyst and velka's talisman (is a casting device); treat it's magic and faith correct differently
-                                        if (paramRow.ID >= 1300000 && paramRow.ID <= 1367000)
+                                        //if id is between sorcerer catalyst and velka's talisman (is a casting device); treat it's magic and faith correct differently; both dlc catalysts added
+                                        if (castsMagic)
                                         {
                                             allCastingCorrectFaith.Add(Convert.ToInt32(prop.GetValue(cell, null)));
                                         }
@@ -2047,7 +2097,11 @@ namespace Paramdomizer
                                     }
                                     else if (cell.Def.Name == "attackBasePhysics")
                                     {
-                                        int randomIndex = r.Next(allAttackBasePhysic.Count);
+                                        int randomIndex;
+                                        if(castsMagic)
+                                            randomIndex = r.Next(allCastingBasePhysic.Count);
+                                        else
+                                            randomIndex = r.Next(allAttackBasePhysic.Count);
                                         Type type = cell.GetType();
                                         PropertyInfo prop = type.GetProperty("Value");
                                         if (chkWeaponDamage.Checked)
@@ -2058,7 +2112,11 @@ namespace Paramdomizer
                                                 if (r.Next(3) == 0)
                                                 {
                                                     damageTypes.Add(0);
-                                                    int temp = r.Next(371) + 20;
+                                                    int temp;
+                                                    if(castsMagic)
+                                                        temp = r.Next(221) + 20; // lowered damage roll to compensate for higher scaling
+                                                    else
+                                                        temp = r.Next(371) + 20;
                                                     baseDamage += temp;
                                                     prop.SetValue(cell, temp, null);
                                                 }
@@ -2069,16 +2127,30 @@ namespace Paramdomizer
                                             }
                                             else
                                             {
-                                                baseDamage += allAttackBasePhysic[randomIndex];
-                                                prop.SetValue(cell, allAttackBasePhysic[randomIndex], null);
+                                                if(castsMagic)
+                                                {
+                                                    baseDamage += allCastingBasePhysic[randomIndex];
+                                                    prop.SetValue(cell, allCastingBasePhysic[randomIndex], null);
+                                                }
+                                                else
+                                                {
+                                                    baseDamage += allAttackBasePhysic[randomIndex];
+                                                    prop.SetValue(cell, allAttackBasePhysic[randomIndex], null);
+                                                }
                                             }
                                         }
-
-                                        allAttackBasePhysic.RemoveAt(randomIndex);
+                                        if(castsMagic)
+                                            allCastingBasePhysic.RemoveAt(randomIndex);
+                                        else
+                                            allAttackBasePhysic.RemoveAt(randomIndex);
                                     }
                                     else if (cell.Def.Name == "attackBaseMagic")
                                     {
-                                        int randomIndex = r.Next(allAttackBaseMagic.Count);
+                                        int randomIndex;
+                                        if(castsMagic)
+                                            randomIndex = r.Next(allCastingBaseMagic.Count);
+                                        else
+                                            randomIndex = r.Next(allAttackBaseMagic.Count);
                                         Type type = cell.GetType();
                                         PropertyInfo prop = type.GetProperty("Value");
                                         if (chkWeaponDamage.Checked)
@@ -2089,7 +2161,11 @@ namespace Paramdomizer
                                                 if (r.Next(3) == 0)
                                                 {
                                                     damageTypes.Add(1);
-                                                    int temp = r.Next(371) + 20;
+                                                    int temp;
+                                                    if(castsMagic)
+                                                        temp = r.Next(221) + 20; // lowered damage roll to compensate for higher scaling
+                                                    else
+                                                        temp = r.Next(371) + 20;
                                                     baseDamage += temp;
                                                     prop.SetValue(cell, temp, null);
                                                 }
@@ -2100,16 +2176,31 @@ namespace Paramdomizer
                                             }
                                             else
                                             {
-                                                baseDamage += allAttackBaseMagic[randomIndex];
-                                                prop.SetValue(cell, allAttackBaseMagic[randomIndex], null);
+                                                if(castsMagic)
+                                                {
+                                                    baseDamage += allCastingBaseMagic[randomIndex];
+                                                    prop.SetValue(cell, allCastingBaseMagic[randomIndex], null);
+                                                }
+                                                else
+                                                {
+                                                    baseDamage += allAttackBaseMagic[randomIndex];
+                                                    prop.SetValue(cell, allAttackBaseMagic[randomIndex], null);
+                                                }
                                             }
                                         }
-
-                                        allAttackBaseMagic.RemoveAt(randomIndex);
+                                        if(castsMagic)
+                                            allCastingBaseMagic.RemoveAt(randomIndex);
+                                        else
+                                            allAttackBaseMagic.RemoveAt(randomIndex);
+                                        
                                     }
                                     else if (cell.Def.Name == "attackBaseFire")
                                     {
-                                        int randomIndex = r.Next(allAttackBaseFire.Count);
+                                        int randomIndex;
+                                        if(castsMagic)
+                                            randomIndex = r.Next(allCastingBaseFire.Count);
+                                        else
+                                            randomIndex = r.Next(allAttackBaseFire.Count);
                                         Type type = cell.GetType();
                                         PropertyInfo prop = type.GetProperty("Value");
                                         if (chkWeaponDamage.Checked)
@@ -2120,7 +2211,11 @@ namespace Paramdomizer
                                                 if (r.Next(3) == 0)
                                                 {
                                                     damageTypes.Add(2);
-                                                    int temp = r.Next(371) + 20;
+                                                    int temp;
+                                                    if(castsMagic)
+                                                        temp = r.Next(221) + 20; // lowered damage roll to compensate for higher scaling
+                                                    else
+                                                        temp = r.Next(371) + 20;
                                                     baseDamage += temp;
                                                     prop.SetValue(cell, temp, null);
                                                 }
@@ -2131,16 +2226,30 @@ namespace Paramdomizer
                                             }
                                             else
                                             {
-                                                baseDamage += allAttackBaseFire[randomIndex];
-                                                prop.SetValue(cell, allAttackBaseFire[randomIndex], null);
+                                                if(castsMagic)
+                                                {
+                                                    baseDamage += allCastingBaseFire[randomIndex];
+                                                    prop.SetValue(cell, allCastingBaseFire[randomIndex], null);
+                                                }
+                                                else
+                                                {
+                                                    baseDamage += allAttackBaseFire[randomIndex];
+                                                    prop.SetValue(cell, allAttackBaseFire[randomIndex], null);
+                                                }
                                             }
                                         }
-
-                                        allAttackBaseFire.RemoveAt(randomIndex);
+                                        if(castsMagic)
+                                            allCastingBaseFire.RemoveAt(randomIndex);
+                                        else
+                                            allAttackBaseFire.RemoveAt(randomIndex);
                                     }
                                     else if (cell.Def.Name == "attackBaseThunder")
                                     {
-                                        int randomIndex = r.Next(allAttackBaseThunder.Count);
+                                        int randomIndex;
+                                        if(castsMagic)
+                                            randomIndex = r.Next(allCastingBaseThunder.Count);
+                                        else
+                                            randomIndex = r.Next(allAttackBaseThunder.Count);
                                         Type type = cell.GetType();
                                         PropertyInfo prop = type.GetProperty("Value");
                                         if (chkWeaponDamage.Checked)
@@ -2151,7 +2260,11 @@ namespace Paramdomizer
                                                 if (r.Next(3) == 0)
                                                 {
                                                     damageTypes.Add(3);
-                                                    int temp = r.Next(371) + 20;
+                                                    int temp;
+                                                    if(castsMagic)
+                                                        temp = r.Next(221) + 20; // lowered damage roll to compensate for higher scaling
+                                                    else
+                                                        temp = r.Next(371) + 20;
                                                     baseDamage += temp;
                                                     prop.SetValue(cell, temp, null);
                                                 }
@@ -2162,12 +2275,22 @@ namespace Paramdomizer
                                             }
                                             else
                                             {
-                                                baseDamage += allAttackBaseThunder[randomIndex];
-                                                prop.SetValue(cell, allAttackBaseThunder[randomIndex], null);
+                                                if(castsMagic)
+                                                {
+                                                    baseDamage += allCastingBaseThunder[randomIndex];
+                                                    prop.SetValue(cell, allCastingBaseThunder[randomIndex], null);
+                                                }
+                                                else
+                                                {
+                                                    baseDamage += allAttackBaseThunder[randomIndex];
+                                                    prop.SetValue(cell, allAttackBaseThunder[randomIndex], null);
+                                                }
                                             }
                                         }
-
-                                        allAttackBaseThunder.RemoveAt(randomIndex);
+                                        if(castsMagic)
+                                            allCastingBaseThunder.RemoveAt(randomIndex);
+                                        else
+                                            allAttackBaseThunder.RemoveAt(randomIndex);
                                     }
                                     else if (cell.Def.Name == "correctStrength")
                                     {
@@ -2243,9 +2366,8 @@ namespace Paramdomizer
                                     }
                                     else if (cell.Def.Name == "correctMagic")
                                     {
-                                        bool isCaster = paramRow.ID >= 1300000 && paramRow.ID <= 1367000;
                                         int randomIndex;
-                                        if (isCaster)
+                                        if (castsMagic)
                                         {
                                             randomIndex = r.Next(allCastingCorrectMagic.Count);
                                         }
@@ -2259,7 +2381,7 @@ namespace Paramdomizer
                                         {
                                             if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponScaling.Checked)
                                             {
-                                                if(isCaster)
+                                                if(castsMagic)
                                                 {
                                                     prop.SetValue(cell, r.Next(251) + 0, null);
                                                 }
@@ -2287,7 +2409,7 @@ namespace Paramdomizer
                                             }
                                             else
                                             {
-                                                if(isCaster)
+                                                if(castsMagic)
                                                 {
                                                     prop.SetValue(cell, allCastingCorrectMagic[randomIndex], null);
                                                 }
@@ -2297,7 +2419,7 @@ namespace Paramdomizer
                                                 }
                                             }
                                         }
-                                        if(isCaster)
+                                        if(castsMagic)
                                         {
                                             allCastingCorrectMagic.RemoveAt(randomIndex);
                                         }
@@ -2308,9 +2430,8 @@ namespace Paramdomizer
                                     }
                                     else if (cell.Def.Name == "correctFaith")
                                     {
-                                        bool isCaster = paramRow.ID >= 1300000 && paramRow.ID <= 1367000;
                                         int randomIndex;
-                                        if(isCaster)
+                                        if(castsMagic)
                                         {
                                             randomIndex = r.Next(allCastingCorrectFaith.Count);
                                         }
@@ -2324,7 +2445,7 @@ namespace Paramdomizer
                                         {
                                             if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponScaling.Checked)
                                             {
-                                                if(isCaster)
+                                                if(castsMagic)
                                                 {
                                                     prop.SetValue(cell, r.Next(251), null);
                                                 }
@@ -2352,7 +2473,7 @@ namespace Paramdomizer
                                             }
                                             else
                                             {
-                                                if(isCaster)
+                                                if(castsMagic)
                                                 {
                                                     prop.SetValue(cell, allCastingCorrectFaith[randomIndex], null);
                                                 }
@@ -2363,7 +2484,7 @@ namespace Paramdomizer
                                             }
                                         }
 
-                                        if(isCaster)
+                                        if(castsMagic)
                                         {
                                             allCastingCorrectFaith.RemoveAt(randomIndex);
                                         }

@@ -245,7 +245,7 @@
             // chkSpeffects
             // 
             this.chkSpeffects.AutoSize = true;
-            this.chkSpeffects.Checked = true;
+            this.chkSpeffects.Checked = false;
             this.chkSpeffects.CheckState = System.Windows.Forms.CheckState.Unchecked;
             this.chkSpeffects.Location = new System.Drawing.Point(33, 277);
             this.chkSpeffects.Name = "chkSpeffects";
