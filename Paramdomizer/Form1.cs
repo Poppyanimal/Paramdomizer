@@ -906,6 +906,7 @@ namespace Paramdomizer
                 }
                 else if (paramFile.ID == "EQUIP_PARAM_ACCESSORY_ST")
                 {
+                    List<int> blacklistedIds = new List<int>() { 2200 }; //blacklist covenant of artorias's effect being randomized, preventing some soft locks
                     List<int> allRefIds = new List<int>();
                     foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
                     {
@@ -914,7 +915,10 @@ namespace Paramdomizer
                             if (cell.Def.Name == "refId")
                             {
                                 PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                allRefIds.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                if(!blacklistedIds.Contains(Convert.ToInt32(prop.GetValue(cell, null))))
+                                {
+                                    allRefIds.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                                }
                             }
                         }
                     }
@@ -930,12 +934,15 @@ namespace Paramdomizer
                                 Type type = cell.GetType();
                                 PropertyInfo prop = type.GetProperty("Value");
 
-                                if (chkRingSpeffects.Checked)
+                                if(!blacklistedIds.Contains(Convert.ToInt32(prop.GetValue(cell, null))))
                                 {
-                                    prop.SetValue(cell, allRefIds[randomIndex], null);
-                                }
+                                    if (chkRingSpeffects.Checked)
+                                    {
+                                        prop.SetValue(cell, allRefIds[randomIndex], null);
+                                    }
 
-                                allRefIds.RemoveAt(randomIndex);
+                                    allRefIds.RemoveAt(randomIndex);
+                                }
                             }
                         }
                     }

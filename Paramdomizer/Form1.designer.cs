@@ -161,7 +161,7 @@
             this.chkRingSpeffects.Size = new System.Drawing.Size(168, 17);
             this.chkRingSpeffects.TabIndex = 7;
             this.chkRingSpeffects.Text = "Randomize SPeffects on rings";
-            this.tooltip.SetToolTip(this.chkRingSpeffects, "Randomizes the effects of rings amongst each other.");
+            this.tooltip.SetToolTip(this.chkRingSpeffects, "Randomizes the effects of rings amongst each other. Does not randomize the covenant of artorias.");
             this.chkRingSpeffects.UseVisualStyleBackColor = true;
             // 
             // lblMessage
@@ -246,13 +246,13 @@
             // 
             this.chkSpeffects.AutoSize = true;
             this.chkSpeffects.Checked = true;
-            this.chkSpeffects.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkSpeffects.CheckState = System.Windows.Forms.CheckState.Unchecked;
             this.chkSpeffects.Location = new System.Drawing.Point(33, 277);
             this.chkSpeffects.Name = "chkSpeffects";
             this.chkSpeffects.Size = new System.Drawing.Size(185, 17);
             this.chkSpeffects.TabIndex = 5;
-            this.chkSpeffects.Text = "Randomize SPeffects on enemies";
-            this.tooltip.SetToolTip(this.chkSpeffects, "Randomizes special effects on enemies as well as their attacks.");
+            this.chkSpeffects.Text = "Randomize SPeffects on enemies*";
+            this.tooltip.SetToolTip(this.chkSpeffects, "Randomizes special effects on enemies as well as their attacks.\nWARNING: currently breaks enemy death animations sometimes???");
             this.chkSpeffects.UseVisualStyleBackColor = true;
             // 
             // chkWeaponSpeffects
