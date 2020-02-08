@@ -1023,7 +1023,7 @@ namespace Paramdomizer
                 }
                 else if (paramFile.ID == "EQUIP_PARAM_ACCESSORY_ST")
                 {
-                    List<int> blacklistedIds = new List<int>() { 2200 }; //blacklist covenant of artorias's effect being randomized, preventing some soft locks
+                    List<int> blacklistedIds = new List<int>() { 2200, 2210 }; //blacklist covenant of artorias and charred ring's effect being randomized, preventing some soft locks
                     List<int> allRefIds = new List<int>();
                     foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
                     {
