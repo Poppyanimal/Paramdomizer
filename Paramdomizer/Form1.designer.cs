@@ -76,8 +76,8 @@
             this.checkBoxNerfHumanityBullets = new System.Windows.Forms.CheckBox();
             this.checkBoxStartingGiftsAmount = new System.Windows.Forms.CheckBox();
             this.checkBoxStartingClasses = new System.Windows.Forms.CheckBox();
-            this.checkBoxForceUseableStartSpells = new System.Windows.Forms.CheckBox();
-            this.checkBoxForceUseableStartWeapons = new System.Windows.Forms.CheckBox();
+            this.checkBoxDontChangeStartSpells = new System.Windows.Forms.CheckBox();
+            this.checkBoxDontChangeStartWeapons = new System.Windows.Forms.CheckBox();
             this.checkBoxForceUseableBullets = new System.Windows.Forms.CheckBox();
             this.tooltip = new System.Windows.Forms.ToolTip(this.components);
             this.btnSavePreset = new System.Windows.Forms.Button();
@@ -681,33 +681,35 @@
             this.tooltip.SetToolTip(this.checkBoxStartingClasses, resources.GetString("checkBoxStartingClasses.ToolTip"));
             this.checkBoxStartingClasses.UseVisualStyleBackColor = true;
             // 
-            // checkBoxForceUseableStartSpells
+            // checkBoxDontChangeStartSpells
             // 
-            this.checkBoxForceUseableStartSpells.AutoSize = true;
-            this.checkBoxForceUseableStartSpells.Checked = true;
-            this.checkBoxForceUseableStartSpells.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxForceUseableStartSpells.Location = new System.Drawing.Point(257, 68);
-            this.checkBoxForceUseableStartSpells.Name = "checkBoxForceUseableStartSpells";
-            this.checkBoxForceUseableStartSpells.Size = new System.Drawing.Size(159, 17);
-            this.checkBoxForceUseableStartSpells.TabIndex = 45;
-            this.checkBoxForceUseableStartSpells.Text = "Force useable starting spells";
-            this.tooltip.SetToolTip(this.checkBoxForceUseableStartSpells, resources.GetString("checkBoxForceUseableStartSpells.ToolTip"));
-            this.checkBoxForceUseableStartSpells.UseVisualStyleBackColor = true;
+            this.checkBoxDontChangeStartSpells.AutoSize = true;
+            this.checkBoxDontChangeStartSpells.Checked = false;
+            this.checkBoxDontChangeStartSpells.CheckState = System.Windows.Forms.CheckState.Unchecked;
+            this.checkBoxDontChangeStartSpells.Location = new System.Drawing.Point(257, 68);
+            this.checkBoxDontChangeStartSpells.Name = "checkBoxDontChangeStartSpells";
+            this.checkBoxDontChangeStartSpells.Size = new System.Drawing.Size(159, 17);
+            this.checkBoxDontChangeStartSpells.TabIndex = 45;
+            this.checkBoxDontChangeStartSpells.Text = "Don't change starting spells";
+            this.tooltip.SetToolTip(this.checkBoxDontChangeStartSpells, "Paramdomizer will not change the starting spells of classes.\n" +
+                "By default the paramdomizer will attempt to reroll the classes's spells into ones the class can use if minimum stats aren't met.\n" +
+                "If this setting is turned on or if no match was found, the classes's spells won't be changed but instead will have their stat requirements forced to be useable.");
+            this.checkBoxDontChangeStartSpells.UseVisualStyleBackColor = true;
             // 
-            // checkBoxForceUseableStartWeapons
+            // checkBoxDontChangeStartWeapons
             // 
-            this.checkBoxForceUseableStartWeapons.AutoSize = true;
-            this.checkBoxForceUseableStartWeapons.Checked = true;
-            this.checkBoxForceUseableStartWeapons.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxForceUseableStartWeapons.Location = new System.Drawing.Point(257, 144);
-            this.checkBoxForceUseableStartWeapons.Name = "checkBoxForceUseableStartWeapons";
-            this.checkBoxForceUseableStartWeapons.Size = new System.Drawing.Size(176, 17);
-            this.checkBoxForceUseableStartWeapons.TabIndex = 45;
-            this.checkBoxForceUseableStartWeapons.Text = "Force useable starting weapons";
-            this.tooltip.SetToolTip(this.checkBoxForceUseableStartWeapons, "Forces the weapons that a class starts with to be useable by that class (prevents" +
-        " some softlocking).\nIf this setting is off the straightsword hilt will still be " +
-        "universally useable.");
-            this.checkBoxForceUseableStartWeapons.UseVisualStyleBackColor = true;
+            this.checkBoxDontChangeStartWeapons.AutoSize = true;
+            this.checkBoxDontChangeStartWeapons.Checked = false;
+            this.checkBoxDontChangeStartWeapons.CheckState = System.Windows.Forms.CheckState.Unchecked;
+            this.checkBoxDontChangeStartWeapons.Location = new System.Drawing.Point(257, 144);
+            this.checkBoxDontChangeStartWeapons.Name = "checkBoxDontChangeStartWeapons";
+            this.checkBoxDontChangeStartWeapons.Size = new System.Drawing.Size(176, 17);
+            this.checkBoxDontChangeStartWeapons.TabIndex = 45;
+            this.checkBoxDontChangeStartWeapons.Text = "Don't change starting weapons";
+            this.tooltip.SetToolTip(this.checkBoxDontChangeStartWeapons, "Paramdomizer will not change the starting weapons of classes.\n" +
+                "By default the paramdomizer will attempt to reroll the classes's weapons into ones the class can use if minimum stats aren't met.\n" +
+                "If this setting is turned on or if no match was found, the classes's weapons won't be changed but instead will have their stat requirements forced to be useable.");
+            this.checkBoxDontChangeStartWeapons.UseVisualStyleBackColor = true;
             // 
             // checkBoxForceUseableBullets
             // 
@@ -720,7 +722,7 @@
             this.checkBoxForceUseableBullets.TabIndex = 45;
             this.checkBoxForceUseableBullets.Text = "Force useable bullets";
             this.tooltip.SetToolTip(this.checkBoxForceUseableBullets, "Forces bullets to be useable. (or at least tries to.)\nAffects both players and en" +
-        "emies.");
+        "emies.\nWARNING: this feature is currently incomplete.");
             this.checkBoxForceUseableBullets.UseVisualStyleBackColor = true;
             // 
             // tooltip
@@ -775,7 +777,7 @@
             // gbWeaponCategory
             // 
             this.gbWeaponCategory.AutoSize = true;
-            this.gbWeaponCategory.Controls.Add(this.checkBoxForceUseableStartWeapons);
+            this.gbWeaponCategory.Controls.Add(this.checkBoxDontChangeStartWeapons);
             this.gbWeaponCategory.Location = new System.Drawing.Point(8, 64);
             this.gbWeaponCategory.Name = "gbWeaponCategory";
             this.gbWeaponCategory.Size = new System.Drawing.Size(468, 180);
@@ -786,7 +788,7 @@
             // gbSpellCategory
             // 
             this.gbSpellCategory.AutoSize = true;
-            this.gbSpellCategory.Controls.Add(this.checkBoxForceUseableStartSpells);
+            this.gbSpellCategory.Controls.Add(this.checkBoxDontChangeStartSpells);
             this.gbSpellCategory.Location = new System.Drawing.Point(479, 123);
             this.gbSpellCategory.Name = "gbSpellCategory";
             this.gbSpellCategory.Size = new System.Drawing.Size(465, 104);
@@ -971,8 +973,8 @@
         private System.Windows.Forms.CheckBox checkBoxNerfHumanityBullets;
         private System.Windows.Forms.CheckBox checkBoxStartingGiftsAmount;
         private System.Windows.Forms.CheckBox checkBoxStartingClasses;
-        private System.Windows.Forms.CheckBox checkBoxForceUseableStartSpells;
-        private System.Windows.Forms.CheckBox checkBoxForceUseableStartWeapons;
+        private System.Windows.Forms.CheckBox checkBoxDontChangeStartSpells;
+        private System.Windows.Forms.CheckBox checkBoxDontChangeStartWeapons;
         private System.Windows.Forms.CheckBox checkBoxForceUseableBullets;
         private System.Windows.Forms.ToolTip tooltip;
         private System.Windows.Forms.GroupBox gbWeaponCategory;

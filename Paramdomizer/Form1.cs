@@ -249,6 +249,123 @@ namespace Paramdomizer
             int[] classLevels = new int[10];
             int[,] classStats = new int[10, 8];
 
+
+            //only assign shield ids if shield split is activated
+            List<int> allShieldIDs = new List<int>();
+            if (checkBoxWeaponShieldSplit.Checked)
+            {
+                allShieldIDs.Add(904000); //dark hand
+                                          //shields, indexes 1400000 to 1410800; steps of 1000
+                for (int i = 0; i < 11; i++)
+                {
+                    int x = 1400000 + (i * 1000); //starting index of the shield
+
+                    //skip the following indexes (no shield there)
+                    if (x != 1407000)
+                    {
+                        allShieldIDs.Add(x); //regular variant
+                        allShieldIDs.Add(x + 100); //crystal variant
+                        allShieldIDs.Add(x + 200); //lightning variant
+                        allShieldIDs.Add(x + 400); //magic variant
+                        allShieldIDs.Add(x + 600); //divine variant
+                        allShieldIDs.Add(x + 800); //fire variant
+                    }
+                }
+                //crystal ring shields, indexes 1411000 to 1414600; steps of 100
+                for (int i = 0; i < 37; i++)
+                {
+                    int x = 1411000 + (i * 100); //starting index of the shield
+                    allShieldIDs.Add(x);
+                }
+                //shields, indexes 1450000 to 1455800; steps of 1000
+                for (int i = 0; i < 6; i++)
+                {
+                    int x = 1450000 + (i * 1000); //starting index of the shield
+
+                    allShieldIDs.Add(x); //regular variant
+                    allShieldIDs.Add(x + 100); //crystal variant
+                    allShieldIDs.Add(x + 200); //lightning variant
+                    allShieldIDs.Add(x + 400); //magic variant
+                    allShieldIDs.Add(x + 600); //divine variant
+                    allShieldIDs.Add(x + 800); //fire variant
+                }
+                allShieldIDs.Add(1456000); //crest shield
+                allShieldIDs.Add(1457000); //dragon crest shield
+                                           //shields, indexes 1460000 to 1462800; steps of 1000
+                for (int i = 0; i < 3; i++)
+                {
+                    int x = 1460000 + (i * 1000); //starting index of the shield
+
+                    allShieldIDs.Add(x); //regular variant
+                    allShieldIDs.Add(x + 100); //crystal variant
+                    allShieldIDs.Add(x + 200); //lightning variant
+                    allShieldIDs.Add(x + 400); //magic variant
+                    allShieldIDs.Add(x + 600); //divine variant
+                    allShieldIDs.Add(x + 800); //fire variant
+                }
+                //shields, indexes 1470000 to 1477800; steps of 1000
+                for (int i = 0; i < 8; i++)
+                {
+                    int x = 1470000 + (i * 1000); //starting index of the shield
+
+                    allShieldIDs.Add(x); //regular variant
+                                         //skip the following indexes (shields have no variants)
+                    if (x != 1471000 && x != 1473000 && x != 1474000)
+                    {
+                        allShieldIDs.Add(x + 100); //crystal variant
+                        allShieldIDs.Add(x + 200); //lightning variant
+                        allShieldIDs.Add(x + 400); //magic variant
+                        allShieldIDs.Add(x + 600); //divine variant
+                        allShieldIDs.Add(x + 800); //fire variant
+                    }
+                }
+                allShieldIDs.Add(1478000); //gargoyle shield
+                allShieldIDs.Add(1478000 + 100); //crystal variant
+                allShieldIDs.Add(1478000 + 200); //lightning variant
+                allShieldIDs.Add(1478000 + 400); //magic variant
+                allShieldIDs.Add(1478000 + 600); //divine variant
+                allShieldIDs.Add(1478000 + 800); //fire variant
+                                                 //shields, indexes 1500000 to 1502800; steps of 1000
+                for (int i = 0; i < 7; i++)
+                {
+                    int x = 1500000 + (i * 1000); //starting index of the shield
+
+                    allShieldIDs.Add(x); //regular variant
+                    allShieldIDs.Add(x + 100); //crystal variant
+                    allShieldIDs.Add(x + 200); //lightning variant
+                    allShieldIDs.Add(x + 400); //magic variant
+                    allShieldIDs.Add(x + 600); //divine variant
+                    allShieldIDs.Add(x + 800); //fire variant
+                }
+                allShieldIDs.Add(1503000); //Stone Greatshield
+                allShieldIDs.Add(1505000); //Havel's Greatshield
+                allShieldIDs.Add(1506000); //Bonewheel shield
+                allShieldIDs.Add(1506000 + 100); //crystal variant
+                allShieldIDs.Add(1506000 + 200); //lightning variant
+                allShieldIDs.Add(1506000 + 400); //magic variant
+                allShieldIDs.Add(1506000 + 600); //divine variant
+                allShieldIDs.Add(1506000 + 800); //fire variant
+                                                 //Greatshields of Artorias, indexes 1507000 to 1510600; steps of 100
+                for (int i = 0; i < 37; i++)
+                {
+                    int x = 1507000 + (i * 100);
+                }
+                //shields, indexes 9001000 to 9003800; steps of 1000
+                for (int i = 0; i < 3; i++)
+                {
+                    int x = 9001000 + (i * 1000); //starting index of the shield
+
+                    allShieldIDs.Add(x); //regular variant
+                    allShieldIDs.Add(x + 100); //crystal variant
+                    allShieldIDs.Add(x + 200); //lightning variant
+                    allShieldIDs.Add(x + 400); //magic variant
+                    allShieldIDs.Add(x + 600); //divine variant
+                    allShieldIDs.Add(x + 800); //fire variant
+                }
+                allShieldIDs.Add(9014000); //Cleansing Greatshield
+            }
+
+            //main randomization
             foreach (var paramBndEntry in gameparamBnd)
             {
                 var paramShortName = paramBndEntry.Name;
@@ -1522,122 +1639,6 @@ namespace Paramdomizer
                             allBowIDs.Add(baseId + 800);
                         }
                     }
-
-                    //only assign shield ids if shield split is activated
-                    List<int> allShieldIDs = new List<int>();
-                    if(checkBoxWeaponShieldSplit.Checked)
-                    {
-                        allShieldIDs.Add(904000); //dark hand
-                        //shields, indexes 1400000 to 1410800; steps of 1000
-                        for (int i = 0; i < 11; i++)
-                        {
-                            int x = 1400000 + (i * 1000); //starting index of the shield
-
-                            //skip the following indexes (no shield there)
-                            if (x != 1407000)
-                            {
-                                allShieldIDs.Add(x); //regular variant
-                                allShieldIDs.Add(x + 100); //crystal variant
-                                allShieldIDs.Add(x + 200); //lightning variant
-                                allShieldIDs.Add(x + 400); //magic variant
-                                allShieldIDs.Add(x + 600); //divine variant
-                                allShieldIDs.Add(x + 800); //fire variant
-                            }
-                        }
-                        //crystal ring shields, indexes 1411000 to 1414600; steps of 100
-                        for (int i = 0; i < 37; i++)
-                        {
-                            int x = 1411000 + (i * 100); //starting index of the shield
-                            allShieldIDs.Add(x);
-                        }
-                        //shields, indexes 1450000 to 1455800; steps of 1000
-                        for (int i = 0; i < 6; i++)
-                        {
-                            int x = 1450000 + (i * 1000); //starting index of the shield
-
-                            allShieldIDs.Add(x); //regular variant
-                            allShieldIDs.Add(x + 100); //crystal variant
-                            allShieldIDs.Add(x + 200); //lightning variant
-                            allShieldIDs.Add(x + 400); //magic variant
-                            allShieldIDs.Add(x + 600); //divine variant
-                            allShieldIDs.Add(x + 800); //fire variant
-                        }
-                        allShieldIDs.Add(1456000); //crest shield
-                        allShieldIDs.Add(1457000); //dragon crest shield
-                        //shields, indexes 1460000 to 1462800; steps of 1000
-                        for (int i = 0; i < 3; i++)
-                        {
-                            int x = 1460000 + (i * 1000); //starting index of the shield
-
-                            allShieldIDs.Add(x); //regular variant
-                            allShieldIDs.Add(x + 100); //crystal variant
-                            allShieldIDs.Add(x + 200); //lightning variant
-                            allShieldIDs.Add(x + 400); //magic variant
-                            allShieldIDs.Add(x + 600); //divine variant
-                            allShieldIDs.Add(x + 800); //fire variant
-                        }
-                        //shields, indexes 1470000 to 1477800; steps of 1000
-                        for (int i = 0; i < 8; i++)
-                        {
-                            int x = 1470000 + (i * 1000); //starting index of the shield
-
-                            allShieldIDs.Add(x); //regular variant
-                            //skip the following indexes (shields have no variants)
-                            if (x != 1471000 && x != 1473000 && x != 1474000)
-                            {
-                                allShieldIDs.Add(x + 100); //crystal variant
-                                allShieldIDs.Add(x + 200); //lightning variant
-                                allShieldIDs.Add(x + 400); //magic variant
-                                allShieldIDs.Add(x + 600); //divine variant
-                                allShieldIDs.Add(x + 800); //fire variant
-                            }
-                        }
-                        allShieldIDs.Add(1478000); //gargoyle shield
-                        allShieldIDs.Add(1478000 + 100); //crystal variant
-                        allShieldIDs.Add(1478000 + 200); //lightning variant
-                        allShieldIDs.Add(1478000 + 400); //magic variant
-                        allShieldIDs.Add(1478000 + 600); //divine variant
-                        allShieldIDs.Add(1478000 + 800); //fire variant
-                        //shields, indexes 1500000 to 1502800; steps of 1000
-                        for (int i = 0; i < 7; i++)
-                        {
-                            int x = 1500000 + (i * 1000); //starting index of the shield
-
-                            allShieldIDs.Add(x); //regular variant
-                            allShieldIDs.Add(x + 100); //crystal variant
-                            allShieldIDs.Add(x + 200); //lightning variant
-                            allShieldIDs.Add(x + 400); //magic variant
-                            allShieldIDs.Add(x + 600); //divine variant
-                            allShieldIDs.Add(x + 800); //fire variant
-                        }
-                        allShieldIDs.Add(1503000); //Stone Greatshield
-                        allShieldIDs.Add(1505000); //Havel's Greatshield
-                        allShieldIDs.Add(1506000); //Bonewheel shield
-                        allShieldIDs.Add(1506000 + 100); //crystal variant
-                        allShieldIDs.Add(1506000 + 200); //lightning variant
-                        allShieldIDs.Add(1506000 + 400); //magic variant
-                        allShieldIDs.Add(1506000 + 600); //divine variant
-                        allShieldIDs.Add(1506000 + 800); //fire variant
-                        //Greatshields of Artorias, indexes 1507000 to 1510600; steps of 100
-                        for (int i = 0; i < 37; i++)
-                        {
-                            int x = 1507000 + (i * 100);
-                        }
-                        //shields, indexes 9001000 to 9003800; steps of 1000
-                        for (int i = 0; i < 3; i++)
-                        {
-                            int x = 9001000 + (i * 1000); //starting index of the shield
-
-                            allShieldIDs.Add(x); //regular variant
-                            allShieldIDs.Add(x + 100); //crystal variant
-                            allShieldIDs.Add(x + 200); //lightning variant
-                            allShieldIDs.Add(x + 400); //magic variant
-                            allShieldIDs.Add(x + 600); //divine variant
-                            allShieldIDs.Add(x + 800); //fire variant
-                        }
-                        allShieldIDs.Add(9014000); //Cleansing Greatshield
-                    }
-                    
 
                     //heads up to those who maintain this in the future:
                     //when treat shields seperately is enabled it runs a different set of
@@ -7137,126 +7138,53 @@ namespace Paramdomizer
                 }
             }
 
-            //force spells to be useable for their class (the classes's casters too); done after class stats can be changed
-            if (checkBoxForceUseableStartSpells.Checked)
+            //rerolls starting weapons to be useable if that is allowed
+            if (!checkBoxDontChangeStartWeapons.Checked)
             {
-                foreach (var paramBndEntry in gameparamBnd)
+                bool[,] canUseWeapons = new bool[10, 2]; //mainhand first then offhand weapons (dont assume offhand is always shield)
+                bool[] offhandIsShield = new bool[10];
+                bool[] canUseSecondaries = new bool[4]; //starts with hunter, next 3 indexes are the caster's casting item
+
+                //assign true by default
+                for (int i = 0; i < 10; i++)
                 {
-                    var paramShortName = paramBndEntry.Name;
-                    var paramFile = paramBndEntry.Param;
-                    if (paramFile.ID == "MAGIC_PARAM_ST")
+                    for (int j = 0; j < 2; j++)
                     {
-                        foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
-                        {
-                            //if is a starting spell
-                            if (startingSpells.Contains(paramRow.ID))
-                            {
-                                int spellId = paramRow.ID;
-                                int classIndex = 6; //sorcerer default in case something goes wrong
-                                for (int i = 0; i < startingSpells.Length; i++) //get class index from starting spell list (assuming sorcerer is index 0)
-                                {
-                                    if (spellId == startingSpells[i])
-                                    {
-                                        classIndex = i + 6; //starting at index of sorcerer
-                                        i = startingSpells.Length;
-                                    }
-                                }
-                                foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
-                                {
-                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                    if (cell.Def.Name == "requirementIntellect")
-                                    {
-                                        //if value is greater than it's classes's stats, lower required stats
-                                        if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[classIndex, 5])
-                                        {
-                                            prop.SetValue(cell, classStats[classIndex, 5], null);
-                                        }
-                                    }
-                                    else if (cell.Def.Name == "requirementFaith")
-                                    {
-                                        //if value is greater than it's classes's stats, lower required stats
-                                        if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[classIndex, 6])
-                                        {
-                                            prop.SetValue(cell, classStats[classIndex, 6], null);
-                                        }
-                                    }
-                                    else if (cell.Def.Name == "slotLength")
-                                    {
-                                        //if slot length is greater than 1, make it length 1
-                                        if (Convert.ToInt32(prop.GetValue(cell, null)) > 1)
-                                        {
-                                            prop.SetValue(cell, 1, null);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    else if (paramFile.ID == "EQUIP_PARAM_WEAPON_ST" && !checkBoxForceUseableStartWeapons.Checked) //caster items are already handled if force useable starting weapons is enabled
-                    {
-                        for(int i = 1; i < secondaryStartingWeapons.Length; i++)
-                        {
-                            int casterId = secondaryStartingWeapons[i]; //casting item
-                            int classIndex = i + 5;
-                            foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
-                            {
-                                if(paramRow.ID == casterId)
-                                {
-                                    foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
-                                    {
-                                        PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                        if (cell.Def.Name == "properMagic")
-                                        {
-                                            //if value is greater than it's classes's stats, lower required stats
-                                            if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[classIndex, 5])
-                                            {
-                                                prop.SetValue(cell, classStats[classIndex, 5], null);
-                                            }
-                                        }
-                                        else if (cell.Def.Name == "properFaith")
-                                        {
-                                            //if value is greater than it's classes's stats, lower required stats
-                                            if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[classIndex, 6])
-                                            {
-                                                prop.SetValue(cell, classStats[classIndex, 6], null);
-                                            }
-                                        }
-                                        else if (cell.Def.Name == "properStrength")
-                                        {
-                                            //if value is greater than it's classes's stats, lower required stats
-                                            if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[classIndex, 3])
-                                            {
-                                                prop.SetValue(cell, classStats[classIndex, 3], null);
-                                            }
-                                        }
-                                        else if (cell.Def.Name == "properAgility")
-                                        {
-                                            //if value is greater than it's classes's stats, lower required stats
-                                            if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[classIndex, 4])
-                                            {
-                                                prop.SetValue(cell, classStats[classIndex, 4], null);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-
-                        }
-
+                        canUseWeapons[i, j] = true;
                     }
                 }
-            }
+                for (int i = 0; i < 10; i++)
+                {
+                    if (checkBoxWeaponShieldSplit.Checked) //if shield should be treated seperately to begin with, treat offhand by shield as default
+                        offhandIsShield[i] = true;
+                    else
+                        offhandIsShield[i] = false;
+                }
+                for (int i = 0; i < 4; i++)
+                {
+                    canUseSecondaries[i] = true;
+                }
 
-            //forces weapons to be useable for their class
-            if(checkBoxForceUseableStartWeapons.Checked)
-            {
+                //check if offhand is shield
+                if (checkBoxWeaponShieldSplit.Checked)
+                {
+                    for (int i = 0; i < 10; i++)
+                    {
+                        if (!allShieldIDs.Contains(startingWeapons[i, 1])) //if offhand is not shield
+                        {
+                            offhandIsShield[i] = false;
+                        }
+                    }
+                }
+
+                //do can use checks
                 foreach (var paramBndEntry in gameparamBnd)
                 {
                     var paramShortName = paramBndEntry.Name;
                     var paramFile = paramBndEntry.Param;
                     if (paramFile.ID == "EQUIP_PARAM_WEAPON_ST")
                     {
-                        //make all main and off hand weapons useable
+                        //main and offhands
                         for(int i = 0; i < 10; i++)
                         {
                             for(int j = 0; j < 2; j++)
@@ -7264,7 +7192,7 @@ namespace Paramdomizer
                                 int weaponId = startingWeapons[i, j];
                                 foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
                                 {
-                                    if(paramRow.ID == weaponId)
+                                    if (paramRow.ID == weaponId)
                                     {
                                         foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
                                         {
@@ -7274,7 +7202,7 @@ namespace Paramdomizer
                                                 //if value is greater than it's classes's stats, lower required stats
                                                 if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[i, 3])
                                                 {
-                                                    prop.SetValue(cell, classStats[i, 3], null);
+                                                    canUseWeapons[i, j] = false;
                                                 }
                                             }
                                             else if (cell.Def.Name == "properAgility")
@@ -7282,7 +7210,7 @@ namespace Paramdomizer
                                                 //if value is greater than it's classes's stats, lower required stats
                                                 if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[i, 4])
                                                 {
-                                                    prop.SetValue(cell, classStats[i, 4], null);
+                                                    canUseWeapons[i, j] = false;
                                                 }
                                             }
                                             else if (cell.Def.Name == "properMagic")
@@ -7290,7 +7218,7 @@ namespace Paramdomizer
                                                 //if value is greater than it's classes's stats, lower required stats
                                                 if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[i, 5])
                                                 {
-                                                    prop.SetValue(cell, classStats[i, 5], null);
+                                                    canUseWeapons[i, j] = false;
                                                 }
                                             }
                                             else if (cell.Def.Name == "properFaith")
@@ -7298,7 +7226,7 @@ namespace Paramdomizer
                                                 //if value is greater than it's classes's stats, lower required stats
                                                 if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[i, 6])
                                                 {
-                                                    prop.SetValue(cell, classStats[i, 6], null);
+                                                    canUseWeapons[i, j] = false;
                                                 }
                                             }
                                         }
@@ -7306,12 +7234,10 @@ namespace Paramdomizer
                                 }
                             }
                         }
-                        
-                        //make the secondary main hand weapons useable
-                        for(int i = 0; i < secondaryStartingWeapons.Length; i++)
+                        //secondaries
+                        for (int i = 0; i < 4; i++)
                         {
                             int weaponId = secondaryStartingWeapons[i];
-                            int classIndex = i + 5; //starting at hunter (i = 0)
                             foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
                             {
                                 if (paramRow.ID == weaponId)
@@ -7322,34 +7248,955 @@ namespace Paramdomizer
                                         if (cell.Def.Name == "properStrength")
                                         {
                                             //if value is greater than it's classes's stats, lower required stats
-                                            if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[classIndex, 3])
+                                            if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[i + 5, 3])
                                             {
-                                                prop.SetValue(cell, classStats[classIndex, 3], null);
+                                                canUseSecondaries[i] = false;
                                             }
                                         }
                                         else if (cell.Def.Name == "properAgility")
                                         {
                                             //if value is greater than it's classes's stats, lower required stats
-                                            if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[classIndex, 4])
+                                            if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[i + 5, 4])
                                             {
-                                                prop.SetValue(cell, classStats[classIndex, 4], null);
+                                                canUseSecondaries[i] = false;
                                             }
                                         }
                                         else if (cell.Def.Name == "properMagic")
                                         {
                                             //if value is greater than it's classes's stats, lower required stats
-                                            if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[classIndex, 5])
+                                            if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[i + 5, 5])
                                             {
-                                                prop.SetValue(cell, classStats[classIndex, 5], null);
+                                                canUseSecondaries[i] = false;
                                             }
                                         }
                                         else if (cell.Def.Name == "properFaith")
                                         {
                                             //if value is greater than it's classes's stats, lower required stats
-                                            if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[classIndex, 6])
+                                            if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[i + 5, 6])
                                             {
-                                                prop.SetValue(cell, classStats[classIndex, 6], null);
+                                                canUseSecondaries[i] = false;
                                             }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                int[,] replacementWeapons = new int[10, 2];
+                int[] replacementSecondaries = new int[4];
+
+                //set all replacements to -1
+                for(int i = 0; i < 10; i++)
+                {
+                    for(int j = 0; j < 2; j++)
+                    {
+                        replacementWeapons[i, j] = -1;
+                    }
+                }
+                for(int i = 0; i < 4; i++)
+                {
+                    replacementSecondaries[i] = -1;
+                }
+
+                List<int> validWeapons = new List<int>(); //valid non bow or catalyst weapons; unupgraded only
+                List<int> shieldWeapons = new List<int>(); //unupgraded shields
+                List<int> bowWeapons = new List<int>(); //unupgraded
+                List<int> catalystWeapons = new List<int>();
+                int pyroFlame = 1330000;
+                List<int> talismanWeapons = new List<int>();
+
+                //set unupgraded weapon lists
+                if (true) //if statement exists to seperate the weapons list from everything else
+                {
+                    //weapons
+                    validWeapons.Add(100000);
+                    validWeapons.Add(101000);
+                    validWeapons.Add(102000);
+                    validWeapons.Add(103000);
+                    validWeapons.Add(104000);
+                    validWeapons.Add(200000);
+                    validWeapons.Add(201000);
+                    validWeapons.Add(202000);
+                    //do not include broken straightsword
+                    validWeapons.Add(204000);
+                    validWeapons.Add(205000);
+                    validWeapons.Add(206000);
+                    validWeapons.Add(207000);
+                    validWeapons.Add(208000);
+                    validWeapons.Add(209000);
+                    validWeapons.Add(210000);
+                    validWeapons.Add(211000);
+                    //do not include straightsword hilt
+                    validWeapons.Add(300000);
+                    validWeapons.Add(301000);
+                    validWeapons.Add(302000);
+                    validWeapons.Add(303000);
+                    validWeapons.Add(304000);
+                    validWeapons.Add(306000);
+                    validWeapons.Add(307000);
+                    validWeapons.Add(309000);
+                    validWeapons.Add(310000);
+                    validWeapons.Add(311000);
+                    validWeapons.Add(314000);
+                    validWeapons.Add(350000);
+                    validWeapons.Add(351000);
+                    validWeapons.Add(352000);
+                    validWeapons.Add(354000);
+                    validWeapons.Add(355000);
+                    validWeapons.Add(400000);
+                    validWeapons.Add(401000);
+                    validWeapons.Add(402000);
+                    validWeapons.Add(403000);
+                    validWeapons.Add(405000);
+                    validWeapons.Add(406000);
+                    validWeapons.Add(450000);
+                    validWeapons.Add(451000);
+                    validWeapons.Add(453000);
+                    validWeapons.Add(500000);
+                    validWeapons.Add(501000);
+                    validWeapons.Add(502000);
+                    validWeapons.Add(503000);
+                    validWeapons.Add(600000);
+                    validWeapons.Add(601000);
+                    validWeapons.Add(602000);
+                    validWeapons.Add(603000);
+                    validWeapons.Add(604000);
+                    validWeapons.Add(700000);
+                    validWeapons.Add(701000);
+                    validWeapons.Add(702000);
+                    validWeapons.Add(703000);
+                    validWeapons.Add(704000);
+                    validWeapons.Add(705000);
+                    validWeapons.Add(750000);
+                    validWeapons.Add(751000);
+                    validWeapons.Add(752000);
+                    validWeapons.Add(753000);
+                    validWeapons.Add(800000);
+                    validWeapons.Add(801000);
+                    validWeapons.Add(802000);
+                    validWeapons.Add(803000);
+                    validWeapons.Add(804000);
+                    validWeapons.Add(809000);
+                    validWeapons.Add(810000);
+                    validWeapons.Add(811000);
+                    validWeapons.Add(812000);
+                    validWeapons.Add(850000);
+                    validWeapons.Add(851000);
+                    validWeapons.Add(852000);
+                    validWeapons.Add(854000);
+                    validWeapons.Add(855000);
+                    validWeapons.Add(856000);
+                    //do not include fists
+                    validWeapons.Add(901000);
+                    validWeapons.Add(902000);
+                    validWeapons.Add(903000);
+                    shieldWeapons.Add(904000); //dark hand is considered a shield by paramdomizer
+                    validWeapons.Add(1000000);
+                    validWeapons.Add(1001000);
+                    validWeapons.Add(1002000);
+                    validWeapons.Add(1003000);
+                    validWeapons.Add(1004000);
+                    validWeapons.Add(1006000);
+                    validWeapons.Add(1050000);
+                    validWeapons.Add(1051000);
+                    validWeapons.Add(1052000);
+                    validWeapons.Add(1100000);
+                    validWeapons.Add(1101000);
+                    validWeapons.Add(1102000);
+                    validWeapons.Add(1103000);
+                    validWeapons.Add(1105000);
+                    validWeapons.Add(1106000);
+                    validWeapons.Add(1107000);
+                    validWeapons.Add(1150000);
+                    validWeapons.Add(1151000);
+                    validWeapons.Add(1600000); //whip
+                    validWeapons.Add(1601000);
+                    validWeapons.Add(9010000); //tracers
+                    validWeapons.Add(9011000);
+                    validWeapons.Add(9012000); //abyss greatsword
+                    validWeapons.Add(9015000); //stone greataxe
+                    validWeapons.Add(9016000); //four pronged prow
+                    validWeapons.Add(9019000); //guardian tail
+                    validWeapons.Add(9020000); //obsidian greatsword
+                    //bows
+                    bowWeapons.Add(1200000); //bows
+                    bowWeapons.Add(1201000);
+                    bowWeapons.Add(1202000);
+                    bowWeapons.Add(1203000);
+                    bowWeapons.Add(1204000);
+                    bowWeapons.Add(1205000);
+                    bowWeapons.Add(1250000); //crossbows
+                    bowWeapons.Add(1251000);
+                    bowWeapons.Add(1252000); //avelyn
+                    bowWeapons.Add(1253000); //sniper crossbow
+                    bowWeapons.Add(9021000); //gough's greatbow
+                    //catalysts
+                    catalystWeapons.Add(1300000); //catalysts
+                    catalystWeapons.Add(1301000);
+                    catalystWeapons.Add(1302000);
+                    catalystWeapons.Add(1303000);
+                    catalystWeapons.Add(1304000);
+                    catalystWeapons.Add(1305000);
+                    catalystWeapons.Add(1306000);
+                    catalystWeapons.Add(1307000);
+                    catalystWeapons.Add(1308000);
+                    catalystWeapons.Add(9017000); //manus catalyst
+                    catalystWeapons.Add(9018000); //oolacile catalyst
+                    //pyro flame was added above
+                    talismanWeapons.Add(1360000); //talismans
+                    talismanWeapons.Add(1361000);
+                    talismanWeapons.Add(1362000);
+                    talismanWeapons.Add(1363000);
+                    talismanWeapons.Add(1365000);
+                    talismanWeapons.Add(1366000);
+                    talismanWeapons.Add(1367000);
+                    //shields
+                    shieldWeapons.Add(1396000); //skull lantern
+                    shieldWeapons.Add(1400000);
+                    shieldWeapons.Add(1401000);
+                    shieldWeapons.Add(1402000);
+                    shieldWeapons.Add(1403000);
+                    shieldWeapons.Add(1404000);
+                    shieldWeapons.Add(1405000);
+                    shieldWeapons.Add(1406000);
+                    shieldWeapons.Add(1408000);
+                    shieldWeapons.Add(1409000);
+                    shieldWeapons.Add(1410000);
+                    shieldWeapons.Add(1411000);
+                    shieldWeapons.Add(1450000);
+                    shieldWeapons.Add(1451000);
+                    shieldWeapons.Add(1452000);
+                    shieldWeapons.Add(1453000);
+                    shieldWeapons.Add(1454000);
+                    shieldWeapons.Add(1455000);
+                    shieldWeapons.Add(1456000);
+                    shieldWeapons.Add(1457000);
+                    shieldWeapons.Add(1460000);
+                    shieldWeapons.Add(1461000);
+                    shieldWeapons.Add(1462000);
+                    shieldWeapons.Add(1470000);
+                    shieldWeapons.Add(1471000);
+                    shieldWeapons.Add(1472000);
+                    shieldWeapons.Add(1473000);
+                    shieldWeapons.Add(1474000);
+                    shieldWeapons.Add(1475000);
+                    shieldWeapons.Add(1476000);
+                    shieldWeapons.Add(1477000);
+                    shieldWeapons.Add(1478000);
+                    shieldWeapons.Add(1500000);
+                    shieldWeapons.Add(1501000);
+                    shieldWeapons.Add(1502000);
+                    shieldWeapons.Add(1503000);
+                    shieldWeapons.Add(1505000);
+                    shieldWeapons.Add(1506000);
+                    shieldWeapons.Add(1507000);
+                    shieldWeapons.Add(9000000);
+                    shieldWeapons.Add(9001000);
+                    shieldWeapons.Add(9002000);
+                    shieldWeapons.Add(9003000);
+                    shieldWeapons.Add(9014000);
+                }
+
+                //if cant use, find replacements
+                for(int i = 0; i < 10; i++)
+                {
+                    //mainhand
+                    if(true || !canUseWeapons[i, 0]) //create a list and select one as a replacement if cant use [currently just randomizes starting weapons if don't change starting weapons is off, remove the true condition to make it only change if the weapon needs rerolling]
+                    {
+                        List<int> useableWeaponIds = new List<int>();
+
+                        //create a list of valid replacements
+                        foreach (var paramBndEntry in gameparamBnd)
+                        {
+                            var paramShortName = paramBndEntry.Name;
+                            var paramFile = paramBndEntry.Param;
+                            if (paramFile.ID == "EQUIP_PARAM_WEAPON_ST")
+                            {
+                                foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
+                                {
+                                    bool isCandidate = true;
+                                    if(checkBoxWeaponShieldSplit.Checked)
+                                    {
+                                        if (!validWeapons.Contains(paramRow.ID))
+                                            isCandidate = false;
+                                        if (shieldWeapons.Contains(paramRow.ID))
+                                            isCandidate = false;
+                                    }
+                                    else
+                                    {
+                                        if (!validWeapons.Contains(paramRow.ID) && !shieldWeapons.Contains(paramRow.ID))
+                                            isCandidate = false;
+                                    }
+                                    if (bowWeapons.Contains(paramRow.ID) || catalystWeapons.Contains(paramRow.ID))
+                                        isCandidate = false;
+                                    if(isCandidate) // if not disqualified yet, run stat checks
+                                    {
+                                        foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                        {
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (cell.Def.Name == "properStrength")
+                                            {
+                                                if(Convert.ToInt32(prop.GetValue(cell, null)) > classStats[i, 3])
+                                                {
+                                                    isCandidate = false;
+                                                }
+                                            }
+                                            else if (cell.Def.Name == "properAgility")
+                                            {
+                                                if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[i, 4])
+                                                {
+                                                    isCandidate = false;
+                                                }
+                                            }
+                                            else if (cell.Def.Name == "properMagic")
+                                            {
+                                                if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[i, 5])
+                                                {
+                                                    isCandidate = false;
+                                                }
+                                            }
+                                            else if (cell.Def.Name == "properFaith")
+                                            {
+                                                if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[i, 6])
+                                                {
+                                                    isCandidate = false;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if(isCandidate) //if still a candidate add it
+                                    {
+                                        useableWeaponIds.Add(paramRow.ID);
+                                    }
+                                }
+                            }
+                        }
+
+                        if (useableWeaponIds.Count > 0) //if list is not empty pick one
+                        {
+                            replacementWeapons[i, 0] = useableWeaponIds[r.Next(useableWeaponIds.Count)];
+                        }
+
+                    }
+                    //offhand
+                    if (true || !canUseWeapons[i, 1]) //create a list and select one as a replacement if cant use
+                    {
+                        List<int> useableWeaponIds = new List<int>();
+
+                        //create a list of valid replacements, check if should only consider shields
+                        foreach (var paramBndEntry in gameparamBnd)
+                        {
+                            var paramShortName = paramBndEntry.Name;
+                            var paramFile = paramBndEntry.Param;
+                            if (paramFile.ID == "EQUIP_PARAM_WEAPON_ST")
+                            {
+                                bool ogIsShield = allShieldIDs.Contains(startingWeapons[i, 1]);
+                                foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
+                                {
+                                    bool isCandidate = true;
+                                    if(checkBoxWeaponShieldSplit.Checked)
+                                    {
+                                        if(ogIsShield)
+                                        {
+                                            if (!shieldWeapons.Contains(paramRow.ID))
+                                                isCandidate = false;
+                                        }
+                                        else
+                                        {
+                                            if(!validWeapons.Contains(paramRow.ID))
+                                                isCandidate = false;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (!validWeapons.Contains(paramRow.ID) && !shieldWeapons.Contains(paramRow.ID))
+                                            isCandidate = false;
+                                    }
+                                    if (bowWeapons.Contains(paramRow.ID) || catalystWeapons.Contains(paramRow.ID))
+                                        isCandidate = false;
+                                    if (isCandidate) // if not disqualified yet, run stat checks
+                                    {
+                                        foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                        {
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (cell.Def.Name == "properStrength")
+                                            {
+                                                if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[i, 3])
+                                                {
+                                                    isCandidate = false;
+                                                }
+                                            }
+                                            else if (cell.Def.Name == "properAgility")
+                                            {
+                                                if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[i, 4])
+                                                {
+                                                    isCandidate = false;
+                                                }
+                                            }
+                                            else if (cell.Def.Name == "properMagic")
+                                            {
+                                                if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[i, 5])
+                                                {
+                                                    isCandidate = false;
+                                                }
+                                            }
+                                            else if (cell.Def.Name == "properFaith")
+                                            {
+                                                if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[i, 6])
+                                                {
+                                                    isCandidate = false;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if (isCandidate) //if still a candidate add it
+                                    {
+                                        useableWeaponIds.Add(paramRow.ID);
+                                    }
+                                }
+                            }
+                        }
+
+                        if (useableWeaponIds.Count > 0) //if list is not empty pick one
+                        {
+                            replacementWeapons[i, 1] = useableWeaponIds[r.Next(useableWeaponIds.Count)];
+                        }
+
+                    }
+                }
+
+                //secondaries
+                for(int i = 0; i < 4; i++)
+                {
+                    if(true || !canUseSecondaries[i])
+                    {
+                        int classNum = i + 5; //starting at hunter;
+                        List<int> useableWeaponIds = new List<int>();
+                        
+                        //create a list of valid replacements
+                        foreach (var paramBndEntry in gameparamBnd)
+                        {
+                            var paramShortName = paramBndEntry.Name;
+                            var paramFile = paramBndEntry.Param;
+                            if (paramFile.ID == "EQUIP_PARAM_WEAPON_ST")
+                            {
+                                foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
+                                {
+                                    bool isCandidate = true;
+                                    if (i == 0) // check if is bow or catalyst (depending on class)
+                                    {
+                                        if(!bowWeapons.Contains(paramRow.ID))
+                                            isCandidate = false;
+                                    }
+                                    else
+                                    {
+                                        if(checkBoxUniversalizeCasters.Checked)
+                                        {
+                                            if (!catalystWeapons.Contains(paramRow.ID) && paramRow.ID != pyroFlame && !talismanWeapons.Contains(paramRow.ID))
+                                                isCandidate = false;
+                                        }
+                                        else
+                                        {
+                                            if(i == 1) //sorcerer
+                                            {
+                                                if (!catalystWeapons.Contains(paramRow.ID))
+                                                    isCandidate = false;
+                                            }
+                                            else if (i == 2) //pyromancer
+                                            {
+                                                if (paramRow.ID != pyroFlame)
+                                                    isCandidate = false;
+                                            }
+                                            else if (i ==3) //cleric
+                                            {
+                                                if (!talismanWeapons.Contains(paramRow.ID))
+                                                    isCandidate = false;
+                                            }
+                                        }
+                                    }
+
+                                    if (isCandidate) // if not disqualified yet, run stat checks
+                                    {
+                                        foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                        {
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (cell.Def.Name == "properStrength")
+                                            {
+                                                if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[i, 3])
+                                                {
+                                                    isCandidate = false;
+                                                }
+                                            }
+                                            else if (cell.Def.Name == "properAgility")
+                                            {
+                                                if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[i, 4])
+                                                {
+                                                    isCandidate = false;
+                                                }
+                                            }
+                                            else if (cell.Def.Name == "properMagic")
+                                            {
+                                                if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[i, 5])
+                                                {
+                                                    isCandidate = false;
+                                                }
+                                            }
+                                            else if (cell.Def.Name == "properFaith")
+                                            {
+                                                if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[i, 6])
+                                                {
+                                                    isCandidate = false;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if (isCandidate) //if still a candidate add it
+                                    {
+                                        useableWeaponIds.Add(paramRow.ID);
+                                    }
+                                }
+                            }
+                        }
+
+                        if (useableWeaponIds.Count > 0) //if list is not empty pick one
+                        {
+                            replacementSecondaries[i] = useableWeaponIds[r.Next(useableWeaponIds.Count)];
+                        }
+                    }
+                }
+
+                //replace weapons if value isnt -1
+                foreach (var paramBndEntry in gameparamBnd)
+                {
+                    var paramShortName = paramBndEntry.Name;
+                    var paramFile = paramBndEntry.Param;
+                    if (paramFile.ID == "CHARACTER_INIT_PARAM")
+                    {
+                        foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
+                        {
+                            //if is a starting class and randomizing starting classes
+                            if ((paramRow.ID >= 3000 && paramRow.ID <= 3009))
+                            {
+                                int classNumber = paramRow.ID - 3000;
+                                foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    if (cell.Def.Name == "equip_Wep_Right")
+                                    {
+                                        if (replacementWeapons[classNumber, 0] != -1)
+                                        {
+                                            startingWeapons[classNumber, 0] = replacementWeapons[classNumber, 0];
+                                            prop.SetValue(cell, replacementWeapons[classNumber, 0], null);
+                                        }
+                                    }
+                                    else if (cell.Def.Name == "equip_Wep_Left")
+                                    {
+                                        if (replacementWeapons[classNumber, 1] != -1)
+                                        {
+                                            startingWeapons[classNumber, 1] = replacementWeapons[classNumber, 1];
+                                            prop.SetValue(cell, replacementWeapons[classNumber, 1], null);
+                                        }
+                                    }
+                                    else if (cell.Def.Name == "equip_Subwep_Right")
+                                    {
+                                        if (classNumber >= 5 && classNumber <= 8) //if caster or hunter
+                                        {
+                                            if (replacementSecondaries[classNumber - 5] != -1)
+                                            {
+                                                secondaryStartingWeapons[classNumber - 5] = replacementSecondaries[classNumber - 5];
+                                                prop.SetValue(cell, replacementSecondaries[classNumber - 5], null);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                foreach (var paramBndEntry in gameparamBnd)
+                {
+                    var paramShortName = paramBndEntry.Name;
+                    var paramFile = paramBndEntry.Param;
+                    if (paramFile.ID == "ITEMLOT_PARAM_ST")
+                    {
+                        foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
+                        {
+                            if (paramRow.ID >= 1810100 && paramRow.ID <= 1810330) //starting gear in the asylum
+                            {
+                                foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    Console.WriteLine(cell.Def.Name);
+                                    if (cell.Def.Name == "lotItemId01") //only weapons are modified so no need to change type flag
+                                    {
+                                        if (paramRow.ID == 1810100)
+                                        {
+                                            prop.SetValue(cell, startingWeapons[0, 0], null);
+                                        }
+                                        else if (paramRow.ID == 1810110)
+                                        {
+                                            prop.SetValue(cell, startingWeapons[0, 1], null);
+                                        }
+                                        else if (paramRow.ID == 1810120)
+                                        {
+                                            prop.SetValue(cell, startingWeapons[1, 0], null);
+                                        }
+                                        else if (paramRow.ID == 1810130)
+                                        {
+                                            prop.SetValue(cell, startingWeapons[1, 1], null);
+                                        }
+                                        else if (paramRow.ID == 1810140)
+                                        {
+                                            prop.SetValue(cell, startingWeapons[2, 0], null);
+                                        }
+                                        else if (paramRow.ID == 1810150)
+                                        {
+                                            prop.SetValue(cell, startingWeapons[2, 1], null);
+                                        }
+                                        else if (paramRow.ID == 1810160)
+                                        {
+                                            prop.SetValue(cell, startingWeapons[3, 0], null);
+                                        }
+                                        else if (paramRow.ID == 1810170)
+                                        {
+                                            prop.SetValue(cell, startingWeapons[3, 1], null);
+                                        }
+                                        else if (paramRow.ID == 1810180)
+                                        {
+                                            prop.SetValue(cell, startingWeapons[4, 0], null);
+                                        }
+                                        else if (paramRow.ID == 1810190)
+                                        {
+                                            prop.SetValue(cell, startingWeapons[4, 1], null);
+                                        }
+                                        else if (paramRow.ID == 1810200)
+                                        {
+                                            prop.SetValue(cell, startingWeapons[5, 0], null);
+                                        }
+                                        else if (paramRow.ID == 1810210)
+                                        {
+                                            prop.SetValue(cell, startingWeapons[5, 1], null);
+                                        }
+                                        else if (paramRow.ID == 1810220)
+                                        {
+                                            prop.SetValue(cell, secondaryStartingWeapons[0], null);
+                                        }
+                                        else if (paramRow.ID == 1810230)
+                                        {
+                                            prop.SetValue(cell, startingWeapons[6, 0], null);
+                                        }
+                                        else if (paramRow.ID == 1810240)
+                                        {
+                                            prop.SetValue(cell, startingWeapons[6, 1], null);
+                                        }
+                                        else if (paramRow.ID == 1810250)
+                                        {
+                                            prop.SetValue(cell, secondaryStartingWeapons[1], null);
+                                        }
+                                        else if (paramRow.ID == 1810260)
+                                        {
+                                            prop.SetValue(cell, startingWeapons[7, 0], null);
+                                        }
+                                        else if (paramRow.ID == 1810270)
+                                        {
+                                            prop.SetValue(cell, startingWeapons[7, 1], null);
+                                        }
+                                        else if (paramRow.ID == 1810280)
+                                        {
+                                            prop.SetValue(cell, secondaryStartingWeapons[2], null);
+                                        }
+                                        else if (paramRow.ID == 1810290)
+                                        {
+                                            prop.SetValue(cell, startingWeapons[8, 0], null);
+                                        }
+                                        else if (paramRow.ID == 1810300)
+                                        {
+                                            prop.SetValue(cell, startingWeapons[8, 1], null);
+                                        }
+                                        else if (paramRow.ID == 1810310)
+                                        {
+                                            prop.SetValue(cell, secondaryStartingWeapons[3], null);
+                                        }
+                                        else if (paramRow.ID == 1810320)
+                                        {
+                                            prop.SetValue(cell, startingWeapons[9, 0], null);
+                                        }
+                                        else if (paramRow.ID == 1810330)
+                                        {
+                                            prop.SetValue(cell, startingWeapons[9, 1], null);
+                                        }
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            //rerolls starting spells to be useable if that is allowed
+            if (!checkBoxDontChangeStartSpells.Checked)
+            {
+                bool[] canUseSpell = new bool[3] { true, true, true }; //starting with sorcerer (index of 6)
+
+                List<int> allSorceries = new List<int>();
+                List<int> allPyromancies = new List<int>();
+                List<int> allMiracles = new List<int>();
+
+                //assign spells to lists
+                if(true)
+                {
+                    allSorceries.Add(3000);
+                    allSorceries.Add(3010);
+                    allSorceries.Add(3020);
+                    allSorceries.Add(3030);
+                    allSorceries.Add(3040);
+                    allSorceries.Add(3050);
+                    allSorceries.Add(3060);
+                    allSorceries.Add(3070);
+                    allSorceries.Add(3100);
+                    allSorceries.Add(3110);
+                    allSorceries.Add(3120);
+                    allSorceries.Add(3300);
+                    allSorceries.Add(3310);
+                    allSorceries.Add(3400);
+                    allSorceries.Add(3410);
+                    allSorceries.Add(3500);
+                    allSorceries.Add(3510);
+                    allSorceries.Add(3520);
+                    allSorceries.Add(3530);
+                    allSorceries.Add(3540);
+                    allSorceries.Add(3550);
+                    allSorceries.Add(3600);
+                    allSorceries.Add(3610);
+                    allSorceries.Add(3700);
+                    allSorceries.Add(3710);
+                    allSorceries.Add(3720);
+                    allSorceries.Add(3730);
+                    allSorceries.Add(3740);
+                    allPyromancies.Add(4000);
+                    allPyromancies.Add(4010);
+                    allPyromancies.Add(4020);
+                    allPyromancies.Add(4030);
+                    allPyromancies.Add(4040);
+                    allPyromancies.Add(4050);
+                    allPyromancies.Add(4060);
+                    allPyromancies.Add(4100);
+                    allPyromancies.Add(4110);
+                    allPyromancies.Add(4200);
+                    allPyromancies.Add(4210);
+                    allPyromancies.Add(4220);
+                    allPyromancies.Add(4300);
+                    allPyromancies.Add(4310);
+                    allPyromancies.Add(4360);
+                    allPyromancies.Add(4400);
+                    allPyromancies.Add(4500);
+                    allPyromancies.Add(4510);
+                    allPyromancies.Add(4520);
+                    allPyromancies.Add(4530);
+                    allMiracles.Add(5000);
+                    allMiracles.Add(5010);
+                    allMiracles.Add(5020);
+                    allMiracles.Add(5030);
+                    allMiracles.Add(5040);
+                    allMiracles.Add(5050);
+                    allMiracles.Add(5100);
+                    allMiracles.Add(5110);
+                    allMiracles.Add(5200);
+                    allMiracles.Add(5210);
+                    allMiracles.Add(5300);
+                    allMiracles.Add(5310);
+                    allMiracles.Add(5320);
+                    allMiracles.Add(5400);
+                    allMiracles.Add(5500);
+                    allMiracles.Add(5510);
+                    allMiracles.Add(5520);
+                    allMiracles.Add(5600);
+                    allMiracles.Add(5610);
+                    allMiracles.Add(5700);
+                    allMiracles.Add(5800);
+                    allMiracles.Add(5810);
+                    allMiracles.Add(5900);
+                    allMiracles.Add(5910);
+                }
+
+                //check if can use spells
+                foreach (var paramBndEntry in gameparamBnd)
+                {
+                    var paramShortName = paramBndEntry.Name;
+                    var paramFile = paramBndEntry.Param;
+                    if (paramFile.ID == "MAGIC_PARAM_ST")
+                    {
+                        for (int i = 0; i < 3; i++)
+                        {
+                            int spellID = startingSpells[i];
+                            foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
+                            {
+                                if(paramRow.ID == spellID)
+                                {
+                                    foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                    {
+                                        PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                        if (cell.Def.Name == "requirementIntellect")
+                                        {
+                                            if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[i + 6, 5])
+                                            {
+                                                canUseSpell[i] = false;
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "requirementFaith")
+                                        {
+                                            if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[i + 6, 6])
+                                            {
+                                                canUseSpell[i] = false;
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "slotLength")
+                                        {
+                                            int slotsUsed = Convert.ToInt32(prop.GetValue(cell, null));
+                                            int attunement = classStats[i + 6, 1];
+                                            int[] attunementIncreases = new int[] {0, 10, 12, 14, 16, 19, 23, 28, 34, 41, 50}; //index corresponds to attunement slots
+                                            int slotsOfClass = -1;
+                                            for(int a = 0; a < attunementIncreases.Length; a++)
+                                            {
+                                                if(attunement > attunementIncreases[a])
+                                                {
+                                                    slotsOfClass = a;
+                                                }
+                                                else
+                                                {
+                                                    a = attunementIncreases.Length;
+                                                }
+                                            }
+                                            if (slotsUsed > slotsOfClass)
+                                            {
+                                                canUseSpell[i] = false;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                int[] spellReplacements = new int[3] { -1, -1, -1};
+
+                //if can't use; find replacements [currently just randomizes starting spells if don't change starting spells is off, remove the true condition to make it only change if the spell needs rerolling]
+                for(int i = 0; i < 3; i++)
+                {
+                    if(true || !canUseSpell[i])
+                    {
+                        int classNumber = i + 6;
+                        List<int> spellCandidates = new List<int>();
+                        
+                        //create a list of valid replacements
+                        foreach (var paramBndEntry in gameparamBnd)
+                        {
+                            var paramShortName = paramBndEntry.Name;
+                            var paramFile = paramBndEntry.Param;
+                            if (paramFile.ID == "MAGIC_PARAM_ST")
+                            {
+                                foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
+                                {
+                                    bool isCandidate = true;
+                                    if (!checkBoxUniversalizeCasters.Checked)
+                                    {
+                                        if (allSorceries.Contains(startingSpells[i])) //replacing a sorcery
+                                        {
+                                            if (!allSorceries.Contains(paramRow.ID))
+                                                isCandidate = false;
+                                        }
+                                        else if (allPyromancies.Contains(startingSpells[i])) //replacing a pyromancy
+                                        {
+                                            if (!allPyromancies.Contains(paramRow.ID))
+                                                isCandidate = false;
+                                        }
+                                        else if (allMiracles.Contains(startingSpells[i])) //replacing a miracle
+                                        {
+                                            if (!allMiracles.Contains(paramRow.ID))
+                                                isCandidate = false;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (!allSorceries.Contains(paramRow.ID) && !allPyromancies.Contains(paramRow.ID) && !allMiracles.Contains(paramRow.ID))
+                                            isCandidate = false;
+                                    }
+                                    if (isCandidate) // if not disqualified yet, run stat checks
+                                    {
+                                        foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                        {
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            if (cell.Def.Name == "requirementIntellect")
+                                            {
+                                                if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[i, 5])
+                                                {
+                                                    isCandidate = false;
+                                                }
+                                            }
+                                            else if (cell.Def.Name == "requirementFaith")
+                                            {
+                                                if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[i, 6])
+                                                {
+                                                    isCandidate = false;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if (isCandidate) //if still a candidate add it
+                                    {
+                                        spellCandidates.Add(paramRow.ID);
+                                    }
+                                }
+                            }
+                        }
+
+
+                        if (spellCandidates.Count > 0)
+                        {
+                            spellReplacements[i] = spellCandidates[r.Next(spellCandidates.Count)];
+                        }
+                    }
+                }
+                
+                //replace spells if value isnt -1
+                foreach (var paramBndEntry in gameparamBnd)
+                {
+                    var paramShortName = paramBndEntry.Name;
+                    var paramFile = paramBndEntry.Param;
+                    if (paramFile.ID == "CHARACTER_INIT_PARAM")
+                    {
+                        foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
+                        {
+                            //if is a magic class
+                            if ((paramRow.ID >= 3006 && paramRow.ID <= 3008) || (paramRow.ID >= 2006 && paramRow.ID <= 2008))
+                            {
+                                int classNumber; //6-8
+                                if (paramRow.ID >= 3000)
+                                {
+                                    classNumber = paramRow.ID - 3000;
+                                }
+                                else
+                                {
+                                    classNumber = paramRow.ID - 2000;
+                                }
+                                foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    if (cell.Def.Name == "equip_Spell_01")
+                                    {
+                                        if (spellReplacements[classNumber - 6] != -1)
+                                        {
+                                            startingSpells[classNumber - 6] = spellReplacements[classNumber - 6];
+                                            prop.SetValue(cell, spellReplacements[classNumber - 6], null);
                                         }
                                     }
                                 }
@@ -7359,8 +8206,172 @@ namespace Paramdomizer
                 }
             }
 
+            //forces weapons to be useable for their respective class
+            foreach (var paramBndEntry in gameparamBnd)
+            {
+                var paramShortName = paramBndEntry.Name;
+                var paramFile = paramBndEntry.Param;
+                if (paramFile.ID == "EQUIP_PARAM_WEAPON_ST")
+                {
+                    //make all main and off hand weapons useable
+                    for (int i = 0; i < 10; i++)
+                    {
+                        for (int j = 0; j < 2; j++)
+                        {
+                            int weaponId = startingWeapons[i, j];
+                            foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
+                            {
+                                if (paramRow.ID == weaponId)
+                                {
+                                    foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                    {
+                                        PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                        if (cell.Def.Name == "properStrength")
+                                        {
+                                            //if value is greater than it's classes's stats, lower required stats
+                                            if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[i, 3])
+                                            {
+                                                prop.SetValue(cell, classStats[i, 3], null);
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "properAgility")
+                                        {
+                                            //if value is greater than it's classes's stats, lower required stats
+                                            if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[i, 4])
+                                            {
+                                                prop.SetValue(cell, classStats[i, 4], null);
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "properMagic")
+                                        {
+                                            //if value is greater than it's classes's stats, lower required stats
+                                            if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[i, 5])
+                                            {
+                                                prop.SetValue(cell, classStats[i, 5], null);
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "properFaith")
+                                        {
+                                            //if value is greater than it's classes's stats, lower required stats
+                                            if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[i, 6])
+                                            {
+                                                prop.SetValue(cell, classStats[i, 6], null);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    //make the secondary main hand weapons useable
+                    for (int i = 0; i < secondaryStartingWeapons.Length; i++)
+                    {
+                        int weaponId = secondaryStartingWeapons[i];
+                        int classIndex = i + 5; //starting at hunter (i = 0)
+                        foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
+                        {
+                            if (paramRow.ID == weaponId)
+                            {
+                                foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    if (cell.Def.Name == "properStrength")
+                                    {
+                                        //if value is greater than it's classes's stats, lower required stats
+                                        if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[classIndex, 3])
+                                        {
+                                            prop.SetValue(cell, classStats[classIndex, 3], null);
+                                        }
+                                    }
+                                    else if (cell.Def.Name == "properAgility")
+                                    {
+                                        //if value is greater than it's classes's stats, lower required stats
+                                        if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[classIndex, 4])
+                                        {
+                                            prop.SetValue(cell, classStats[classIndex, 4], null);
+                                        }
+                                    }
+                                    else if (cell.Def.Name == "properMagic")
+                                    {
+                                        //if value is greater than it's classes's stats, lower required stats
+                                        if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[classIndex, 5])
+                                        {
+                                            prop.SetValue(cell, classStats[classIndex, 5], null);
+                                        }
+                                    }
+                                    else if (cell.Def.Name == "properFaith")
+                                    {
+                                        //if value is greater than it's classes's stats, lower required stats
+                                        if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[classIndex, 6])
+                                        {
+                                            prop.SetValue(cell, classStats[classIndex, 6], null);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            //forces spells to be useable for their respective class
+            foreach (var paramBndEntry in gameparamBnd)
+            {
+                var paramShortName = paramBndEntry.Name;
+                var paramFile = paramBndEntry.Param;
+                if (paramFile.ID == "MAGIC_PARAM_ST")
+                {
+                    foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
+                    {
+                        //if is a starting spell
+                        if (startingSpells.Contains(paramRow.ID))
+                        {
+                            int spellId = paramRow.ID;
+                            int classIndex = 6; //sorcerer default in case something goes wrong
+                            for (int i = 0; i < startingSpells.Length; i++) //get class index from starting spell list (assuming sorcerer is index 0)
+                            {
+                                if (spellId == startingSpells[i])
+                                {
+                                    classIndex = i + 6; //starting at index of sorcerer
+                                    i = startingSpells.Length;
+                                }
+                            }
+                            foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                            {
+                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                if (cell.Def.Name == "requirementIntellect")
+                                {
+                                    //if value is greater than it's classes's stats, lower required stats
+                                    if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[classIndex, 5])
+                                    {
+                                        prop.SetValue(cell, classStats[classIndex, 5], null);
+                                    }
+                                }
+                                else if (cell.Def.Name == "requirementFaith")
+                                {
+                                    //if value is greater than it's classes's stats, lower required stats
+                                    if (Convert.ToInt32(prop.GetValue(cell, null)) > classStats[classIndex, 6])
+                                    {
+                                        prop.SetValue(cell, classStats[classIndex, 6], null);
+                                    }
+                                }
+                                else if (cell.Def.Name == "slotLength")
+                                {
+                                    //if slot length is greater than 1, make it length 1
+                                    if (Convert.ToInt32(prop.GetValue(cell, null)) > 1)
+                                    {
+                                        prop.SetValue(cell, 1, null);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             //set the text for the appropriate starting gifts
-            if(checkBoxStartingGifts.Checked)
+            if (checkBoxStartingGifts.Checked)
             {
                 //bool lists needed to prevent infinite looping because value pairs have to be removed and then added because they cant be modified directly
                 List<String> itemStartingNames = new List<String>() {"", "", "", "", ""};
@@ -7961,7 +8972,7 @@ namespace Paramdomizer
                 checkBoxWeaponDefense.Checked = getState(w2, 0);
                 checkBoxWeaponShieldSplit.Checked = getState(w2, 1);
                 checkBoxWeaponFistNo.Checked = getState(w2, 2);
-                checkBoxForceUseableStartWeapons.Checked = getState(w2, 3);
+                checkBoxDontChangeStartWeapons.Checked = getState(w2, 3);
 
                 //enemies byte
                 chkAggroRadius.Checked = getState(e1, 0);
@@ -7987,7 +8998,7 @@ namespace Paramdomizer
                 checkBoxRandomizeSpellSlotSize.Checked = getState(s1, 2);
                 checkBoxRandomizeSpellQuantity.Checked = getState(s1, 3);
                 chkMagicAnimations.Checked = getState(s1, 4);
-                checkBoxForceUseableStartSpells.Checked = getState(s1, 5);
+                checkBoxDontChangeStartSpells.Checked = getState(s1, 5);
 
                 //other settings byte (options in the other settings tab)
                 chkItemAnimations.Checked = getState(o1, 0);
@@ -8066,7 +9077,7 @@ namespace Paramdomizer
                    checkBoxWeaponScaling.Checked, checkBoxWeaponStamina.Checked, checkBoxWeaponStatMin.Checked, chkWeaponSpeffects.Checked);
 
                 //weapons 2nd byte
-                writeByte(s, checkBoxWeaponDefense.Checked, checkBoxWeaponShieldSplit.Checked, checkBoxWeaponFistNo.Checked, checkBoxForceUseableStartWeapons.Checked);
+                writeByte(s, checkBoxWeaponDefense.Checked, checkBoxWeaponShieldSplit.Checked, checkBoxWeaponFistNo.Checked, checkBoxDontChangeStartWeapons.Checked);
 
                 //enemies byte
                 writeByte(s, chkAggroRadius.Checked, chkTurnSpeeds.Checked, chkSpeffects.Checked);
@@ -8080,7 +9091,7 @@ namespace Paramdomizer
 
                 //spells byte
                 writeByte(s, checkBoxUniversalizeCasters.Checked, checkBoxRandomizeSpellRequirements.Checked, checkBoxRandomizeSpellSlotSize.Checked, checkBoxRandomizeSpellQuantity.Checked,
-                    chkMagicAnimations.Checked, checkBoxForceUseableStartSpells.Checked);
+                    chkMagicAnimations.Checked, checkBoxDontChangeStartSpells.Checked);
 
                 //other settings byte (options in the other settings tab)
                 writeByte(s, chkItemAnimations.Checked, chkRandomFaceData.Checked, chkRingSpeffects.Checked, chkVoices.Checked,
@@ -8178,7 +9189,7 @@ namespace Paramdomizer
                 checkBoxWeaponDefense.Checked = nextBool(msr);
                 checkBoxWeaponShieldSplit.Checked = nextBool(msr);
                 checkBoxWeaponFistNo.Checked = nextBool(msr);
-                checkBoxForceUseableStartWeapons.Checked = nextBool(msr);
+                checkBoxDontChangeStartWeapons.Checked = nextBool(msr);
 
                 //enemies
                 chkAggroRadius.Checked = nextBool(msr);
@@ -8204,7 +9215,7 @@ namespace Paramdomizer
                 checkBoxRandomizeSpellSlotSize.Checked = nextBool(msr);
                 checkBoxRandomizeSpellQuantity.Checked = nextBool(msr);
                 chkMagicAnimations.Checked = nextBool(msr);
-                checkBoxForceUseableStartSpells.Checked = nextBool(msr);
+                checkBoxDontChangeStartSpells.Checked = nextBool(msr);
 
                 //other settings
                 chkItemAnimations.Checked = nextBool(msr);
