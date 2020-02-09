@@ -245,6 +245,7 @@ namespace Paramdomizer
 
             int[,] startingWeapons = new int[10, 2]; //mainhand first then offhand weapons
             int[] secondaryStartingWeapons = new int[4]; //starts with hunter, next 3 indexes are the caster's casting item
+            int hunterStartingArrowsID = -1;
 
             int[] classLevels = new int[10];
             int[,] classStats = new int[10, 8];
@@ -6710,6 +6711,18 @@ namespace Paramdomizer
                         //if is a starting class
                         if(paramRow.ID >= 3000 && paramRow.ID <= 3009)
                         {
+                            //if is hunter
+                            if(paramRow.ID == 3005)
+                            {
+                                foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                {
+                                    if(cell.Def.Name == "equip_Arrow")
+                                    {
+                                        PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                        hunterStartingArrowsID = Convert.ToInt32(prop.GetValue(cell, null));
+                                    }
+                                }
+                            }
                             //if is hunter or spellcaster
                             if(paramRow.ID >= 3005 && paramRow.ID <= 3008)
                             {
@@ -7991,6 +8004,97 @@ namespace Paramdomizer
                 }
             }
 
+            //rerolls starting arrows on archer if it cant be used with their cross/bow
+            if (!checkBoxUniversalizeBows.Checked)
+            {
+                int weaponID = secondaryStartingWeapons[0]; //hunter's "bow"
+                List<int> crossbowIDS = new List<int>() {
+                    1250000, 1250100, 1250200, 1250400, 1250600, 1250800,
+                    1251000, 1251100, 1251200, 1251400, 1251600, 1251800,
+                    1252000, 1252100, 1252200, 1252400, 1252600, 1252800,
+                    1253000, 1253100, 1253200, 1253400, 1253600, 1253800};
+                bool isCrossbow = crossbowIDS.Contains(weaponID);
+
+                List<int> boltIDS = new List<int>() { 2100000, 2101000, 2102000, 2103000, 2104000, 2199000 };
+                bool isBolt = boltIDS.Contains(hunterStartingArrowsID);
+
+                List<int> validArrows = new List<int>() { 2000000, 2001000, 2002000, 2003000, 2004000, 2005000, 2006000, 2007000, 2008000 };
+                List<int> validBolts = new List<int>() { 2100000, 2101000, 2102000, 2103000, 2104000 };
+                int newArrowBolt = -1;
+
+                //check if needs new arrowbolt and if so decide what it is
+                if(isCrossbow && !isBolt)
+                {
+                    newArrowBolt = validBolts[r.Next(validBolts.Count)];
+                }
+                else if(!isCrossbow && isBolt)
+                {
+                    newArrowBolt = validArrows[r.Next(validArrows.Count)];
+                }
+
+                //if should change, change
+                if(newArrowBolt != -1)
+                {
+                    foreach (var paramBndEntry in gameparamBnd)
+                    {
+                        var paramShortName = paramBndEntry.Name;
+                        var paramFile = paramBndEntry.Param;
+                        if (paramFile.ID == "ITEMLOT_PARAM_ST")
+                        {
+                            foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
+                            {
+                                if (paramRow.ID == 1810221) //hunter's starting arrows
+                                {
+                                    foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                    {
+                                        PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                        if (cell.Def.Name == "lotItemId01") //only weapons are modified so no need to change type flag (arrows are weapons)
+                                        {
+                                            prop.SetValue(cell, newArrowBolt, null);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else if (paramFile.ID == "CHARACTER_INIT_PARAM")
+                        {
+                            foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
+                            {
+                                if (paramRow.ID == 3005) // hunter menu class
+                                {
+                                    foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                    {
+                                        PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                        if (cell.Def.Name == "equip_Arrow")
+                                        {
+                                            if(isCrossbow)
+                                            {
+                                                prop.SetValue(cell, -1, null);
+                                            }
+                                            else
+                                            {
+                                                prop.SetValue(cell, newArrowBolt, null);
+                                            }
+                                        }
+                                        else if (cell.Def.Name == "equip_Bolt")
+                                        {
+                                            if(isCrossbow)
+                                            {
+                                                prop.SetValue(cell, newArrowBolt, null);
+                                            }
+                                            else
+                                            {
+                                                prop.SetValue(cell, -1, null);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
 
             //rerolls starting spells to be useable if that is allowed
             if (!checkBoxDontChangeStartSpells.Checked)
