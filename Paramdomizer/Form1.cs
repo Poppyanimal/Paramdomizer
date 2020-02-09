@@ -454,7 +454,7 @@ namespace Paramdomizer
                                 Type type = cell.GetType();
                                 PropertyInfo prop = type.GetProperty("Value");
 
-                                if (chkSpeffects.Checked)
+                                if (chkSpeffectsEnemyAttacks.Checked)
                                 {
                                     prop.SetValue(cell, allSpEffects[randomIndex], null);
                                 }
@@ -595,7 +595,7 @@ namespace Paramdomizer
 
                                 if (!invalidSpeffects.Contains(speffectCheck))
                                 {
-                                    if (chkSpeffects.Checked)
+                                    if (chkSpeffectsEnemies.Checked)
                                     {
                                         prop.SetValue(cell, allSPeffects[randomIndex], null);
                                     }
@@ -9134,7 +9134,8 @@ namespace Paramdomizer
                 //enemies byte
                 chkAggroRadius.Checked = getState(e1, 0);
                 chkTurnSpeeds.Checked = getState(e1, 1);
-                chkSpeffects.Checked = getState(e1, 2);
+                chkSpeffectsEnemyAttacks.Checked = getState(e1, 2);
+                chkSpeffectsEnemies.Checked = getState(e1, 3);
 
                 //enemy and player byte
                 chkStaggerLevels.Checked = getState(ep1, 0);
@@ -9238,7 +9239,7 @@ namespace Paramdomizer
                     checkBoxUniversalizeBows.Checked);
 
                 //enemies byte
-                writeByte(s, chkAggroRadius.Checked, chkTurnSpeeds.Checked, chkSpeffects.Checked);
+                writeByte(s, chkAggroRadius.Checked, chkTurnSpeeds.Checked, chkSpeffectsEnemyAttacks.Checked, chkSpeffectsEnemies.Checked);
 
                 //enemy and player byte
                 writeByte(s, chkStaggerLevels.Checked, chkKnockback.Checked, chkBullets.Checked, chkHitboxSizes.Checked,
@@ -9353,7 +9354,8 @@ namespace Paramdomizer
                 //enemies
                 chkAggroRadius.Checked = nextBool(msr);
                 chkTurnSpeeds.Checked = nextBool(msr);
-                chkSpeffects.Checked = nextBool(msr);
+                chkSpeffectsEnemyAttacks.Checked = nextBool(msr);
+                chkSpeffectsEnemies.Checked = nextBool(msr);
 
                 //enemy and player
                 chkStaggerLevels.Checked = nextBool(msr);

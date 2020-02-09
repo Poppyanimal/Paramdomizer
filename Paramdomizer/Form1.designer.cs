@@ -43,7 +43,8 @@
             this.chkWeaponMoveset = new System.Windows.Forms.CheckBox();
             this.chkBullets = new System.Windows.Forms.CheckBox();
             this.chkKnockback = new System.Windows.Forms.CheckBox();
-            this.chkSpeffects = new System.Windows.Forms.CheckBox();
+            this.chkSpeffectsEnemies = new System.Windows.Forms.CheckBox();
+            this.chkSpeffectsEnemyAttacks = new System.Windows.Forms.CheckBox();
             this.chkWeaponSpeffects = new System.Windows.Forms.CheckBox();
             this.chkVoices = new System.Windows.Forms.CheckBox();
             this.chkTurnSpeeds = new System.Windows.Forms.CheckBox();
@@ -244,17 +245,30 @@
             this.chkKnockback.UseVisualStyleBackColor = true;
             this.chkKnockback.CheckedChanged += new System.EventHandler(this.chkKnockback_CheckedChanged);
             // 
-            // chkSpeffects
+            // chkSpeffectsEnemies
             // 
-            this.chkSpeffects.AutoSize = true;
-            this.chkSpeffects.Location = new System.Drawing.Point(33, 294);
-            this.chkSpeffects.Name = "chkSpeffects";
-            this.chkSpeffects.Size = new System.Drawing.Size(189, 17);
-            this.chkSpeffects.TabIndex = 5;
-            this.chkSpeffects.Text = "Randomize SPeffects on enemies*";
-            this.tooltip.SetToolTip(this.chkSpeffects, "Randomizes special effects on enemies as well as their attacks.\nWARNING: currentl" +
-        "y breaks enemy death animations sometimes???");
-            this.chkSpeffects.UseVisualStyleBackColor = true;
+            this.chkSpeffectsEnemies.AutoSize = true;
+            this.chkSpeffectsEnemies.Location = new System.Drawing.Point(268, 294);
+            this.chkSpeffectsEnemies.Name = "chkSpeffectsEnemies";
+            this.chkSpeffectsEnemies.Size = new System.Drawing.Size(189, 17);
+            this.chkSpeffectsEnemies.TabIndex = 5;
+            this.chkSpeffectsEnemies.Text = "Randomize SPeffects on enemies*";
+            this.tooltip.SetToolTip(this.chkSpeffectsEnemies, "Randomizes special effects on enemies, like stagger, super armor, status immuniti" +
+        "es, and .\nWARNING: currently breaks enemy death animations sometimes???");
+            this.chkSpeffectsEnemies.UseVisualStyleBackColor = true;
+            // 
+            // chkSpeffectsEnemyAttacks
+            // 
+            this.chkSpeffectsEnemyAttacks.AutoSize = true;
+            this.chkSpeffectsEnemyAttacks.Checked = true;
+            this.chkSpeffectsEnemyAttacks.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkSpeffectsEnemyAttacks.Location = new System.Drawing.Point(33, 294);
+            this.chkSpeffectsEnemyAttacks.Name = "chkSpeffectsEnemyAttacks";
+            this.chkSpeffectsEnemyAttacks.Size = new System.Drawing.Size(195, 17);
+            this.chkSpeffectsEnemyAttacks.TabIndex = 5;
+            this.chkSpeffectsEnemyAttacks.Text = "Randomize enemy attack SPeffects";
+            this.tooltip.SetToolTip(this.chkSpeffectsEnemyAttacks, "Randomizes special effects of enemy attacks, like bleed and poison.");
+            this.chkSpeffectsEnemyAttacks.UseVisualStyleBackColor = true;
             // 
             // chkWeaponSpeffects
             // 
@@ -899,7 +913,8 @@
             this.Controls.Add(this.chkBullets);
             this.Controls.Add(this.checkBoxForceUseableBullets);
             this.Controls.Add(this.chkKnockback);
-            this.Controls.Add(this.chkSpeffects);
+            this.Controls.Add(this.chkSpeffectsEnemyAttacks);
+            this.Controls.Add(this.chkSpeffectsEnemies);
             this.Controls.Add(this.chkWeaponSpeffects);
             this.Controls.Add(this.chkVoices);
             this.Controls.Add(this.lblMessage);
@@ -946,7 +961,8 @@
         private System.Windows.Forms.CheckBox chkWeaponMoveset;
         private System.Windows.Forms.CheckBox chkBullets;
         private System.Windows.Forms.CheckBox chkKnockback;
-        private System.Windows.Forms.CheckBox chkSpeffects;
+        private System.Windows.Forms.CheckBox chkSpeffectsEnemyAttacks;
+        private System.Windows.Forms.CheckBox chkSpeffectsEnemies;
         private System.Windows.Forms.CheckBox chkWeaponSpeffects;
         private System.Windows.Forms.CheckBox chkVoices;
         private System.Windows.Forms.CheckBox chkTurnSpeeds;
