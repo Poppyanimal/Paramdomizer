@@ -253,8 +253,8 @@
             this.chkSpeffectsEnemies.Size = new System.Drawing.Size(189, 17);
             this.chkSpeffectsEnemies.TabIndex = 5;
             this.chkSpeffectsEnemies.Text = "Randomize SPeffects on enemies*";
-            this.tooltip.SetToolTip(this.chkSpeffectsEnemies, "Randomizes special effects on enemies, like stagger, super armor, status immuniti" +
-        "es, and .\nWARNING: currently breaks enemy death animations sometimes???");
+            this.tooltip.SetToolTip(this.chkSpeffectsEnemies, "Randomizes special effects on enemies, like stun, super armor, status immuniti" +
+        "es, and gravelord status.\nWARNING: currently breaks enemy death animations sometimes???");
             this.chkSpeffectsEnemies.UseVisualStyleBackColor = true;
             // 
             // chkSpeffectsEnemyAttacks
