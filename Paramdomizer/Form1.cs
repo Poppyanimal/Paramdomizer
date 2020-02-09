@@ -1648,6 +1648,28 @@ namespace Paramdomizer
                         }
                     }
 
+                    //list of all arrows; used to prevent minimum stat randomization
+                    List<int> allArrowIDS = new List<int>();
+                    if(true)
+                    {
+                        allArrowIDS.Add(2000000);
+                        allArrowIDS.Add(2001000);
+                        allArrowIDS.Add(2002000);
+                        allArrowIDS.Add(2003000);
+                        allArrowIDS.Add(2004000);
+                        allArrowIDS.Add(2005000);
+                        allArrowIDS.Add(2006000);
+                        allArrowIDS.Add(2007000);
+                        allArrowIDS.Add(2008000);
+                        allArrowIDS.Add(2099000);
+                        allArrowIDS.Add(2100000);
+                        allArrowIDS.Add(2101000);
+                        allArrowIDS.Add(2102000);
+                        allArrowIDS.Add(2103000);
+                        allArrowIDS.Add(2104000);
+                        allArrowIDS.Add(2199000);
+                    }
+
                     //heads up to those who maintain this in the future:
                     //when treat shields seperately is enabled it runs a different set of
                     //loops for getting and setting values.
@@ -1814,8 +1836,8 @@ namespace Paramdomizer
                                     }
                                     else if (cell.Def.Name == "properStrength")
                                     {
-                                        //if not straightsword hilt
-                                        if(paramRow.ID != 212000)
+                                        //if not straightsword hilt or arrows
+                                        if(paramRow.ID != 212000 && !allArrowIDS.Contains(paramRow.ID))
                                         {
                                             PropertyInfo prop = cell.GetType().GetProperty("Value");
                                             allAttackProperStrength.Add(Convert.ToInt32(prop.GetValue(cell, null)));
@@ -1823,8 +1845,8 @@ namespace Paramdomizer
                                     }
                                     else if (cell.Def.Name == "properAgility")
                                     {
-                                        //if not straightsword hilt
-                                        if (paramRow.ID != 212000)
+                                        //if not straightsword hilt or arrows
+                                        if (paramRow.ID != 212000 && !allArrowIDS.Contains(paramRow.ID))
                                         {
                                             PropertyInfo prop = cell.GetType().GetProperty("Value");
                                             allAttackProperAgility.Add(Convert.ToInt32(prop.GetValue(cell, null)));
@@ -1832,8 +1854,8 @@ namespace Paramdomizer
                                     }
                                     else if (cell.Def.Name == "properMagic")
                                     {
-                                        //if not straightsword hilt
-                                        if (paramRow.ID != 212000)
+                                        //if not straightsword hilt or arrows
+                                        if (paramRow.ID != 212000 && !allArrowIDS.Contains(paramRow.ID))
                                         {
                                             PropertyInfo prop = cell.GetType().GetProperty("Value");
                                             allAttackProperMagic.Add(Convert.ToInt32(prop.GetValue(cell, null)));
@@ -1841,8 +1863,8 @@ namespace Paramdomizer
                                     }
                                     else if (cell.Def.Name == "properFaith")
                                     {
-                                        //if not straightsword hilt
-                                        if (paramRow.ID != 212000)
+                                        //if not straightsword hilt or arrows
+                                        if (paramRow.ID != 212000 && !allArrowIDS.Contains(paramRow.ID))
                                         {
                                             PropertyInfo prop = cell.GetType().GetProperty("Value");
                                             allAttackProperFaith.Add(Convert.ToInt32(prop.GetValue(cell, null)));
@@ -2519,8 +2541,8 @@ namespace Paramdomizer
                                     }
                                     else if (cell.Def.Name == "properStrength")
                                     {
-                                        //if not straightsword hilt
-                                        if (paramRow.ID != 212000)
+                                        //if not straightsword hilt or arrows
+                                        if (paramRow.ID != 212000 && !allArrowIDS.Contains(paramRow.ID))
                                         {
                                             int randomIndex = r.Next(allAttackProperStrength.Count);
                                             Type type = cell.GetType();
@@ -2568,8 +2590,8 @@ namespace Paramdomizer
                                     }
                                     else if (cell.Def.Name == "properAgility")
                                     {
-                                        //if not straightsword hilt
-                                        if (paramRow.ID != 212000)
+                                        //if not straightsword hilt or arrows
+                                        if (paramRow.ID != 212000 && !allArrowIDS.Contains(paramRow.ID))
                                         {
                                             int randomIndex = r.Next(allAttackProperAgility.Count);
                                             Type type = cell.GetType();
@@ -2617,8 +2639,8 @@ namespace Paramdomizer
                                     }
                                     else if (cell.Def.Name == "properMagic")
                                     {
-                                        //if not straightsword hilt
-                                        if (paramRow.ID != 212000)
+                                        //if not straightsword hilt or arrows
+                                        if (paramRow.ID != 212000 && !allArrowIDS.Contains(paramRow.ID))
                                         {
                                             int randomIndex = r.Next(allAttackProperMagic.Count);
                                             Type type = cell.GetType();
@@ -2666,8 +2688,8 @@ namespace Paramdomizer
                                     }
                                     else if (cell.Def.Name == "properFaith")
                                     {
-                                        //if not straightsword hilt
-                                        if (paramRow.ID != 212000)
+                                        //if not straightsword hilt or arrows
+                                        if (paramRow.ID != 212000 && !allArrowIDS.Contains(paramRow.ID))
                                         {
                                             int randomIndex = r.Next(allAttackProperFaith.Count);
                                             Type type = cell.GetType();
