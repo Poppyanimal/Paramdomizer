@@ -117,10 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="tooltip.TrayLocation" type="System.Drawing.Point, System.Drawing">
+  <metadata name="tooltip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
-  </data>
+  </metadata>
   <data name="checkBoxLoadFromBackup.ToolTip" xml:space="preserve">
     <value>If paramdomizer randomized your game in the past, it will load an unrandomized backup before randomizing again.
 useful to remove some of the effects of the randomizer before randomizing it again.
@@ -147,13 +146,20 @@ This setting can be turned off for those who consider themselves hardcore.</valu
 Will make the straightsword hilt have no stat requirements to use to prevent some softlocks.
 Also shuffles starting level.</value>
   </data>
-  <data name="checkBoxForceUseableStartSpells.ToolTip" xml:space="preserve">
-    <value>Any spells / pyromancies / miracles that a class starts with will have their stat requirements lowered if that class can't cast it at their starting level.</value>
+  <data name="checkBoxDontChangeStartSpells.ToolTip" xml:space="preserve">
+    <value>Paramdomizer will not change the starting spells of classes.
+By default the paramdomizer will attempt to reroll the classes's spells into ones the class can use if minimum stats aren't met.
+If this setting is turned on or if no match was found, the classes's spells won't be changed but instead will have their stat requirements forced to be useable.</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="$this.TrayHeight" type="System.Int32, mscorlib">
+  <data name="checkBoxDontChangeStartWeapons.ToolTip" xml:space="preserve">
+    <value>Paramdomizer will not change the starting weapons of classes.
+By default the paramdomizer will attempt to reroll the classes's weapons into ones the class can use if minimum stats aren't met.
+If this setting is turned on or if no match was found, the classes's weapons won't be changed but instead will have their stat requirements forced to be useable.</value>
+  </data>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>48</value>
-  </data>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAUAEBAAAAEAIABoBAAAVgAAABgYAAABACAAiAkAAL4EAAAgIAAAAQAgAKgQAABGDgAAMDAAAAEA

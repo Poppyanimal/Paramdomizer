@@ -79,6 +79,7 @@
             this.checkBoxDontChangeStartSpells = new System.Windows.Forms.CheckBox();
             this.checkBoxDontChangeStartWeapons = new System.Windows.Forms.CheckBox();
             this.checkBoxForceUseableBullets = new System.Windows.Forms.CheckBox();
+            this.checkBoxUniversalizeBows = new System.Windows.Forms.CheckBox();
             this.tooltip = new System.Windows.Forms.ToolTip(this.components);
             this.btnSavePreset = new System.Windows.Forms.Button();
             this.btnLoadPreset = new System.Windows.Forms.Button();
@@ -130,7 +131,7 @@
             // 
             // btnSubmit
             // 
-            this.btnSubmit.Location = new System.Drawing.Point(869, 434);
+            this.btnSubmit.Location = new System.Drawing.Point(869, 447);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.Size = new System.Drawing.Size(75, 23);
             this.btnSubmit.TabIndex = 20;
@@ -143,7 +144,7 @@
             this.checkBoxLoadFromBackup.AutoSize = true;
             this.checkBoxLoadFromBackup.Checked = true;
             this.checkBoxLoadFromBackup.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxLoadFromBackup.Location = new System.Drawing.Point(268, 440);
+            this.checkBoxLoadFromBackup.Location = new System.Drawing.Point(268, 453);
             this.checkBoxLoadFromBackup.Name = "checkBoxLoadFromBackup";
             this.checkBoxLoadFromBackup.Size = new System.Drawing.Size(204, 17);
             this.checkBoxLoadFromBackup.TabIndex = 45;
@@ -161,12 +162,13 @@
             this.chkRingSpeffects.Size = new System.Drawing.Size(168, 17);
             this.chkRingSpeffects.TabIndex = 7;
             this.chkRingSpeffects.Text = "Randomize SPeffects on rings";
-            this.tooltip.SetToolTip(this.chkRingSpeffects, "Randomizes the effects of rings amongst each other. Does not randomize the covenant of artorias.");
+            this.tooltip.SetToolTip(this.chkRingSpeffects, "Randomizes the effects of rings amongst each other. Does not randomize the covena" +
+        "nt of artorias.");
             this.chkRingSpeffects.UseVisualStyleBackColor = true;
             // 
             // lblMessage
             // 
-            this.lblMessage.Location = new System.Drawing.Point(701, 371);
+            this.lblMessage.Location = new System.Drawing.Point(701, 384);
             this.lblMessage.Name = "lblMessage";
             this.lblMessage.Size = new System.Drawing.Size(243, 43);
             this.lblMessage.TabIndex = 6;
@@ -218,7 +220,7 @@
             this.chkBullets.AutoSize = true;
             this.chkBullets.Checked = true;
             this.chkBullets.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkBullets.Location = new System.Drawing.Point(33, 348);
+            this.chkBullets.Location = new System.Drawing.Point(33, 365);
             this.chkBullets.Name = "chkBullets";
             this.chkBullets.Size = new System.Drawing.Size(112, 17);
             this.chkBullets.TabIndex = 9;
@@ -232,7 +234,7 @@
             this.chkKnockback.AutoSize = true;
             this.chkKnockback.Checked = true;
             this.chkKnockback.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkKnockback.Location = new System.Drawing.Point(268, 325);
+            this.chkKnockback.Location = new System.Drawing.Point(268, 342);
             this.chkKnockback.Name = "chkKnockback";
             this.chkKnockback.Size = new System.Drawing.Size(169, 17);
             this.chkKnockback.TabIndex = 16;
@@ -245,14 +247,13 @@
             // chkSpeffects
             // 
             this.chkSpeffects.AutoSize = true;
-            this.chkSpeffects.Checked = false;
-            this.chkSpeffects.CheckState = System.Windows.Forms.CheckState.Unchecked;
-            this.chkSpeffects.Location = new System.Drawing.Point(33, 277);
+            this.chkSpeffects.Location = new System.Drawing.Point(33, 294);
             this.chkSpeffects.Name = "chkSpeffects";
-            this.chkSpeffects.Size = new System.Drawing.Size(185, 17);
+            this.chkSpeffects.Size = new System.Drawing.Size(189, 17);
             this.chkSpeffects.TabIndex = 5;
             this.chkSpeffects.Text = "Randomize SPeffects on enemies*";
-            this.tooltip.SetToolTip(this.chkSpeffects, "Randomizes special effects on enemies as well as their attacks.\nWARNING: currently breaks enemy death animations sometimes???");
+            this.tooltip.SetToolTip(this.chkSpeffects, "Randomizes special effects on enemies as well as their attacks.\nWARNING: currentl" +
+        "y breaks enemy death animations sometimes???");
             this.chkSpeffects.UseVisualStyleBackColor = true;
             // 
             // chkWeaponSpeffects
@@ -287,7 +288,7 @@
             this.chkTurnSpeeds.AutoSize = true;
             this.chkTurnSpeeds.Checked = true;
             this.chkTurnSpeeds.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkTurnSpeeds.Location = new System.Drawing.Point(268, 254);
+            this.chkTurnSpeeds.Location = new System.Drawing.Point(268, 271);
             this.chkTurnSpeeds.Name = "chkTurnSpeeds";
             this.chkTurnSpeeds.Size = new System.Drawing.Size(166, 17);
             this.chkTurnSpeeds.TabIndex = 3;
@@ -300,7 +301,7 @@
             this.chkHitboxSizes.AutoSize = true;
             this.chkHitboxSizes.Checked = true;
             this.chkHitboxSizes.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkHitboxSizes.Location = new System.Drawing.Point(268, 348);
+            this.chkHitboxSizes.Location = new System.Drawing.Point(268, 365);
             this.chkHitboxSizes.Name = "chkHitboxSizes";
             this.chkHitboxSizes.Size = new System.Drawing.Size(136, 17);
             this.chkHitboxSizes.TabIndex = 18;
@@ -315,7 +316,7 @@
             this.chkStaggerLevels.AutoSize = true;
             this.chkStaggerLevels.Checked = true;
             this.chkStaggerLevels.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkStaggerLevels.Location = new System.Drawing.Point(33, 325);
+            this.chkStaggerLevels.Location = new System.Drawing.Point(33, 342);
             this.chkStaggerLevels.Name = "chkStaggerLevels";
             this.chkStaggerLevels.Size = new System.Drawing.Size(147, 17);
             this.chkStaggerLevels.TabIndex = 17;
@@ -329,7 +330,7 @@
             this.chkAggroRadius.AutoSize = true;
             this.chkAggroRadius.Checked = true;
             this.chkAggroRadius.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkAggroRadius.Location = new System.Drawing.Point(33, 254);
+            this.chkAggroRadius.Location = new System.Drawing.Point(33, 271);
             this.chkAggroRadius.Name = "chkAggroRadius";
             this.chkAggroRadius.Size = new System.Drawing.Size(140, 17);
             this.chkAggroRadius.TabIndex = 2;
@@ -392,7 +393,7 @@
             // checkBoxRemaster
             // 
             this.checkBoxRemaster.AutoSize = true;
-            this.checkBoxRemaster.Location = new System.Drawing.Point(33, 440);
+            this.checkBoxRemaster.Location = new System.Drawing.Point(33, 453);
             this.checkBoxRemaster.Name = "checkBoxRemaster";
             this.checkBoxRemaster.Size = new System.Drawing.Size(176, 17);
             this.checkBoxRemaster.TabIndex = 23;
@@ -490,7 +491,7 @@
             this.checkBoxWeaponFistNo.Location = new System.Drawing.Point(30, 208);
             this.checkBoxWeaponFistNo.Name = "checkBoxWeaponFistNo";
             this.checkBoxWeaponFistNo.Size = new System.Drawing.Size(105, 17);
-            this.checkBoxWeaponFistNo.TabIndex = 43;
+            this.checkBoxWeaponFistNo.TabIndex = 49;
             this.checkBoxWeaponFistNo.Text = "Don\'t modify fists";
             this.tooltip.SetToolTip(this.checkBoxWeaponFistNo, "Fists will not be modified by damage randomization of any other type of weapon ra" +
         "ndomization");
@@ -499,7 +500,7 @@
             // checkBoxDoTrueRandom
             // 
             this.checkBoxDoTrueRandom.AutoSize = true;
-            this.checkBoxDoTrueRandom.Location = new System.Drawing.Point(33, 406);
+            this.checkBoxDoTrueRandom.Location = new System.Drawing.Point(33, 419);
             this.checkBoxDoTrueRandom.Name = "checkBoxDoTrueRandom";
             this.checkBoxDoTrueRandom.Size = new System.Drawing.Size(153, 30);
             this.checkBoxDoTrueRandom.TabIndex = 26;
@@ -646,7 +647,7 @@
             this.checkBoxNerfHumanityBullets.AutoSize = true;
             this.checkBoxNerfHumanityBullets.Checked = true;
             this.checkBoxNerfHumanityBullets.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxNerfHumanityBullets.Location = new System.Drawing.Point(33, 371);
+            this.checkBoxNerfHumanityBullets.Location = new System.Drawing.Point(33, 388);
             this.checkBoxNerfHumanityBullets.Name = "checkBoxNerfHumanityBullets";
             this.checkBoxNerfHumanityBullets.Size = new System.Drawing.Size(124, 17);
             this.checkBoxNerfHumanityBullets.TabIndex = 45;
@@ -684,31 +685,23 @@
             // checkBoxDontChangeStartSpells
             // 
             this.checkBoxDontChangeStartSpells.AutoSize = true;
-            this.checkBoxDontChangeStartSpells.Checked = false;
-            this.checkBoxDontChangeStartSpells.CheckState = System.Windows.Forms.CheckState.Unchecked;
             this.checkBoxDontChangeStartSpells.Location = new System.Drawing.Point(257, 68);
             this.checkBoxDontChangeStartSpells.Name = "checkBoxDontChangeStartSpells";
-            this.checkBoxDontChangeStartSpells.Size = new System.Drawing.Size(159, 17);
+            this.checkBoxDontChangeStartSpells.Size = new System.Drawing.Size(156, 17);
             this.checkBoxDontChangeStartSpells.TabIndex = 45;
-            this.checkBoxDontChangeStartSpells.Text = "Don't change starting spells";
-            this.tooltip.SetToolTip(this.checkBoxDontChangeStartSpells, "Paramdomizer will not change the starting spells of classes.\n" +
-                "By default the paramdomizer will attempt to reroll the classes's spells into ones the class can use if minimum stats aren't met.\n" +
-                "If this setting is turned on or if no match was found, the classes's spells won't be changed but instead will have their stat requirements forced to be useable.");
+            this.checkBoxDontChangeStartSpells.Text = "Don\'t change starting spells";
+            this.tooltip.SetToolTip(this.checkBoxDontChangeStartSpells, resources.GetString("checkBoxDontChangeStartSpells.ToolTip"));
             this.checkBoxDontChangeStartSpells.UseVisualStyleBackColor = true;
             // 
             // checkBoxDontChangeStartWeapons
             // 
             this.checkBoxDontChangeStartWeapons.AutoSize = true;
-            this.checkBoxDontChangeStartWeapons.Checked = false;
-            this.checkBoxDontChangeStartWeapons.CheckState = System.Windows.Forms.CheckState.Unchecked;
             this.checkBoxDontChangeStartWeapons.Location = new System.Drawing.Point(257, 144);
             this.checkBoxDontChangeStartWeapons.Name = "checkBoxDontChangeStartWeapons";
-            this.checkBoxDontChangeStartWeapons.Size = new System.Drawing.Size(176, 17);
+            this.checkBoxDontChangeStartWeapons.Size = new System.Drawing.Size(173, 17);
             this.checkBoxDontChangeStartWeapons.TabIndex = 45;
-            this.checkBoxDontChangeStartWeapons.Text = "Don't change starting weapons";
-            this.tooltip.SetToolTip(this.checkBoxDontChangeStartWeapons, "Paramdomizer will not change the starting weapons of classes.\n" +
-                "By default the paramdomizer will attempt to reroll the classes's weapons into ones the class can use if minimum stats aren't met.\n" +
-                "If this setting is turned on or if no match was found, the classes's weapons won't be changed but instead will have their stat requirements forced to be useable.");
+            this.checkBoxDontChangeStartWeapons.Text = "Don\'t change starting weapons";
+            this.tooltip.SetToolTip(this.checkBoxDontChangeStartWeapons, resources.GetString("checkBoxDontChangeStartWeapons.ToolTip"));
             this.checkBoxDontChangeStartWeapons.UseVisualStyleBackColor = true;
             // 
             // checkBoxForceUseableBullets
@@ -716,7 +709,7 @@
             this.checkBoxForceUseableBullets.AutoSize = true;
             this.checkBoxForceUseableBullets.Checked = true;
             this.checkBoxForceUseableBullets.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxForceUseableBullets.Location = new System.Drawing.Point(268, 371);
+            this.checkBoxForceUseableBullets.Location = new System.Drawing.Point(268, 388);
             this.checkBoxForceUseableBullets.Name = "checkBoxForceUseableBullets";
             this.checkBoxForceUseableBullets.Size = new System.Drawing.Size(126, 17);
             this.checkBoxForceUseableBullets.TabIndex = 45;
@@ -724,6 +717,19 @@
             this.tooltip.SetToolTip(this.checkBoxForceUseableBullets, "Forces bullets to be useable. (or at least tries to.)\nAffects both players and en" +
         "emies.\nWARNING: this feature is currently incomplete.");
             this.checkBoxForceUseableBullets.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxUniversalizeBows
+            // 
+            this.checkBoxUniversalizeBows.AutoSize = true;
+            this.checkBoxUniversalizeBows.Checked = true;
+            this.checkBoxUniversalizeBows.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxUniversalizeBows.Location = new System.Drawing.Point(30, 231);
+            this.checkBoxUniversalizeBows.Name = "checkBoxUniversalizeBows";
+            this.checkBoxUniversalizeBows.Size = new System.Drawing.Size(141, 17);
+            this.checkBoxUniversalizeBows.TabIndex = 43;
+            this.checkBoxUniversalizeBows.Text = "Universalize cross/bows";
+            this.tooltip.SetToolTip(this.checkBoxUniversalizeBows, "Bows and crossbows can now use both types of ammo.");
+            this.checkBoxUniversalizeBows.UseVisualStyleBackColor = true;
             // 
             // tooltip
             // 
@@ -765,7 +771,7 @@
             // 
             // btnDoTrueRandomPopup
             // 
-            this.btnDoTrueRandomPopup.Location = new System.Drawing.Point(192, 408);
+            this.btnDoTrueRandomPopup.Location = new System.Drawing.Point(192, 421);
             this.btnDoTrueRandomPopup.Name = "btnDoTrueRandomPopup";
             this.btnDoTrueRandomPopup.Size = new System.Drawing.Size(104, 28);
             this.btnDoTrueRandomPopup.TabIndex = 48;
@@ -799,7 +805,7 @@
             // gbEnemiesCategory
             // 
             this.gbEnemiesCategory.AutoSize = true;
-            this.gbEnemiesCategory.Location = new System.Drawing.Point(11, 231);
+            this.gbEnemiesCategory.Location = new System.Drawing.Point(11, 248);
             this.gbEnemiesCategory.Name = "gbEnemiesCategory";
             this.gbEnemiesCategory.Size = new System.Drawing.Size(465, 64);
             this.gbEnemiesCategory.TabIndex = 34;
@@ -819,7 +825,7 @@
             // gbSharedCategory
             // 
             this.gbSharedCategory.AutoSize = true;
-            this.gbSharedCategory.Location = new System.Drawing.Point(11, 301);
+            this.gbSharedCategory.Location = new System.Drawing.Point(11, 318);
             this.gbSharedCategory.Name = "gbSharedCategory";
             this.gbSharedCategory.Size = new System.Drawing.Size(465, 87);
             this.gbSharedCategory.TabIndex = 36;
@@ -839,7 +845,7 @@
             // lblVersion
             // 
             this.lblVersion.AutoSize = true;
-            this.lblVersion.Location = new System.Drawing.Point(773, 441);
+            this.lblVersion.Location = new System.Drawing.Point(773, 454);
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(90, 13);
             this.lblVersion.TabIndex = 41;
@@ -849,7 +855,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(960, 470);
+            this.ClientSize = new System.Drawing.Size(960, 480);
+            this.Controls.Add(this.checkBoxUniversalizeBows);
             this.Controls.Add(this.btnLoadPreset);
             this.Controls.Add(this.btnSavePreset);
             this.Controls.Add(this.btnRandomizeSettings);
@@ -906,8 +913,8 @@
             this.Controls.Add(this.gbSharedCategory);
             this.Controls.Add(this.gbArmorCategory);
             this.Controls.Add(this.lblVersion);
-            this.Controls.Add(this.gbWeaponCategory);
             this.Controls.Add(this.gbSpellCategory);
+            this.Controls.Add(this.gbWeaponCategory);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -976,6 +983,7 @@
         private System.Windows.Forms.CheckBox checkBoxDontChangeStartSpells;
         private System.Windows.Forms.CheckBox checkBoxDontChangeStartWeapons;
         private System.Windows.Forms.CheckBox checkBoxForceUseableBullets;
+        private System.Windows.Forms.CheckBox checkBoxUniversalizeBows;
         private System.Windows.Forms.ToolTip tooltip;
         private System.Windows.Forms.GroupBox gbWeaponCategory;
         private System.Windows.Forms.GroupBox gbSpellCategory;

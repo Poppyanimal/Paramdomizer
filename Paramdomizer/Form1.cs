@@ -1235,8 +1235,16 @@ namespace Paramdomizer
                                     {
                                         if(checkBoxDoTrueRandom.Checked && TRForm.chkTRArmorWeight.Checked)
                                         {
+                                            // 2/3 chance to be 7.0 or under
                                             //randomized by 0.1 steps
-                                            prop.SetValue(cell, r.Next(196) / 10.0, null);
+                                            if(r.Next(3) != 0)
+                                            {
+                                                prop.SetValue(cell, r.Next(71) / 10.0, null);
+                                            }
+                                            else
+                                            {
+                                                prop.SetValue(cell, (r.Next(126) + 70 ) / 10.0, null);
+                                            }
                                         }
                                         else
                                         {
@@ -2046,6 +2054,21 @@ namespace Paramdomizer
                                             }
 
                                             allspAtkcategories.RemoveAt(randomIndex);
+                                        }
+                                    }
+                                }
+                                else //if bow
+                                {
+                                    foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                                    {
+                                        if (cell.Def.Name == "arrowSlotEquipable:1" || cell.Def.Name == "boltSlotEquipable:1")
+                                        {
+                                            if(checkBoxUniversalizeBows.Checked)
+                                            {
+                                                Type type = cell.GetType();
+                                                PropertyInfo prop = type.GetProperty("Value");
+                                                prop.SetValue(cell, true, null);
+                                            }
                                         }
                                     }
                                 }
@@ -7831,7 +7854,6 @@ namespace Paramdomizer
                                 foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
                                 {
                                     PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                    Console.WriteLine(cell.Def.Name);
                                     if (cell.Def.Name == "lotItemId01") //only weapons are modified so no need to change type flag
                                     {
                                         if (paramRow.ID == 1810100)
@@ -8973,6 +8995,7 @@ namespace Paramdomizer
                 checkBoxWeaponShieldSplit.Checked = getState(w2, 1);
                 checkBoxWeaponFistNo.Checked = getState(w2, 2);
                 checkBoxDontChangeStartWeapons.Checked = getState(w2, 3);
+                checkBoxUniversalizeBows.Checked = getState(w2, 4);
 
                 //enemies byte
                 chkAggroRadius.Checked = getState(e1, 0);
@@ -9077,7 +9100,8 @@ namespace Paramdomizer
                    checkBoxWeaponScaling.Checked, checkBoxWeaponStamina.Checked, checkBoxWeaponStatMin.Checked, chkWeaponSpeffects.Checked);
 
                 //weapons 2nd byte
-                writeByte(s, checkBoxWeaponDefense.Checked, checkBoxWeaponShieldSplit.Checked, checkBoxWeaponFistNo.Checked, checkBoxDontChangeStartWeapons.Checked);
+                writeByte(s, checkBoxWeaponDefense.Checked, checkBoxWeaponShieldSplit.Checked, checkBoxWeaponFistNo.Checked, checkBoxDontChangeStartWeapons.Checked,
+                    checkBoxUniversalizeBows.Checked);
 
                 //enemies byte
                 writeByte(s, chkAggroRadius.Checked, chkTurnSpeeds.Checked, chkSpeffects.Checked);
@@ -9190,6 +9214,7 @@ namespace Paramdomizer
                 checkBoxWeaponShieldSplit.Checked = nextBool(msr);
                 checkBoxWeaponFistNo.Checked = nextBool(msr);
                 checkBoxDontChangeStartWeapons.Checked = nextBool(msr);
+                checkBoxUniversalizeBows.Checked = nextBool(msr);
 
                 //enemies
                 chkAggroRadius.Checked = nextBool(msr);
