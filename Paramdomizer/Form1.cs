@@ -557,7 +557,7 @@ namespace Paramdomizer
                             {
                                 PropertyInfo prop = cell.GetType().GetProperty("Value");
                                 int speffectCheck = Convert.ToInt32(prop.GetValue(cell, null));
-                                if (!invalidSpeffects.Contains(speffectCheck))
+                                if (cell.Def.Name != "spEffectID4" || !invalidSpeffects.Contains(speffectCheck))
                                 {
                                     allSPeffects.Add(speffectCheck);
                                 }
@@ -593,7 +593,7 @@ namespace Paramdomizer
 
                                 int speffectCheck = Convert.ToInt32(prop.GetValue(cell, null));
 
-                                if (!invalidSpeffects.Contains(speffectCheck))
+                                if (cell.Def.Name != "spEffectID4" || !invalidSpeffects.Contains(speffectCheck))
                                 {
                                     if (chkSpeffectsEnemies.Checked)
                                     {
