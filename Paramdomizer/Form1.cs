@@ -1872,8 +1872,12 @@ namespace Paramdomizer
                                     }
                                     else if (cell.Def.Name == "weight")
                                     {
-                                        PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                        allWepWeight.Add(Convert.ToDouble(prop.GetValue(cell, null)));
+                                        //if not arrow, consider weight
+                                        if(!allArrowIDS.Contains(paramRow.ID))
+                                        {
+                                            PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                            allWepWeight.Add(Convert.ToDouble(prop.GetValue(cell, null)));
+                                        }
                                     }
                                     else if (cell.Def.Name == "attackBaseStamina")
                                     {
@@ -2737,37 +2741,41 @@ namespace Paramdomizer
                                     }
                                     else if (cell.Def.Name == "weight")
                                     {
-                                        MeowDSIO.DataTypes.PARAM.ParamCellValueRef fistCheckCell = paramRow.Cells.First(c => c.Def.Name == "sortId");
-                                        Type fistchecktype = fistCheckCell.GetType();
-                                        PropertyInfo fistcheckprop = fistchecktype.GetProperty("Value");
-
-                                        int randomIndex = r.Next(allWepWeight.Count);
-                                        Type type = cell.GetType();
-                                        PropertyInfo prop = type.GetProperty("Value");
-                                        //fists dont get weight
-                                        if (checkBoxWeaponWeight.Checked && Convert.ToInt32(fistcheckprop.GetValue(fistCheckCell, null)) != 1750)
+                                        //if not an arrow
+                                        if(!allArrowIDS.Contains(paramRow.ID))
                                         {
-                                            if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponWeight.Checked)
+                                            MeowDSIO.DataTypes.PARAM.ParamCellValueRef fistCheckCell = paramRow.Cells.First(c => c.Def.Name == "sortId");
+                                            Type fistchecktype = fistCheckCell.GetType();
+                                            PropertyInfo fistcheckprop = fistchecktype.GetProperty("Value");
+
+                                            int randomIndex = r.Next(allWepWeight.Count);
+                                            Type type = cell.GetType();
+                                            PropertyInfo prop = type.GetProperty("Value");
+                                            //fists dont get weight
+                                            if (checkBoxWeaponWeight.Checked && Convert.ToInt32(fistcheckprop.GetValue(fistCheckCell, null)) != 1750)
                                             {
-                                                //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
-                                                if (r.Next(20) == 0)
+                                                if (checkBoxDoTrueRandom.Checked && TRForm.chkTRWeaponWeight.Checked)
                                                 {
-                                                    //28 is the cap; weight is randomized in half steps
-                                                    prop.SetValue(cell, (r.Next(37) + 20) / 2.0, null);
+                                                    //small chance that the value will be above a certain value (used to prevent higher values appearing more frequently because outliers are included)
+                                                    if (r.Next(20) == 0)
+                                                    {
+                                                        //28 is the cap; weight is randomized in half steps
+                                                        prop.SetValue(cell, (r.Next(37) + 20) / 2.0, null);
+                                                    }
+                                                    else
+                                                    {
+                                                        //10 is soft cap; weight is randomized in half steps
+                                                        prop.SetValue(cell, (r.Next(21)) / 2.0, null);
+                                                    }
                                                 }
                                                 else
                                                 {
-                                                    //10 is soft cap; weight is randomized in half steps
-                                                    prop.SetValue(cell, (r.Next(21)) / 2.0, null);
+                                                    prop.SetValue(cell, allWepWeight[randomIndex], null);
                                                 }
                                             }
-                                            else
-                                            {
-                                                prop.SetValue(cell, allWepWeight[randomIndex], null);
-                                            }
-                                        }
 
-                                        allWepWeight.RemoveAt(randomIndex);
+                                            allWepWeight.RemoveAt(randomIndex);
+                                        }
                                     }
                                     else if (cell.Def.Name == "attackBaseStamina")
                                     {
