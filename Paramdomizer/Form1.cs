@@ -7202,6 +7202,181 @@ namespace Paramdomizer
                         }
                     }
                 }
+                else if (paramFile.ID == "LOCK_CAM_PARAM_ST")
+                {
+                    List<int> camDistTargetList = new List<int>();
+                    List<int> rotRangeMinXList = new List<int>();
+                    List<int> lockRotXShiftRatioList = new List<int>();
+                    List<int> chrOrgOffset_YList = new List<int>();
+                    List<int> chrLockRangeMaxRadiusList = new List<int>();
+                    List<int> camFovYList = new List<int>();
+                    
+                    //read values
+                    foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
+                    {
+                        foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                        {
+                            if (cell.Def.Name == "camDistTarget")
+                            {
+                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                camDistTargetList.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                            }
+                            else if (cell.Def.Name == "rotRangeMinX")
+                            {
+                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                rotRangeMinXList.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                            }
+                            else if (cell.Def.Name == "lockRotXShiftRatio")
+                            {
+                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                lockRotXShiftRatioList.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                            }
+                            else if (cell.Def.Name == "chrOrgOffset_Y")
+                            {
+                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                chrOrgOffset_YList.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                            }
+                            else if (cell.Def.Name == "chrLockRangeMaxRadius")
+                            {
+                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                chrLockRangeMaxRadiusList.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                            }
+                            else if (cell.Def.Name == "camFovY")
+                            {
+                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                camFovYList.Add(Convert.ToInt32(prop.GetValue(cell, null)));
+                            }
+                        }
+                    }
+
+                    //set values
+                    foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
+                    {
+                        foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                        {
+                            if (cell.Def.Name == "camDistTarget")
+                            {
+                                int randomIndex = r.Next(camDistTargetList.Count);
+                                Type type = cell.GetType();
+                                PropertyInfo prop = type.GetProperty("Value");
+
+                                if (checkBoxRandomizeCamera.Checked)
+                                {
+                                    if(checkBoxDoTrueRandom.Checked && TRForm.chkTRCamera.Checked)
+                                    {
+                                        prop.SetValue(cell, r.NextDouble() * 13, null);
+                                    }
+                                    else
+                                    {
+                                        prop.SetValue(cell, camDistTargetList[randomIndex], null);
+                                    }
+                                }
+
+                                camDistTargetList.RemoveAt(randomIndex);
+                            }
+                            else if (cell.Def.Name == "rotRangeMinX")
+                            {
+                                int randomIndex = r.Next(rotRangeMinXList.Count);
+                                Type type = cell.GetType();
+                                PropertyInfo prop = type.GetProperty("Value");
+
+                                if (checkBoxRandomizeCamera.Checked)
+                                {
+                                    if (checkBoxDoTrueRandom.Checked && TRForm.chkTRCamera.Checked)
+                                    {
+                                        prop.SetValue(cell, (r.Next(50) *-1) - 10, null);
+                                    }
+                                    else
+                                    {
+                                        prop.SetValue(cell, rotRangeMinXList[randomIndex], null);
+                                    }
+                                }
+
+                                rotRangeMinXList.RemoveAt(randomIndex);
+                            }
+                            else if (cell.Def.Name == "lockRotXShiftRatio")
+                            {
+                                int randomIndex = r.Next(lockRotXShiftRatioList.Count);
+                                Type type = cell.GetType();
+                                PropertyInfo prop = type.GetProperty("Value");
+
+                                if (checkBoxRandomizeCamera.Checked)
+                                {
+                                    if (checkBoxDoTrueRandom.Checked && TRForm.chkTRCamera.Checked)
+                                    {
+                                        prop.SetValue(cell, r.Next(10) / 10.0, null);
+                                    }
+                                    else
+                                    {
+                                        prop.SetValue(cell, lockRotXShiftRatioList[randomIndex], null);
+                                    }
+                                }
+
+                                lockRotXShiftRatioList.RemoveAt(randomIndex);
+                            }
+                            else if (cell.Def.Name == "chrOrgOffset_Y")
+                            {
+                                int randomIndex = r.Next(chrOrgOffset_YList.Count);
+                                Type type = cell.GetType();
+                                PropertyInfo prop = type.GetProperty("Value");
+
+                                if (checkBoxRandomizeCamera.Checked)
+                                {
+                                    if (checkBoxDoTrueRandom.Checked && TRForm.chkTRCamera.Checked)
+                                    {
+                                        prop.SetValue(cell, r.NextDouble() * 3, null);
+                                    }
+                                    else
+                                    {
+                                        prop.SetValue(cell, chrOrgOffset_YList[randomIndex], null);
+                                    }
+                                }
+
+                                chrOrgOffset_YList.RemoveAt(randomIndex);
+                            }
+                            else if (cell.Def.Name == "chrLockRangeMaxRadius")
+                            {
+                                int randomIndex = r.Next(chrLockRangeMaxRadiusList.Count);
+                                Type type = cell.GetType();
+                                PropertyInfo prop = type.GetProperty("Value");
+
+                                if (checkBoxRandomizeCamera.Checked)
+                                {
+                                    if (checkBoxDoTrueRandom.Checked && TRForm.chkTRCamera.Checked)
+                                    {
+                                        prop.SetValue(cell, r.Next(15) + 5, null);
+                                    }
+                                    else
+                                    {
+                                        prop.SetValue(cell, chrLockRangeMaxRadiusList[randomIndex], null);
+                                    }
+                                }
+
+                                chrLockRangeMaxRadiusList.RemoveAt(randomIndex);
+                            }
+                            else if (cell.Def.Name == "camFovY")
+                            {
+                                int randomIndex = r.Next(camFovYList.Count);
+                                Type type = cell.GetType();
+                                PropertyInfo prop = type.GetProperty("Value");
+
+                                if (checkBoxRandomizeCamera.Checked)
+                                {
+                                    if (checkBoxDoTrueRandom.Checked && TRForm.chkTRCamera.Checked)
+                                    {
+                                        prop.SetValue(cell, r.NextDouble() * 90, null);
+                                    }
+                                    else
+                                    {
+                                        prop.SetValue(cell, camFovYList[randomIndex], null);
+                                    }
+                                }
+
+                                camFovYList.RemoveAt(randomIndex);
+                            }
+                        }
+                    }
+                }
             }
 
             //rerolls starting weapons to be useable if that is allowed
@@ -9112,6 +9287,7 @@ namespace Paramdomizer
                 int o1 = s.ReadByte(); //other settings byte (options in the other settings tab)
                 int altRand1 = s.ReadByte(); //alternative randomization's 1st byte (don't randomize by shuffle)
                 int altRand2 = s.ReadByte(); //alternative randomization's 2nd byte (don't randomize by shuffle)
+                int o2 = s.ReadByte(); // other settings byte 2
 
 
                 //weapons 1st byte
@@ -9168,6 +9344,9 @@ namespace Paramdomizer
                 checkBoxStartingGiftsAmount.Checked = getState(o1, 6);
                 checkBoxStartingClasses.Checked = getState(o1, 7);
 
+                //other settings byte 2
+                checkBoxRandomizeCamera.Checked = getState(o2, 0);
+
                 //alternative randomization's 1st byte (don't randomize by shuffle)
                 checkBoxDoTrueRandom.Checked = getState(altRand1, 0);
                 TRForm.chkTRWeaponDamage.Checked = getState(altRand1, 1);
@@ -9184,6 +9363,7 @@ namespace Paramdomizer
                 TRForm.chkTRSpellRequirements.Checked = getState(altRand2, 2);
                 TRForm.chkTRSpellSlotSize.Checked = getState(altRand2, 3);
                 TRForm.chkTRSpellQuantity.Checked = getState(altRand2, 4);
+                TRForm.chkTRCamera.Checked = getState(altRand2, 5);
 
 
 
@@ -9262,8 +9442,10 @@ namespace Paramdomizer
 
                 //alternative randomization's 2nd byte (don't randomize by shuffle)
                 writeByte(s, TRForm.chkTRArmorPoise.Checked, TRForm.chkTRArmorWeight.Checked, TRForm.chkTRSpellRequirements.Checked, TRForm.chkTRSpellSlotSize.Checked,
-                    TRForm.chkTRSpellQuantity.Checked);
+                    TRForm.chkTRSpellQuantity.Checked, TRForm.chkTRCamera.Checked);
 
+                //other settings byte 2
+                writeByte(s, checkBoxRandomizeCamera.Checked);
 
 
                 lblMessage.Name = "";
@@ -9363,6 +9545,7 @@ namespace Paramdomizer
                 chkBullets.Checked = nextBool(msr);
                 chkHitboxSizes.Checked = nextBool(msr);
                 checkBoxNerfHumanityBullets.Checked = nextBool(msr);
+                checkBoxForceUseableBullets.Checked = nextBool(msr);
 
                 //armor
                 checkBoxArmorResistance.Checked = nextBool(msr);
@@ -9387,6 +9570,7 @@ namespace Paramdomizer
                 checkBoxPreventSpellGifts.Checked = nextBool(msr);
                 checkBoxStartingGiftsAmount.Checked = nextBool(msr);
                 checkBoxStartingClasses.Checked = nextBool(msr);
+                checkBoxRandomizeCamera.Checked = nextBool(msr);
 
                 //alternative randomization's 1st
                 checkBoxDoTrueRandom.Checked = nextBool(msr);
@@ -9404,6 +9588,90 @@ namespace Paramdomizer
                 TRForm.chkTRSpellRequirements.Checked = nextBool(msr);
                 TRForm.chkTRSpellSlotSize.Checked = nextBool(msr);
                 TRForm.chkTRSpellQuantity.Checked = nextBool(msr);
+                TRForm.chkTRCamera.Checked = nextBool(msr);
+            }
+        }
+
+        private void btnDisableAll_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("WARNING: You are about to change all settings.\nDo you want to continue?", "Disable All Settings", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                //change all settings to make it so nothing that changes the game is turned on
+
+                //weapons 1st
+                chkWeaponDamage.Checked = false;
+                chkWeaponMoveset.Checked = false;
+                chkWeaponModels.Checked = false;
+                checkBoxWeaponWeight.Checked = false;
+                checkBoxWeaponScaling.Checked = false;
+                checkBoxWeaponStamina.Checked = false;
+                checkBoxWeaponStatMin.Checked = false;
+                chkWeaponSpeffects.Checked = false;
+
+                //weapons 2nd
+                checkBoxWeaponDefense.Checked = false;
+                checkBoxWeaponShieldSplit.Checked = false;
+                checkBoxWeaponFistNo.Checked = true;
+                checkBoxDontChangeStartWeapons.Checked = true;
+                checkBoxUniversalizeBows.Checked = false;
+
+                //enemies
+                chkAggroRadius.Checked = false;
+                chkTurnSpeeds.Checked = false;
+                chkSpeffectsEnemyAttacks.Checked = false;
+                chkSpeffectsEnemies.Checked = false;
+
+                //enemy and player
+                chkStaggerLevels.Checked = false;
+                chkKnockback.Checked = false;
+                chkBullets.Checked = false;
+                chkHitboxSizes.Checked = false;
+                checkBoxNerfHumanityBullets.Checked = false;
+                checkBoxForceUseableBullets.Checked = false;
+
+                //armor
+                checkBoxArmorResistance.Checked = false;
+                checkBoxArmorWeight.Checked = false;
+                checkBoxArmorPoise.Checked = false;
+                checkBoxArmorspEffect.Checked = false;
+
+                //spells
+                checkBoxUniversalizeCasters.Checked = false;
+                checkBoxRandomizeSpellRequirements.Checked = false;
+                checkBoxRandomizeSpellSlotSize.Checked = false;
+                checkBoxRandomizeSpellQuantity.Checked = false;
+                chkMagicAnimations.Checked = false;
+                checkBoxDontChangeStartSpells.Checked = true;
+
+                //other settings
+                chkItemAnimations.Checked = false;
+                chkRandomFaceData.Checked = false;
+                chkRingSpeffects.Checked = false;
+                chkVoices.Checked = false;
+                checkBoxStartingGifts.Checked = false;
+                checkBoxPreventSpellGifts.Checked = false;
+                checkBoxStartingGiftsAmount.Checked = false;
+                checkBoxStartingClasses.Checked = false;
+                checkBoxRandomizeCamera.Checked = false;
+
+                //alternative randomization's 1st
+                checkBoxDoTrueRandom.Checked = false;
+                TRForm.chkTRWeaponDamage.Checked = false;
+                TRForm.chkTRWeaponWeight.Checked = false;
+                TRForm.chkTRWeaponScaling.Checked = false;
+                TRForm.chkTRWeaponStamina.Checked = false;
+                TRForm.chkTRWeaponStatMin.Checked = false;
+                TRForm.chkTRWeaponDefense.Checked = false;
+                TRForm.chkTRArmorResistance.Checked = false;
+
+                //alternative randomization's 2nd
+                TRForm.chkTRArmorPoise.Checked = false;
+                TRForm.chkTRArmorWeight.Checked = false;
+                TRForm.chkTRSpellRequirements.Checked = false;
+                TRForm.chkTRSpellSlotSize.Checked = false;
+                TRForm.chkTRSpellQuantity.Checked = false;
+                TRForm.chkTRCamera.Checked = false;
             }
         }
     }

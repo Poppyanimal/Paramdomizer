@@ -81,10 +81,12 @@
             this.checkBoxDontChangeStartWeapons = new System.Windows.Forms.CheckBox();
             this.checkBoxForceUseableBullets = new System.Windows.Forms.CheckBox();
             this.checkBoxUniversalizeBows = new System.Windows.Forms.CheckBox();
+            this.checkBoxRandomizeCamera = new System.Windows.Forms.CheckBox();
             this.tooltip = new System.Windows.Forms.ToolTip(this.components);
             this.btnSavePreset = new System.Windows.Forms.Button();
             this.btnLoadPreset = new System.Windows.Forms.Button();
             this.btnRandomizeSettings = new System.Windows.Forms.Button();
+            this.btnDisableAll = new System.Windows.Forms.Button();
             this.btnDoTrueRandomPopup = new System.Windows.Forms.Button();
             this.gbWeaponCategory = new System.Windows.Forms.GroupBox();
             this.gbSpellCategory = new System.Windows.Forms.GroupBox();
@@ -253,8 +255,9 @@
             this.chkSpeffectsEnemies.Size = new System.Drawing.Size(189, 17);
             this.chkSpeffectsEnemies.TabIndex = 5;
             this.chkSpeffectsEnemies.Text = "Randomize SPeffects on enemies*";
-            this.tooltip.SetToolTip(this.chkSpeffectsEnemies, "Randomizes special effects on enemies, like stun, super armor, status immuniti" +
-        "es, and gravelord status.\nWARNING: currently breaks enemy death animations sometimes???");
+            this.tooltip.SetToolTip(this.chkSpeffectsEnemies, "Randomizes special effects on enemies, like stun, super armor, status immunities," +
+        " and gravelord status.\nWARNING: currently breaks enemy death animations sometime" +
+        "s???");
             this.chkSpeffectsEnemies.UseVisualStyleBackColor = true;
             // 
             // chkSpeffectsEnemyAttacks
@@ -745,6 +748,18 @@
             this.tooltip.SetToolTip(this.checkBoxUniversalizeBows, "Bows and crossbows can now use both types of ammo.");
             this.checkBoxUniversalizeBows.UseVisualStyleBackColor = true;
             // 
+            // checkBoxRandomizeCamera
+            // 
+            this.checkBoxRandomizeCamera.AutoSize = true;
+            this.checkBoxRandomizeCamera.Location = new System.Drawing.Point(504, 336);
+            this.checkBoxRandomizeCamera.Name = "checkBoxRandomizeCamera";
+            this.checkBoxRandomizeCamera.Size = new System.Drawing.Size(118, 17);
+            this.checkBoxRandomizeCamera.TabIndex = 43;
+            this.checkBoxRandomizeCamera.Text = "Randomize Camera";
+            this.tooltip.SetToolTip(this.checkBoxRandomizeCamera, "Randomizes the camera and camera lockon parameters.\nWARNING: use with caution. Th" +
+        "is may make the game annoying or impossible to play.");
+            this.checkBoxRandomizeCamera.UseVisualStyleBackColor = true;
+            // 
             // tooltip
             // 
             this.tooltip.AutoPopDelay = 32767;
@@ -782,6 +797,16 @@
             this.btnRandomizeSettings.Text = "Roll a Die";
             this.tooltip.SetToolTip(this.btnRandomizeSettings, "Randomizes the state of every setting.");
             this.btnRandomizeSettings.Click += new System.EventHandler(this.btnRandomizeSettings_Click);
+            // 
+            // btnDisableAll
+            // 
+            this.btnDisableAll.Location = new System.Drawing.Point(583, 27);
+            this.btnDisableAll.Name = "btnDisableAll";
+            this.btnDisableAll.Size = new System.Drawing.Size(74, 25);
+            this.btnDisableAll.TabIndex = 47;
+            this.btnDisableAll.Text = "Disable All";
+            this.tooltip.SetToolTip(this.btnDisableAll, "Adjusts settings to ensure no changes will be made.");
+            this.btnDisableAll.Click += new System.EventHandler(this.btnDisableAll_Click);
             // 
             // btnDoTrueRandomPopup
             // 
@@ -831,7 +856,7 @@
             this.gbOtherCategory.AutoSize = true;
             this.gbOtherCategory.Location = new System.Drawing.Point(479, 214);
             this.gbOtherCategory.Name = "gbOtherCategory";
-            this.gbOtherCategory.Size = new System.Drawing.Size(466, 116);
+            this.gbOtherCategory.Size = new System.Drawing.Size(466, 139);
             this.gbOtherCategory.TabIndex = 35;
             this.gbOtherCategory.TabStop = false;
             this.gbOtherCategory.Text = "Other Settings:";
@@ -861,9 +886,9 @@
             this.lblVersion.AutoSize = true;
             this.lblVersion.Location = new System.Drawing.Point(773, 454);
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(90, 13);
+            this.lblVersion.Size = new System.Drawing.Size(87, 13);
             this.lblVersion.TabIndex = 41;
-            this.lblVersion.Text = "DEV version 0.3e";
+            this.lblVersion.Text = "DEV version 0.3f";
             // 
             // Form1
             // 
@@ -871,9 +896,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(960, 480);
             this.Controls.Add(this.checkBoxUniversalizeBows);
+            this.Controls.Add(this.checkBoxRandomizeCamera);
             this.Controls.Add(this.btnLoadPreset);
             this.Controls.Add(this.btnSavePreset);
             this.Controls.Add(this.btnRandomizeSettings);
+            this.Controls.Add(this.btnDisableAll);
             this.Controls.Add(this.btnDoTrueRandomPopup);
             this.Controls.Add(this.checkBoxLoadFromBackup);
             this.Controls.Add(this.checkBoxNerfHumanityBullets);
@@ -1000,6 +1027,7 @@
         private System.Windows.Forms.CheckBox checkBoxDontChangeStartWeapons;
         private System.Windows.Forms.CheckBox checkBoxForceUseableBullets;
         private System.Windows.Forms.CheckBox checkBoxUniversalizeBows;
+        private System.Windows.Forms.CheckBox checkBoxRandomizeCamera;
         private System.Windows.Forms.ToolTip tooltip;
         private System.Windows.Forms.GroupBox gbWeaponCategory;
         private System.Windows.Forms.GroupBox gbSpellCategory;
@@ -1011,6 +1039,7 @@
         private System.Windows.Forms.Button btnSavePreset;
         private System.Windows.Forms.Button btnLoadPreset;
         private System.Windows.Forms.Button btnRandomizeSettings;
+        private System.Windows.Forms.Button btnDisableAll;
         private System.Windows.Forms.Button btnDoTrueRandomPopup;
     }
 }

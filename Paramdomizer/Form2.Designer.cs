@@ -43,15 +43,17 @@
             this.chkTRSpellRequirements = new System.Windows.Forms.CheckBox();
             this.chkTRSpellSlotSize = new System.Windows.Forms.CheckBox();
             this.chkTRSpellQuantity = new System.Windows.Forms.CheckBox();
+            this.chkTRCamera = new System.Windows.Forms.CheckBox();
             this.gbWeaponCategory = new System.Windows.Forms.GroupBox();
             this.gbArmorCategory = new System.Windows.Forms.GroupBox();
             this.gbSpellCategory = new System.Windows.Forms.GroupBox();
+            this.gbOtherCategory = new System.Windows.Forms.GroupBox();
             this.tooltip = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // btnCloseWindow
             // 
-            this.btnCloseWindow.Location = new System.Drawing.Point(413, 235);
+            this.btnCloseWindow.Location = new System.Drawing.Point(413, 277);
             this.btnCloseWindow.Name = "btnCloseWindow";
             this.btnCloseWindow.Size = new System.Drawing.Size(75, 23);
             this.btnCloseWindow.TabIndex = 0;
@@ -230,6 +232,20 @@
         "a values.\nDon\'t Randomize by Shuffle needs to be on for this to function.");
             this.chkTRSpellQuantity.UseVisualStyleBackColor = true;
             // 
+            // chkTRCamera
+            // 
+            this.chkTRCamera.AutoSize = true;
+            this.chkTRCamera.Checked = true;
+            this.chkTRCamera.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkTRCamera.Location = new System.Drawing.Point(36, 254);
+            this.chkTRCamera.Name = "chkTRCamera";
+            this.chkTRCamera.Size = new System.Drawing.Size(95, 17);
+            this.chkTRCamera.TabIndex = 1;
+            this.chkTRCamera.Text = "Camera DRBS";
+            this.tooltip.SetToolTip(this.chkTRCamera, "Randomize camera parameters by generating random numbers instead of shuffling van" +
+        "illa values.\nDon\'t Randomize by Shuffle needs to be on for this to function.");
+            this.chkTRCamera.UseVisualStyleBackColor = true;
+            // 
             // gbWeaponCategory
             // 
             this.gbWeaponCategory.AutoSize = true;
@@ -260,6 +276,16 @@
             this.gbSpellCategory.TabStop = false;
             this.gbSpellCategory.Text = "Spell Settings:";
             // 
+            // gbOtherCategory
+            // 
+            this.gbOtherCategory.AutoSize = true;
+            this.gbOtherCategory.Location = new System.Drawing.Point(12, 235);
+            this.gbOtherCategory.Name = "gbOtherCategory";
+            this.gbOtherCategory.Size = new System.Drawing.Size(450, 36);
+            this.gbOtherCategory.TabIndex = 2;
+            this.gbOtherCategory.TabStop = false;
+            this.gbOtherCategory.Text = "Other Settings:";
+            // 
             // tooltip
             // 
             this.tooltip.AutoPopDelay = 32767;
@@ -270,7 +296,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(500, 270);
+            this.ClientSize = new System.Drawing.Size(500, 300);
             this.Controls.Add(this.btnCloseWindow);
             this.Controls.Add(this.chkTRWeaponDamage);
             this.Controls.Add(this.chkTRWeaponScaling);
@@ -284,9 +310,11 @@
             this.Controls.Add(this.chkTRSpellRequirements);
             this.Controls.Add(this.chkTRSpellSlotSize);
             this.Controls.Add(this.chkTRSpellQuantity);
+            this.Controls.Add(this.chkTRCamera);
             this.Controls.Add(this.gbWeaponCategory);
             this.Controls.Add(this.gbArmorCategory);
             this.Controls.Add(this.gbSpellCategory);
+            this.Controls.Add(this.gbOtherCategory);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -312,9 +340,11 @@
         public System.Windows.Forms.CheckBox chkTRSpellRequirements;
         public System.Windows.Forms.CheckBox chkTRSpellSlotSize;
         public System.Windows.Forms.CheckBox chkTRSpellQuantity;
+        public System.Windows.Forms.CheckBox chkTRCamera;
         public System.Windows.Forms.GroupBox gbWeaponCategory;
         public System.Windows.Forms.GroupBox gbArmorCategory;
         public System.Windows.Forms.GroupBox gbSpellCategory;
+        public System.Windows.Forms.GroupBox gbOtherCategory;
         //public System.Windows.Forms.GroupBox gbEnemyCategory;
         //public System.Windows.Forms.GroupBox gbNPCPCCategory;
         public System.Windows.Forms.ToolTip tooltip;
